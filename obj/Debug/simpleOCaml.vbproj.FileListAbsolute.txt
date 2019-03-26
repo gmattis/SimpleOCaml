@@ -1,0 +1,13 @@
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.exe.config
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.exe
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.pdb
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.xml
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.vbprojResolveAssemblyReference.cache
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.Main.resources
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.Resources.resources
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.vbproj.GenerateResource.Cache
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.vbproj.CoreCompileInputs.cache
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.exe
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.xml
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.pdb
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.Settings.resources
