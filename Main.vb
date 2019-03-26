@@ -1,4 +1,6 @@
-﻿Public Class Main
+﻿Imports System.Windows.Input
+
+Public Class Main
     Private WithEvents _commandExecutor As New OCaml()
     Private ExecuteCode As Integer()
     Private KeyWords As List(Of String) = KeyWordList()
@@ -142,6 +144,7 @@
 
     ''' Le reste
     Private Sub InputBox_KeyUp(sender As Object, e As KeyEventArgs)
+        ' Coloration
         Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
         For i = 0 To Pos.Count - 2
@@ -169,6 +172,10 @@
             CurrentTextbox.DeselectAll()
             CurrentTextbox.SelectionStart = CursorPos
         End If
+
+        ' Autocomplétion
+        'Dim CurrentList As ListBox = TryCast(TabControl.SelectedTab.Controls.Item(2), ListBox)
+        'CurrentList.Location = CurrentTextbox.Selectio
     End Sub
 
     Private Sub AddNewPage()
@@ -214,6 +221,11 @@
             .Show_LineNrs = True
             .Show_MarginLines = True
             .Size = New System.Drawing.Size(29, 298)
+        End With
+        TabControl.SelectedTab.Controls.Add(New ListBox)
+        With TryCast(TabControl.SelectedTab.Controls(2), ListBox)
+            .DataSource = KeyWords
+            .Visible = False
         End With
     End Sub
 End Class
