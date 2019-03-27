@@ -22,6 +22,14 @@ Public Class Main
             PartielleToolStripMenuItem.Checked = True
         End If
 
+        If My.Settings.Dark_Theme Then
+            DarkModeToolStripMenuItem.Enabled = False
+            DarkModeToolStripMenuItem.Checked = True
+        Else
+            LightModeToolStripMenuItem.Enabled = False
+            LightModeToolStripMenuItem.Checked = True
+        End If
+
         StartOcaml()
     End Sub
 
@@ -138,12 +146,90 @@ Public Class Main
         My.Settings.Detailed_Output = False
     End Sub
 
+    Private Sub DarkModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeToolStripMenuItem.Click
+        For Each tab As TabPage In TabControl.TabPages
+            With Me
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            With SplitContainer
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            With TryCast(tab.Controls(0), RichTextBox)
+                .BackColor = Color.FromArgb(45, 45, 45)
+                .ForeColor = Color.LightGray
+            End With
+            With OutputBox
+                .BackColor = Color.FromArgb(45, 45, 45)
+                .ForeColor = Color.LightGray
+            End With
+            With MenuStrip
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            For Each ctrl As TabPage In TabControl.TabPages
+                ctrl.BackColor = Color.FromArgb(60, 60, 60)
+                ctrl.ForeColor = Color.LightGray
+            Next
+            For Each ctrl As ToolStripMenuItem In MenuStrip.Controls
+                ctrl.BackColor = Color.FromArgb(45, 45, 45)
+                ctrl.ForeColor = Color.LightGray
+            Next
+        Next
+
+        LightModeToolStripMenuItem.Checked = False
+        LightModeToolStripMenuItem.Enabled = True
+        DarkModeToolStripMenuItem.Enabled = False
+        'My.Settings.Dark_Theme = True
+
+        MsgBox("Dark Mode expérimental, redemarrez l'application pour réinitialiser les paramètres du thème (Dsl je peux pas faire mieux, faudra attendre la v2)")
+    End Sub
+
+    Private Sub LightModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeToolStripMenuItem.Click
+        For Each tab As TabPage In TabControl.TabPages
+            With Me
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            With SplitContainer
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            With TryCast(tab.Controls(0), RichTextBox)
+                .BackColor = Color.FromArgb(45, 45, 45)
+                .ForeColor = Color.LightGray
+            End With
+            With OutputBox
+                .BackColor = Color.FromArgb(45, 45, 45)
+                .ForeColor = Color.LightGray
+            End With
+            With MenuStrip
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
+            For Each ctrl As TabPage In TabControl.TabPages
+                ctrl.BackColor = Color.FromArgb(60, 60, 60)
+                ctrl.ForeColor = Color.LightGray
+            Next
+            For Each ctrl As ToolStripMenuItem In MenuStrip.Controls
+                ctrl.BackColor = Color.FromArgb(45, 45, 45)
+                ctrl.ForeColor = Color.LightGray
+            Next
+        Next
+
+        DarkModeToolStripMenuItem.Checked = False
+        DarkModeToolStripMenuItem.Enabled = True
+        LightModeToolStripMenuItem.Enabled = False
+        My.Settings.Dark_Theme = False
+    End Sub
+
     Private Sub AProposToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AProposToolStripMenuItem.Click
         MsgBox("OCaml c'est trivial", Title:="Aquatique")
     End Sub
 
     ''' Le reste
-    Private Sub InputBox_KeyUp(sender As Object, e As KeyEventArgs)
+    Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Coloration
         Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
@@ -155,13 +241,14 @@ Public Class Main
                     CurrentTextbox.SelectionBackColor = CurrentTextbox.BackColor
                     ExecuteCode = {Pos(i), Pos(i + 1)}
                     CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
-                    CurrentTextbox.SelectionBackColor = Color.LightGray
+                    CurrentTextbox.SelectionBackColor = If(My.Settings.Dark_Theme, Color.DarkBlue, Color.LightGray)
                     CurrentTextbox.DeselectAll()
                     CurrentTextbox.SelectionStart = CursorPos
                 End If
                 Exit Sub
             End If
         Next
+
         If ExecuteCode(0) <> 0 Or ExecuteCode(1) <> 0 Then
             Dim CursorPos As Integer = CurrentTextbox.SelectionStart
             CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
@@ -175,7 +262,7 @@ Public Class Main
 
         ' Autocomplétion
         'Dim CurrentList As ListBox = TryCast(TabControl.SelectedTab.Controls.Item(2), ListBox)
-        'CurrentList.Location = CurrentTextbox.Selectio
+        'CurrentList.Location = CurrentTextbox.Selection
     End Sub
 
     Private Sub AddNewPage()
@@ -227,5 +314,35 @@ Public Class Main
             .DataSource = KeyWords
             .Visible = False
         End With
+    End Sub
+
+    Private Sub TabControl_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles TabControl.DrawItem
+        Dim g As Graphics = e.Graphics
+        Dim tp As TabPage = TabControl.TabPages(e.Index)
+        Dim br As Brush
+        Dim sf As New StringFormat
+        Dim r As New RectangleF(e.Bounds.X, e.Bounds.Y + 2, e.Bounds.Width, e.Bounds.Height - 2)
+
+        sf.Alignment = StringAlignment.Center
+
+        Dim strTitle As String = tp.Text
+        'If the current index is the Selected Index, change the color
+        If TabControl.SelectedIndex = e.Index Then
+            'this is the background color of the tabpage
+            'you could make this a standard color for the selected page
+            br = New SolidBrush(tp.BackColor)
+            'this is the background color of the tab page
+            g.FillRectangle(br, e.Bounds)
+            'this is the foreground color of the tab page
+            'you could make this a standard color for the selected page
+            br = New SolidBrush(tp.ForeColor)
+            g.DrawString(strTitle, TabControl.Font, br, r, sf)
+        Else
+            'these are the standard colors for the unselected tab pages
+            br = New SolidBrush(Color.WhiteSmoke)
+            g.FillRectangle(br, e.Bounds)
+            br = New SolidBrush(Color.Black)
+            g.DrawString(strTitle, TabControl.Font, br, r, sf)
+        End If
     End Sub
 End Class

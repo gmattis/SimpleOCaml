@@ -38,11 +38,16 @@ Partial Class Main
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ParamètresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExécuterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartielleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComplèteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ParamètresToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ThèmeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LightModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DarkModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentationOCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AProposToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -75,6 +80,7 @@ Partial Class Main
         'TabControl
         '
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.Padding = New System.Drawing.Point(0, 0)
@@ -85,9 +91,10 @@ Partial Class Main
         '
         'OutputBox
         '
-        Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.OutputBox.Location = New System.Drawing.Point(0, 0)
+        Me.OutputBox.Margin = New System.Windows.Forms.Padding(6)
         Me.OutputBox.Name = "OutputBox"
         Me.OutputBox.ReadOnly = True
         Me.OutputBox.Size = New System.Drawing.Size(362, 393)
@@ -104,7 +111,7 @@ Partial Class Main
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FichierToolStripMenuItem, Me.EditionToolStripMenuItem, Me.OCamlToolStripMenuItem, Me.AideToolStripMenuItem})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FichierToolStripMenuItem, Me.EditionToolStripMenuItem, Me.OCamlToolStripMenuItem, Me.ParamètresToolStripMenuItem1, Me.AideToolStripMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(769, 24)
@@ -166,9 +173,18 @@ Partial Class Main
         '
         'EditionToolStripMenuItem
         '
+        Me.EditionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestToolStripMenuItem})
         Me.EditionToolStripMenuItem.Name = "EditionToolStripMenuItem"
         Me.EditionToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.EditionToolStripMenuItem.Text = "Edition"
+        '
+        'TestToolStripMenuItem
+        '
+        Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
+        Me.TestToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.TestToolStripMenuItem.Text = "Test"
         '
         'OCamlToolStripMenuItem
         '
@@ -204,6 +220,34 @@ Partial Class Main
         Me.ComplèteToolStripMenuItem.Name = "ComplèteToolStripMenuItem"
         Me.ComplèteToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.ComplèteToolStripMenuItem.Text = "Complète"
+        '
+        'ParamètresToolStripMenuItem1
+        '
+        Me.ParamètresToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThèmeToolStripMenuItem})
+        Me.ParamètresToolStripMenuItem1.Name = "ParamètresToolStripMenuItem1"
+        Me.ParamètresToolStripMenuItem1.Size = New System.Drawing.Size(78, 20)
+        Me.ParamètresToolStripMenuItem1.Text = "Paramètres"
+        '
+        'ThèmeToolStripMenuItem
+        '
+        Me.ThèmeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightModeToolStripMenuItem, Me.DarkModeToolStripMenuItem})
+        Me.ThèmeToolStripMenuItem.Name = "ThèmeToolStripMenuItem"
+        Me.ThèmeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ThèmeToolStripMenuItem.Text = "Thème"
+        '
+        'LightModeToolStripMenuItem
+        '
+        Me.LightModeToolStripMenuItem.CheckOnClick = True
+        Me.LightModeToolStripMenuItem.Name = "LightModeToolStripMenuItem"
+        Me.LightModeToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.LightModeToolStripMenuItem.Text = "Light Mode"
+        '
+        'DarkModeToolStripMenuItem
+        '
+        Me.DarkModeToolStripMenuItem.CheckOnClick = True
+        Me.DarkModeToolStripMenuItem.Name = "DarkModeToolStripMenuItem"
+        Me.DarkModeToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.DarkModeToolStripMenuItem.Text = "Dark Mode [WIP]"
         '
         'AideToolStripMenuItem
         '
@@ -266,8 +310,13 @@ Partial Class Main
     Friend WithEvents SortieToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ComplèteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PartielleToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OutputBox As RichTextBox
     Friend WithEvents OcamlFileDialog As OpenFileDialog
     Friend WithEvents LibrariesBrowserDialog As FolderBrowserDialog
     Friend WithEvents AProposToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ParamètresToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ThèmeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LightModeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DarkModeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OutputBox As RichTextBox
+    Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
 End Class
