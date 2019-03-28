@@ -51,6 +51,9 @@
     <ApplicationIcon>SimpleCaml.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox, Version=2.16.24.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.24\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -82,9 +85,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LineNumbers_For_RichTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="OCaml.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
@@ -108,12 +108,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Settings.Designer.vb">
-      <DependentUpon>Settings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Settings.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Utils.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +119,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Settings.resx">
-      <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +132,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SimpleCaml.ico" />

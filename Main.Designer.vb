@@ -35,10 +35,7 @@ Partial Class Main
         Me.EnregistrerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnregistrerSousToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FermerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ParamètresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExécuterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -53,6 +50,8 @@ Partial Class Main
         Me.AProposToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
+        Me.FermerToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NettoyerLaSortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -120,7 +119,7 @@ Partial Class Main
         '
         'FichierToolStripMenuItem
         '
-        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NouveauToolStripMenuItem, Me.OuvrirToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.EnregistrerSousToolStripMenuItem, Me.FermerToolStripMenuItem, Me.ToolStripSeparator1, Me.ParamètresToolStripMenuItem})
+        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NouveauToolStripMenuItem, Me.OuvrirToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.EnregistrerSousToolStripMenuItem, Me.FermerToolStripMenuItem})
         Me.FichierToolStripMenuItem.Name = "FichierToolStripMenuItem"
         Me.FichierToolStripMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.FichierToolStripMenuItem.Text = "Fichier"
@@ -160,35 +159,16 @@ Partial Class Main
         Me.FermerToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.FermerToolStripMenuItem.Text = "Fermer"
         '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(222, 6)
-        '
-        'ParamètresToolStripMenuItem
-        '
-        Me.ParamètresToolStripMenuItem.Name = "ParamètresToolStripMenuItem"
-        Me.ParamètresToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.ParamètresToolStripMenuItem.Text = "Paramètres"
-        '
         'EditionToolStripMenuItem
         '
-        Me.EditionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestToolStripMenuItem})
+        Me.EditionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NettoyerLaSortieToolStripMenuItem})
         Me.EditionToolStripMenuItem.Name = "EditionToolStripMenuItem"
         Me.EditionToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.EditionToolStripMenuItem.Text = "Edition"
         '
-        'TestToolStripMenuItem
-        '
-        Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
-        Me.TestToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
-            Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
-        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
-        Me.TestToolStripMenuItem.Text = "Test"
-        '
         'OCamlToolStripMenuItem
         '
-        Me.OCamlToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExécuterToolStripMenuItem, Me.SortieToolStripMenuItem})
+        Me.OCamlToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExécuterToolStripMenuItem, Me.SortieToolStripMenuItem, Me.FermerToolStripMenuItem1})
         Me.OCamlToolStripMenuItem.Name = "OCamlToolStripMenuItem"
         Me.OCamlToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OCamlToolStripMenuItem.Text = "OCaml"
@@ -232,7 +212,7 @@ Partial Class Main
         '
         Me.ThèmeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightModeToolStripMenuItem, Me.DarkModeToolStripMenuItem})
         Me.ThèmeToolStripMenuItem.Name = "ThèmeToolStripMenuItem"
-        Me.ThèmeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ThèmeToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
         Me.ThèmeToolStripMenuItem.Text = "Thème"
         '
         'LightModeToolStripMenuItem
@@ -268,6 +248,18 @@ Partial Class Main
         Me.AProposToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
         Me.AProposToolStripMenuItem.Text = "A propos"
         '
+        'FermerToolStripMenuItem1
+        '
+        Me.FermerToolStripMenuItem1.Name = "FermerToolStripMenuItem1"
+        Me.FermerToolStripMenuItem1.Size = New System.Drawing.Size(185, 22)
+        Me.FermerToolStripMenuItem1.Text = "Fermer"
+        '
+        'NettoyerLaSortieToolStripMenuItem
+        '
+        Me.NettoyerLaSortieToolStripMenuItem.Name = "NettoyerLaSortieToolStripMenuItem"
+        Me.NettoyerLaSortieToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.NettoyerLaSortieToolStripMenuItem.Text = "Nettoyer la sortie"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -302,8 +294,6 @@ Partial Class Main
     Friend WithEvents EnregistrerSousToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OCamlToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExécuterToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents ParamètresToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DocumentationOCamlToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TabControl As TabControl
     Friend WithEvents FermerToolStripMenuItem As ToolStripMenuItem
@@ -318,5 +308,6 @@ Partial Class Main
     Friend WithEvents LightModeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DarkModeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
-    Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FermerToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents NettoyerLaSortieToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -1,4 +1,6 @@
-﻿Module Utils
+﻿Imports FastColoredTextBoxNS
+
+Module Utils
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
         If Not ret.EndsWith(";;") Then ret = ret + ";;"
@@ -33,5 +35,19 @@
             "lxor", "match", "method", "mod", "module", "mutable", "open", "new", "nonrec", "object",
             "of", "open", "open!", "or", "private", "rec", "sig", "struct", "then", "to",
             "true", "try", "type", "val", "virtual", "when", "while", "with"}.ToList()
+    End Function
+
+    Public Sub PaintLines(sender As Object, e As PaintLineEventArgs)
+        If Main.LinesToExecute(0) <= e.LineIndex And e.LineIndex <= Main.LinesToExecute(1) Then
+            e.Graphics.FillRectangle(Brushes.MistyRose, e.LineRect.X, e.LineRect.Y, e.LineRect.Width, e.LineRect.Height)
+        End If
+    End Sub
+
+    Public Function Max(a, b)
+        If a > b Then
+            Return a
+        Else
+            Return b
+        End If
     End Function
 End Module

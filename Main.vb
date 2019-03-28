@@ -1,14 +1,17 @@
-﻿Imports System.Windows.Input
+﻿Imports System.ComponentModel
+Imports System.Text.RegularExpressions
+Imports System.Windows.Input
+Imports FastColoredTextBoxNS
 
 Public Class Main
+    Public LinesToExecute As Integer() = {-1, -1}
+    Public CodeToExecute As String = ""
+    Public CodeToExecutePos As Integer() = {0, 0}
     Private WithEvents _commandExecutor As New OCaml()
-    Private ExecuteCode As Integer()
     Private KeyWords As List(Of String) = KeyWordList()
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ExecuteCode = {0, 0}
-
         AddNewPage()
 
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
@@ -45,17 +48,23 @@ Public Class Main
                 OcamlFileDialog.Reset()
             End If
         End While
-        While Not System.IO.Directory.Exists(My.Settings.Ocaml_Lib)
-            MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
-            LibrariesBrowserDialog.ShowDialog()
-            If LibrariesBrowserDialog.SelectedPath = "" Then
-                End
-            Else
-                My.Settings.Ocaml_Lib = LibrariesBrowserDialog.SelectedPath
-                LibrariesBrowserDialog.Reset()
-            End If
-        End While
-        _commandExecutor.Start(My.Settings.Ocaml_Exe, "-I " + My.Settings.Ocaml_Lib)
+        For i = 0 To My.Settings.Ocaml_Lib.Count - 1
+            While Not System.IO.Directory.Exists(My.Settings.Ocaml_Lib.Item(i))
+                MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
+                LibrariesBrowserDialog.ShowDialog()
+                If LibrariesBrowserDialog.SelectedPath = "" Then
+                    End
+                Else
+                    My.Settings.Ocaml_Lib.Item(i) = LibrariesBrowserDialog.SelectedPath
+                    LibrariesBrowserDialog.Reset()
+                End If
+            End While
+        Next
+        Dim LibsPath As String = ""
+        For i = 0 To My.Settings.Ocaml_Lib.Count - 1
+            LibsPath += "-I " + My.Settings.Ocaml_Lib.Item(i) + " "
+        Next
+        _commandExecutor.Start(My.Settings.Ocaml_Exe, LibsPath)
     End Sub
 
     Private Sub Main_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -64,15 +73,21 @@ Public Class Main
 
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExécuterToolStripMenuItem.Click
-        If ExecuteCode(0) <> ExecuteCode(1) Then
-            Dim ToExecute As String = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox).Text.Substring(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
+        If Not _commandExecutor.GetState() Then
+            Dim LibsPath As String = ""
+            For i = 0 To My.Settings.Ocaml_Lib.Count - 1
+                LibsPath += "-I " + My.Settings.Ocaml_Lib.Item(i) + " "
+            Next
+            _commandExecutor.Start(My.Settings.Ocaml_Exe, LibsPath)
+        End If
+        If CodeToExecute <> "" Then
             OutputBox.AppendText("> ")
-            If My.Settings.Detailed_Output Or Not ToExecute.Contains(vbLf) Then
-                OutputBox.AppendText(ToExecute + vbCrLf)
+            If My.Settings.Detailed_Output Or Not CodeToExecute.Contains(vbLf) Then
+                OutputBox.AppendText(CodeToExecute + vbCrLf)
             Else
-                OutputBox.AppendText(ToExecute.Substring(0, ToExecute.IndexOf(vbLf)) + " ..." + vbCrLf)
+                OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf)) + " ..." + vbCrLf)
             End If
-            _commandExecutor.Execute(Normalise_Text(ToExecute))
+            _commandExecutor.Execute(Normalise_Text(CodeToExecute))
         End If
     End Sub
 
@@ -88,7 +103,7 @@ Public Class Main
 
     ''' Interactions avec les menus
     Private Sub SaveFile() Handles EnregistrerToolStripMenuItem.Click
-        Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         If TabControl.SelectedTab.Tag = "" Or Not System.IO.File.Exists(TabControl.SelectedTab.Tag) Then
             SaveAsFile()
         Else
@@ -102,7 +117,7 @@ Public Class Main
     End Sub
 
     Private Sub OnSaveAsFile(sender As Object, e As EventArgs) Handles SaveFileDialog.FileOk
-        Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim savePath As String = SaveFileDialog.FileName
         System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
         TabControl.SelectedTab.Tag = savePath
@@ -115,7 +130,7 @@ Public Class Main
 
     Private Sub OnOpenFile(sender As Object, e As EventArgs) Handles OpenFileDialog.FileOk
         AddNewPage()
-        Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim openPath As String = OpenFileDialog.FileName
         TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
         CurrentTextbox.Text = System.IO.File.ReadAllText(openPath, System.Text.Encoding.Default)
@@ -156,7 +171,7 @@ Public Class Main
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
             End With
-            With TryCast(tab.Controls(0), RichTextBox)
+            With TryCast(tab.Controls(0), FastColoredTextBox)
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.LightGray
             End With
@@ -196,7 +211,7 @@ Public Class Main
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
             End With
-            With TryCast(tab.Controls(0), RichTextBox)
+            With TryCast(tab.Controls(0), FastColoredTextBox)
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.LightGray
             End With
@@ -228,36 +243,41 @@ Public Class Main
         MsgBox("OCaml c'est trivial", Title:="Aquatique")
     End Sub
 
+    Private Sub FermerToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles FermerToolStripMenuItem1.Click
+        _commandExecutor.Dispose()
+        OutputBox.AppendText("OCaml a été fermé" & vbLf)
+    End Sub
+
+    Private Sub NettoyerLaSortieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NettoyerLaSortieToolStripMenuItem.Click
+        OutputBox.Clear()
+    End Sub
+
     ''' Le reste
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Coloration
-        Dim CurrentTextbox As RichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
-        For i = 0 To Pos.Count - 2
-            If Pos(i) <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= Pos(i + 1) Then
-                If Pos(i) <> ExecuteCode(0) Or Pos(i + 1) <> ExecuteCode(1) Then
-                    Dim CursorPos As Integer = CurrentTextbox.SelectionStart
-                    CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
-                    CurrentTextbox.SelectionBackColor = CurrentTextbox.BackColor
-                    ExecuteCode = {Pos(i), Pos(i + 1)}
-                    CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
-                    CurrentTextbox.SelectionBackColor = If(My.Settings.Dark_Theme, Color.DarkBlue, Color.LightGray)
-                    CurrentTextbox.DeselectAll()
-                    CurrentTextbox.SelectionStart = CursorPos
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(][\s\S]+?(;;)")
+        For Each expr As Match In Mat
+            If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
+                Dim code As String = Regex.Replace(expr.Value, "[(][*][\s\S]*?[*][)][\s]*", "")
+                Console.WriteLine(code)
+                If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({expr.Index, expr.Length}) Then
+                    CodeToExecute = code
+                    CodeToExecutePos = {expr.Index, expr.Length}
+                    If Not LinesToExecute.SequenceEqual({CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}) Then
+                        LinesToExecute = {CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}
+                        CurrentTextbox.Invalidate()
+                    End If
                 End If
                 Exit Sub
             End If
         Next
-
-        If ExecuteCode(0) <> 0 Or ExecuteCode(1) <> 0 Then
-            Dim CursorPos As Integer = CurrentTextbox.SelectionStart
-            CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
-            CurrentTextbox.SelectionBackColor = CurrentTextbox.BackColor
-            ExecuteCode = {0, 0}
-            CurrentTextbox.Select(ExecuteCode(0), ExecuteCode(1) - ExecuteCode(0))
-            CurrentTextbox.SelectionBackColor = Color.LightGray
-            CurrentTextbox.DeselectAll()
-            CurrentTextbox.SelectionStart = CursorPos
+        If CodeToExecute <> "" Then
+            CodeToExecute = ""
+            CodeToExecutePos = {0, 0}
+            LinesToExecute = {-1, -1}
+            CurrentTextbox.Invalidate()
         End If
 
         ' Autocomplétion
@@ -268,49 +288,25 @@ Public Class Main
     Private Sub AddNewPage()
         TabControl.TabPages.Add("*")
         TabControl.SelectTab(TabControl.TabCount - 1)
-        TabControl.SelectedTab.Controls.Add(New RichTextBox)
-        With TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
-            .AcceptsTab = True
+        TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
+        With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             .Dock = DockStyle.Fill
-            .Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
-            .SelectionTabs = {32, 64, 96, 128, 160, 192, 224, 256, 288, 320}
-            .WordWrap = False
             .Select()
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
+            AddHandler .PaintLine, AddressOf PaintLines
         End With
-        TabControl.SelectedTab.Controls.Add(New LineNumbers_For_RichTextBox)
-        With TryCast(TabControl.SelectedTab.Controls.Item(1), LineNumbers_For_RichTextBox)
-            ._SeeThroughMode_ = False
-            .AutoSizing = True
-            .BorderLines_Color = System.Drawing.Color.SlateGray
-            .BorderLines_Style = System.Drawing.Drawing2D.DashStyle.Solid
-            .BorderLines_Thickness = 1.0!
-            .Dock = System.Windows.Forms.DockStyle.Left
-            .DockSide = LineNumbers_For_RichTextBox.LineNumberDockSide.Left
-            .ForeColor = TabControl.ForeColor
-            .LineNrs_Alignment = System.Drawing.ContentAlignment.TopRight
-            .LineNrs_AntiAlias = True
-            .LineNrs_AsHexadecimal = False
-            .LineNrs_ClippedByItemRectangle = False
-            .LineNrs_LeadingZeroes = False
-            .LineNrs_Offset = New System.Drawing.Size(0, 0)
-            .Location = New System.Drawing.Point(0, 0)
-            .Margin = New System.Windows.Forms.Padding(0)
-            .MarginLines_Color = System.Drawing.Color.SlateGray
-            .MarginLines_Side = LineNumbers_For_RichTextBox.LineNumberDockSide.Right
-            .MarginLines_Style = System.Drawing.Drawing2D.DashStyle.Solid
-            .MarginLines_Thickness = 1.0!
-            .Padding = New System.Windows.Forms.Padding(0, 1, 3, 0)
-            .ParentRichTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
-            .Show_BackgroundGradient = False
-            .Show_BorderLines = False
-            .Show_GridLines = False
-            .Show_LineNrs = True
-            .Show_MarginLines = True
-            .Size = New System.Drawing.Size(29, 298)
-        End With
+        'TabControl.SelectedTab.Controls.Add(New RichTextBox)
+        'With TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
+        '    .AcceptsTab = True
+        '    .Dock = DockStyle.Fill
+        '    .Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+        '    .SelectionTabs = {32, 64, 96, 128, 160, 192, 224, 256, 288, 320}
+        '    .WordWrap = False
+        '    .Select()
+        '    AddHandler .KeyUp, AddressOf InputBox_KeyUp
+        'End With
         TabControl.SelectedTab.Controls.Add(New ListBox)
-        With TryCast(TabControl.SelectedTab.Controls(2), ListBox)
+        With TryCast(TabControl.SelectedTab.Controls(1), ListBox)
             .DataSource = KeyWords
             .Visible = False
         End With

@@ -10,4 +10,5 @@ C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.vbproj
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.exe
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.xml
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.pdb
-C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.Settings.resources
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\FastColoredTextBox.dll
+C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\FastColoredTextBox.xml

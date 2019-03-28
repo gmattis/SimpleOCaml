@@ -57,4 +57,8 @@
         Dispose(True)
         GC.SuppressFinalize(Me)
     End Sub
+
+    Public Function GetState()
+        Return _process IsNot Nothing
+    End Function
 End Class
