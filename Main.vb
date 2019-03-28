@@ -12,6 +12,10 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Not My.Settings.Ocaml_Exe = ".\ocaml64\miniocaml\bin\ocaml.exe" Then
+            My.Settings.Reset()
+        End If
+
         AddNewPage()
 
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
