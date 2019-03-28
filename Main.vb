@@ -37,8 +37,7 @@ Public Class Main
     End Sub
 
     Private Sub StartOcaml()
-        While Not (System.IO.File.Exists(My.Settings.Ocaml_Exe) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
-
+        While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
             MsgBox("Exécutable OCaml non trouvé ! Veuillez spécifier son emplacement")
             OcamlFileDialog.ShowDialog()
             If OcamlFileDialog.FileName = "" Then
@@ -48,23 +47,21 @@ Public Class Main
                 OcamlFileDialog.Reset()
             End If
         End While
-        For i = 0 To My.Settings.Ocaml_Lib.Count - 1
-            While Not System.IO.Directory.Exists(My.Settings.Ocaml_Lib.Item(i))
-                MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
-                LibrariesBrowserDialog.ShowDialog()
-                If LibrariesBrowserDialog.SelectedPath = "" Then
-                    End
-                Else
-                    My.Settings.Ocaml_Lib.Item(i) = LibrariesBrowserDialog.SelectedPath
-                    LibrariesBrowserDialog.Reset()
-                End If
-            End While
+        While Not System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
+            MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
+            LibrariesBrowserDialog.ShowDialog()
+            If LibrariesBrowserDialog.SelectedPath = "" Then
+                End
+            Else
+                My.Settings.Ocaml_Lib = LibrariesBrowserDialog.SelectedPath
+                LibrariesBrowserDialog.Reset()
+            End If
+        End While
+        Dim LibsPath As String = "-I " + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + " "
+        For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
+            LibsPath += "-I " + path + " "
         Next
-        Dim LibsPath As String = ""
-        For i = 0 To My.Settings.Ocaml_Lib.Count - 1
-            LibsPath += "-I " + My.Settings.Ocaml_Lib.Item(i) + " "
-        Next
-        _commandExecutor.Start(My.Settings.Ocaml_Exe, LibsPath)
+        _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
     End Sub
 
     Private Sub Main_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -75,10 +72,10 @@ Public Class Main
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExécuterToolStripMenuItem.Click
         If Not _commandExecutor.GetState() Then
             Dim LibsPath As String = ""
-            For i = 0 To My.Settings.Ocaml_Lib.Count - 1
-                LibsPath += "-I " + My.Settings.Ocaml_Lib.Item(i) + " "
+            For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
+                LibsPath += "-I " + path + " "
             Next
-            _commandExecutor.Start(My.Settings.Ocaml_Exe, LibsPath)
+            _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
         End If
         If CodeToExecute <> "" Then
             OutputBox.AppendText("> ")
@@ -261,7 +258,6 @@ Public Class Main
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, "[(][*][\s\S]*?[*][)][\s]*", "")
-                Console.WriteLine(code)
                 If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({expr.Index, expr.Length}) Then
                     CodeToExecute = code
                     CodeToExecutePos = {expr.Index, expr.Length}
