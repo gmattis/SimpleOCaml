@@ -12,10 +12,6 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If Not My.Settings.Ocaml_Exe = ".\ocaml64\miniocaml\bin\ocaml.exe" Then
-            My.Settings.Reset()
-        End If
-
         AddNewPage()
 
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
@@ -39,6 +35,11 @@ Public Class Main
 
         StartOcaml()
 
+        If My.Settings.Autosave Then
+            ActiverToolStripMenuItem.Checked = True
+        End If
+
+        AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         End If
@@ -138,6 +139,7 @@ Public Class Main
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim openPath As String = OpenFileDialog.FileName
         TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
+        TabControl.SelectedTab.Tag = openPath
         CurrentTextbox.Text = System.IO.File.ReadAllText(openPath, System.Text.Encoding.Default)
     End Sub
 
@@ -257,13 +259,23 @@ Public Class Main
         OutputBox.Clear()
     End Sub
 
-    Private Sub SauvegardeAutomatiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SauvegardeAutomatiqueToolStripMenuItem.Click
+    Private Sub SauvegardeAutomatiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActiverToolStripMenuItem.Click
         My.Settings.Autosave = Not My.Settings.Autosave
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         Else
             AutoSaveTimer.Stop()
         End If
+    End Sub
+
+    Private Sub DelaiSauvegardeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DelaiSauvegardeToolStripMenuItem.Click
+        Try
+            Dim Delay As Integer = InputBox("Veuillez définir le délai en secondes entre deux sauvegardes automatiques", "Délai de sauvegarde", My.Settings.Autosave_delay)
+            My.Settings.Autosave_delay = Delay
+            AutoSaveTimer.Interval = Delay * 1000
+        Catch
+            MsgBox("Veuillez entrer un nombre valide")
+        End Try
     End Sub
 
     ''' Le reste
@@ -359,6 +371,7 @@ Public Class Main
         SaveLabel.Text = "Autosaving..."
         For Each tab As TabPage In TabControl.TabPages
             If Not tab.Tag = "" Then
+                Console.WriteLine(tab.Tag)
                 Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
                 Dim savePath As String = TabControl.SelectedTab.Tag
                 System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)

@@ -149,6 +149,18 @@ Namespace My
                 Me("Autosave") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property Autosave_delay() As Integer
+            Get
+                Return CType(Me("Autosave_delay"),Integer)
+            End Get
+            Set
+                Me("Autosave_delay") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

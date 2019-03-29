@@ -48,13 +48,15 @@ Partial Class Main
         Me.ThèmeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LightModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DarkModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SauvegardeAutomatiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ActiverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DelaiSauvegardeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentationOCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AProposToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.SauvegardeAutomatiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -247,6 +249,26 @@ Partial Class Main
         Me.DarkModeToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
         Me.DarkModeToolStripMenuItem.Text = "Dark Mode [WIP]"
         '
+        'SauvegardeAutomatiqueToolStripMenuItem
+        '
+        Me.SauvegardeAutomatiqueToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActiverToolStripMenuItem, Me.DelaiSauvegardeToolStripMenuItem})
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Name = "SauvegardeAutomatiqueToolStripMenuItem"
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Text = "Sauvegarde automatique"
+        '
+        'ActiverToolStripMenuItem
+        '
+        Me.ActiverToolStripMenuItem.CheckOnClick = True
+        Me.ActiverToolStripMenuItem.Name = "ActiverToolStripMenuItem"
+        Me.ActiverToolStripMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.ActiverToolStripMenuItem.Text = "Activer"
+        '
+        'DelaiSauvegardeToolStripMenuItem
+        '
+        Me.DelaiSauvegardeToolStripMenuItem.Name = "DelaiSauvegardeToolStripMenuItem"
+        Me.DelaiSauvegardeToolStripMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.DelaiSauvegardeToolStripMenuItem.Text = "Délai de sauvegarde"
+        '
         'AideToolStripMenuItem
         '
         Me.AideToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DocumentationOCamlToolStripMenuItem, Me.AProposToolStripMenuItem})
@@ -268,14 +290,7 @@ Partial Class Main
         '
         'AutoSaveTimer
         '
-        Me.AutoSaveTimer.Interval = 300000
-        '
-        'SauvegardeAutomatiqueToolStripMenuItem
-        '
-        Me.SauvegardeAutomatiqueToolStripMenuItem.CheckOnClick = True
-        Me.SauvegardeAutomatiqueToolStripMenuItem.Name = "SauvegardeAutomatiqueToolStripMenuItem"
-        Me.SauvegardeAutomatiqueToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.SauvegardeAutomatiqueToolStripMenuItem.Text = "Sauvegarde automatique"
+        Me.AutoSaveTimer.Interval = 5000
         '
         'StatusStrip
         '
@@ -348,4 +363,6 @@ Partial Class Main
     Friend WithEvents SauvegardeAutomatiqueToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents SaveLabel As ToolStripStatusLabel
+    Friend WithEvents ActiverToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DelaiSauvegardeToolStripMenuItem As ToolStripMenuItem
 End Class
