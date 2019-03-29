@@ -38,6 +38,10 @@ Public Class Main
         End If
 
         StartOcaml()
+
+        If My.Settings.Autosave Then
+            AutoSaveTimer.Start()
+        End If
     End Sub
 
     Private Sub StartOcaml()
@@ -253,6 +257,15 @@ Public Class Main
         OutputBox.Clear()
     End Sub
 
+    Private Sub SauvegardeAutomatiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SauvegardeAutomatiqueToolStripMenuItem.Click
+        My.Settings.Autosave = Not My.Settings.Autosave
+        If My.Settings.Autosave Then
+            AutoSaveTimer.Start()
+        Else
+            AutoSaveTimer.Stop()
+        End If
+    End Sub
+
     ''' Le reste
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Coloration
@@ -340,5 +353,17 @@ Public Class Main
             br = New SolidBrush(Color.Black)
             g.DrawString(strTitle, TabControl.Font, br, r, sf)
         End If
+    End Sub
+
+    Private Sub AutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles AutoSaveTimer.Tick
+        SaveLabel.Text = "Autosaving..."
+        For Each tab As TabPage In TabControl.TabPages
+            If Not tab.Tag = "" Then
+                Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+                Dim savePath As String = TabControl.SelectedTab.Tag
+                System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+            End If
+        Next
+        SaveLabel.Text = "Autosave done!"
     End Sub
 End Class

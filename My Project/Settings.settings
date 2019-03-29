@@ -23,5 +23,8 @@
     <Setting Name="Ocaml_Exe" Type="System.String" Scope="User">
       <Value Profile="(Default)">.\ocaml64\miniocaml\bin\ocaml.exe</Value>
     </Setting>
+    <Setting Name="Autosave" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

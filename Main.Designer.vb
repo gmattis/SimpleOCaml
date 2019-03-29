@@ -22,6 +22,7 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer = New System.Windows.Forms.SplitContainer()
         Me.TabControl = New System.Windows.Forms.TabControl()
@@ -36,11 +37,13 @@ Partial Class Main
         Me.EnregistrerSousToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FermerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NettoyerLaSortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExécuterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartielleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComplèteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FermerToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ParamètresToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThèmeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LightModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -50,13 +53,16 @@ Partial Class Main
         Me.AProposToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
-        Me.FermerToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NettoyerLaSortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.SauvegardeAutomatiqueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
         Me.SplitContainer.SuspendLayout()
         Me.MenuStrip.SuspendLayout()
+        Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'SplitContainer
@@ -72,7 +78,7 @@ Partial Class Main
         'SplitContainer.Panel2
         '
         Me.SplitContainer.Panel2.Controls.Add(Me.OutputBox)
-        Me.SplitContainer.Size = New System.Drawing.Size(769, 393)
+        Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
         Me.SplitContainer.SplitterDistance = 403
         Me.SplitContainer.TabIndex = 2
         '
@@ -84,7 +90,7 @@ Partial Class Main
         Me.TabControl.Name = "TabControl"
         Me.TabControl.Padding = New System.Drawing.Point(0, 0)
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(403, 393)
+        Me.TabControl.Size = New System.Drawing.Size(403, 345)
         Me.TabControl.TabIndex = 2
         Me.TabControl.Tag = ""
         '
@@ -96,7 +102,7 @@ Partial Class Main
         Me.OutputBox.Margin = New System.Windows.Forms.Padding(6)
         Me.OutputBox.Name = "OutputBox"
         Me.OutputBox.ReadOnly = True
-        Me.OutputBox.Size = New System.Drawing.Size(362, 393)
+        Me.OutputBox.Size = New System.Drawing.Size(362, 345)
         Me.OutputBox.TabIndex = 2
         Me.OutputBox.Text = ""
         '
@@ -166,6 +172,12 @@ Partial Class Main
         Me.EditionToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.EditionToolStripMenuItem.Text = "Edition"
         '
+        'NettoyerLaSortieToolStripMenuItem
+        '
+        Me.NettoyerLaSortieToolStripMenuItem.Name = "NettoyerLaSortieToolStripMenuItem"
+        Me.NettoyerLaSortieToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.NettoyerLaSortieToolStripMenuItem.Text = "Nettoyer la sortie"
+        '
         'OCamlToolStripMenuItem
         '
         Me.OCamlToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExécuterToolStripMenuItem, Me.SortieToolStripMenuItem, Me.FermerToolStripMenuItem1})
@@ -201,9 +213,15 @@ Partial Class Main
         Me.ComplèteToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.ComplèteToolStripMenuItem.Text = "Complète"
         '
+        'FermerToolStripMenuItem1
+        '
+        Me.FermerToolStripMenuItem1.Name = "FermerToolStripMenuItem1"
+        Me.FermerToolStripMenuItem1.Size = New System.Drawing.Size(185, 22)
+        Me.FermerToolStripMenuItem1.Text = "Fermer"
+        '
         'ParamètresToolStripMenuItem1
         '
-        Me.ParamètresToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThèmeToolStripMenuItem})
+        Me.ParamètresToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThèmeToolStripMenuItem, Me.SauvegardeAutomatiqueToolStripMenuItem})
         Me.ParamètresToolStripMenuItem1.Name = "ParamètresToolStripMenuItem1"
         Me.ParamètresToolStripMenuItem1.Size = New System.Drawing.Size(78, 20)
         Me.ParamètresToolStripMenuItem1.Text = "Paramètres"
@@ -212,7 +230,7 @@ Partial Class Main
         '
         Me.ThèmeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightModeToolStripMenuItem, Me.DarkModeToolStripMenuItem})
         Me.ThèmeToolStripMenuItem.Name = "ThèmeToolStripMenuItem"
-        Me.ThèmeToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.ThèmeToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.ThèmeToolStripMenuItem.Text = "Thème"
         '
         'LightModeToolStripMenuItem
@@ -248,25 +266,39 @@ Partial Class Main
         Me.AProposToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
         Me.AProposToolStripMenuItem.Text = "A propos"
         '
-        'FermerToolStripMenuItem1
+        'AutoSaveTimer
         '
-        Me.FermerToolStripMenuItem1.Name = "FermerToolStripMenuItem1"
-        Me.FermerToolStripMenuItem1.Size = New System.Drawing.Size(185, 22)
-        Me.FermerToolStripMenuItem1.Text = "Fermer"
+        Me.AutoSaveTimer.Interval = 300000
         '
-        'NettoyerLaSortieToolStripMenuItem
+        'SauvegardeAutomatiqueToolStripMenuItem
         '
-        Me.NettoyerLaSortieToolStripMenuItem.Name = "NettoyerLaSortieToolStripMenuItem"
-        Me.NettoyerLaSortieToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.NettoyerLaSortieToolStripMenuItem.Text = "Nettoyer la sortie"
+        Me.SauvegardeAutomatiqueToolStripMenuItem.CheckOnClick = True
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Name = "SauvegardeAutomatiqueToolStripMenuItem"
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.SauvegardeAutomatiqueToolStripMenuItem.Text = "Sauvegarde automatique"
+        '
+        'StatusStrip
+        '
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveLabel})
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 369)
+        Me.StatusStrip.Name = "StatusStrip"
+        Me.StatusStrip.Size = New System.Drawing.Size(769, 22)
+        Me.StatusStrip.TabIndex = 4
+        Me.StatusStrip.Text = "StatusStrip"
+        '
+        'SaveLabel
+        '
+        Me.SaveLabel.Name = "SaveLabel"
+        Me.SaveLabel.Size = New System.Drawing.Size(0, 17)
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(769, 417)
+        Me.ClientSize = New System.Drawing.Size(769, 391)
         Me.Controls.Add(Me.SplitContainer)
         Me.Controls.Add(Me.MenuStrip)
+        Me.Controls.Add(Me.StatusStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "Main"
@@ -277,6 +309,8 @@ Partial Class Main
         Me.SplitContainer.ResumeLayout(False)
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
+        Me.StatusStrip.ResumeLayout(False)
+        Me.StatusStrip.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -310,4 +344,8 @@ Partial Class Main
     Friend WithEvents OutputBox As RichTextBox
     Friend WithEvents FermerToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents NettoyerLaSortieToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AutoSaveTimer As Timer
+    Friend WithEvents SauvegardeAutomatiqueToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StatusStrip As StatusStrip
+    Friend WithEvents SaveLabel As ToolStripStatusLabel
 End Class

@@ -137,6 +137,18 @@ Namespace My
                 Me("Ocaml_Exe") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property Autosave() As Boolean
+            Get
+                Return CType(Me("Autosave"),Boolean)
+            End Get
+            Set
+                Me("Autosave") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
