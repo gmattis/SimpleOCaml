@@ -50,4 +50,10 @@ Module Utils
             Return b
         End If
     End Function
+
+    Public Sub OnTabClose(sender As Object, e As EventArgs)
+        If Main.TabControl.TabCount = 1 Then
+            Main.AddNewPage()
+        End If
+    End Sub
 End Module

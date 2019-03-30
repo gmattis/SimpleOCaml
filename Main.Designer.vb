@@ -25,7 +25,6 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer = New System.Windows.Forms.SplitContainer()
-        Me.TabControl = New System.Windows.Forms.TabControl()
         Me.OutputBox = New System.Windows.Forms.RichTextBox()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
@@ -35,7 +34,6 @@ Partial Class Main
         Me.OuvrirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnregistrerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnregistrerSousToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FermerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NettoyerLaSortieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OCamlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -59,6 +57,8 @@ Partial Class Main
         Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.SaveProgressBar = New System.Windows.Forms.ToolStripProgressBar()
+        Me.TabControl = New simpleOCaml.TabControlEx()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -83,18 +83,6 @@ Partial Class Main
         Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
         Me.SplitContainer.SplitterDistance = 403
         Me.SplitContainer.TabIndex = 2
-        '
-        'TabControl
-        '
-        Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
-        Me.TabControl.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl.Name = "TabControl"
-        Me.TabControl.Padding = New System.Drawing.Point(0, 0)
-        Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(403, 345)
-        Me.TabControl.TabIndex = 2
-        Me.TabControl.Tag = ""
         '
         'OutputBox
         '
@@ -127,7 +115,7 @@ Partial Class Main
         '
         'FichierToolStripMenuItem
         '
-        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NouveauToolStripMenuItem, Me.OuvrirToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.EnregistrerSousToolStripMenuItem, Me.FermerToolStripMenuItem})
+        Me.FichierToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NouveauToolStripMenuItem, Me.OuvrirToolStripMenuItem, Me.EnregistrerToolStripMenuItem, Me.EnregistrerSousToolStripMenuItem})
         Me.FichierToolStripMenuItem.Name = "FichierToolStripMenuItem"
         Me.FichierToolStripMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.FichierToolStripMenuItem.Text = "Fichier"
@@ -160,12 +148,6 @@ Partial Class Main
             Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.EnregistrerSousToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.EnregistrerSousToolStripMenuItem.Text = "Enregistrer sous"
-        '
-        'FermerToolStripMenuItem
-        '
-        Me.FermerToolStripMenuItem.Name = "FermerToolStripMenuItem"
-        Me.FermerToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.FermerToolStripMenuItem.Text = "Fermer"
         '
         'EditionToolStripMenuItem
         '
@@ -294,7 +276,7 @@ Partial Class Main
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveLabel})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveProgressBar, Me.SaveLabel})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 369)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(769, 22)
@@ -305,6 +287,20 @@ Partial Class Main
         '
         Me.SaveLabel.Name = "SaveLabel"
         Me.SaveLabel.Size = New System.Drawing.Size(0, 17)
+        '
+        'SaveProgressBar
+        '
+        Me.SaveProgressBar.Name = "SaveProgressBar"
+        Me.SaveProgressBar.Size = New System.Drawing.Size(100, 16)
+        '
+        'TabControl
+        '
+        Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl.Name = "TabControl"
+        Me.TabControl.SelectedIndex = 0
+        Me.TabControl.Size = New System.Drawing.Size(403, 345)
+        Me.TabControl.TabIndex = 3
         '
         'Main
         '
@@ -344,8 +340,6 @@ Partial Class Main
     Friend WithEvents OCamlToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExécuterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DocumentationOCamlToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TabControl As TabControl
-    Friend WithEvents FermerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SortieToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ComplèteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PartielleToolStripMenuItem As ToolStripMenuItem
@@ -365,4 +359,6 @@ Partial Class Main
     Friend WithEvents SaveLabel As ToolStripStatusLabel
     Friend WithEvents ActiverToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DelaiSauvegardeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveProgressBar As ToolStripProgressBar
+    Friend WithEvents TabControl As TabControlEx
 End Class

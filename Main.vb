@@ -43,6 +43,9 @@ Public Class Main
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         End If
+
+        AddHandler TabControl.CloseButtonClick, AddressOf OnTabClose
+        AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
     End Sub
 
     Private Sub StartOcaml()
@@ -110,12 +113,15 @@ Public Class Main
     ''' Interactions avec les menus
     Private Sub SaveFile() Handles EnregistrerToolStripMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        If TabControl.SelectedTab.Tag = "" Or Not System.IO.File.Exists(TabControl.SelectedTab.Tag) Then
+        If TabControl.SelectedTab.Tag(0) = "" Or Not System.IO.File.Exists(TabControl.SelectedTab.Tag(0)) Then
             SaveAsFile()
         Else
-            Dim savePath As String = TabControl.SelectedTab.Tag
+            Dim savePath As String = TabControl.SelectedTab.Tag(0)
             System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
         End If
+
+        TabControl.SelectedTab.Tag(1) = True
+        TabControl.SelectedTab.Text = TabControl.SelectedTab.Tag(0).ToString.Substring(TabControl.SelectedTab.Tag(0).ToString.LastIndexOf("\") + 1)
     End Sub
 
     Private Sub SaveAsFile() Handles EnregistrerSousToolStripMenuItem.Click
@@ -126,8 +132,10 @@ Public Class Main
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim savePath As String = SaveFileDialog.FileName
         System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
-        TabControl.SelectedTab.Tag = savePath
+        TabControl.SelectedTab.Tag(0) = savePath
         TabControl.SelectedTab.Text = SaveFileDialog.FileName.Substring(SaveFileDialog.FileName.LastIndexOf("\") + 1)
+
+        TabControl.SelectedTab.Tag(1) = True
     End Sub
 
     Private Sub OpenFile() Handles OuvrirToolStripMenuItem.Click
@@ -139,19 +147,13 @@ Public Class Main
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim openPath As String = OpenFileDialog.FileName
         TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
-        TabControl.SelectedTab.Tag = openPath
+        TabControl.SelectedTab.Tag(0) = openPath
+        TabControl.SelectedTab.Tag(1) = True
         CurrentTextbox.Text = System.IO.File.ReadAllText(openPath, System.Text.Encoding.Default)
     End Sub
 
     Private Sub NouveauToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NouveauToolStripMenuItem.Click
         AddNewPage()
-    End Sub
-
-    Private Sub FermerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FermerToolStripMenuItem.Click
-        TabControl.TabPages.RemoveAt(TabControl.SelectedIndex)
-        If TabControl.TabCount = 0 Then
-            AddNewPage()
-        End If
     End Sub
 
     Private Sub ComplèteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComplèteToolStripMenuItem.Click
@@ -280,7 +282,12 @@ Public Class Main
 
     ''' Le reste
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
-        ' Coloration
+        If TabControl.SelectedTab.Tag(1) Then
+            TabControl.SelectedTab.Tag(1) = False
+            TabControl.SelectedTab.Text = "*" & TabControl.SelectedTab.Text
+        End If
+
+        ' Code a exécuter
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
         Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(][\s\S]+?(;;)")
@@ -310,14 +317,16 @@ Public Class Main
         'CurrentList.Location = CurrentTextbox.Selection
     End Sub
 
-    Private Sub AddNewPage()
+    Public Sub AddNewPage()
         TabControl.TabPages.Add("*")
         TabControl.SelectTab(TabControl.TabCount - 1)
+        TabControl.SelectedTab.Tag = {"", False}
         TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             .Dock = DockStyle.Fill
             .Select()
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
+            AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .PaintLine, AddressOf PaintLines
         End With
         'TabControl.SelectedTab.Controls.Add(New RichTextBox)
@@ -337,7 +346,7 @@ Public Class Main
         End With
     End Sub
 
-    Private Sub TabControl_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles TabControl.DrawItem
+    Private Sub TabControl_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs)
         Dim g As Graphics = e.Graphics
         Dim tp As TabPage = TabControl.TabPages(e.Index)
         Dim br As Brush
@@ -358,7 +367,6 @@ Public Class Main
             'you could make this a standard color for the selected page
             br = New SolidBrush(tp.ForeColor)
             g.DrawString(strTitle, TabControl.Font, br, r, sf)
-        Else
             'these are the standard colors for the unselected tab pages
             br = New SolidBrush(Color.WhiteSmoke)
             g.FillRectangle(br, e.Bounds)
@@ -368,15 +376,18 @@ Public Class Main
     End Sub
 
     Private Sub AutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles AutoSaveTimer.Tick
+        Dim Count As Integer = TabControl.TabCount
         SaveLabel.Text = "Autosaving..."
+        SaveProgressBar.Value = 0
         For Each tab As TabPage In TabControl.TabPages
-            If Not tab.Tag = "" Then
-                Console.WriteLine(tab.Tag)
+            SaveProgressBar.Value = 100 * tab.TabIndex / Count
+            If Not tab.Tag(0) = "" Then
                 Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-                Dim savePath As String = TabControl.SelectedTab.Tag
+                Dim savePath As String = TabControl.SelectedTab.Tag(0)
                 System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
             End If
         Next
+        SaveProgressBar.Value = 100
         SaveLabel.Text = "Autosave done!"
     End Sub
 End Class
