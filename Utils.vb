@@ -1,6 +1,8 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
+    Dim style As TextStyle = New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
+
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
         If Not ret.EndsWith(";;") Then ret = ret + ";;"
@@ -28,13 +30,22 @@ Module Utils
         End If
     End Function
 
-    Public Function KeyWordList() As List(Of String)
-        Return {"and", "as", "asr", "assert", "begin", "class", "constraint", "do", "done", "downto",
-            "else", "end", "exception", "external", "false", "for", "fun", "function", "functor", "if",
-            "in", "include", "inherit", "initializer", "land", "lazy", "let", "lor", "lsl", "lsr",
-            "lxor", "match", "method", "mod", "module", "mutable", "open", "new", "nonrec", "object",
-            "of", "open", "open!", "or", "private", "rec", "sig", "struct", "then", "to",
-            "true", "try", "type", "val", "virtual", "when", "while", "with"}.ToList()
+    'Public Function KeyWordList() As List(Of String)
+    '    Return {"and", "as", "asr", "assert", "begin", "class", "constraint", "do", "done", "downto",
+    '        "else", "end", "exception", "external", "false", "for", "fun", "function", "functor", "if",
+    '        "in", "include", "inherit", "initializer", "land", "lazy", "let", "lor", "lsl", "lsr",
+    '        "lxor", "match", "method", "mod", "module", "mutable", "open", "new", "nonrec", "object",
+    '        "of", "open", "open!", "or", "private", "rec", "sig", "struct", "then", "to",
+    '        "true", "try", "type", "val", "virtual", "when", "while", "with"}.ToList()
+    'End Function
+
+    Public Function KeyWordRegex() As String
+        Return "(and|asr|assert|as|begin|class|constraint|done|downto|do" &
+            "else|end|exception|external|false|for|function|functor|fun|if" &
+            "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr" &
+            "lxor|match|method|module|mod|mutable|open|new|nonrec|object" &
+            "of|open!|open|or|private|rec|sig|struct|then|to" &
+            "true|try|type|val|virtual|when|while|with)[\s]"
     End Function
 
     Public Sub PaintLines(sender As Object, e As PaintLineEventArgs)
@@ -55,5 +66,10 @@ Module Utils
         If Main.TabControl.TabCount = 1 Then
             Main.AddNewPage()
         End If
+    End Sub
+
+    Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
+        e.ChangedRange.ClearStyle(New Style() {style})
+        e.ChangedRange.SetStyle(style, KeyWordRegex())
     End Sub
 End Module

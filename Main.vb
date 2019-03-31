@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Text.RegularExpressions
-Imports System.Windows.Input
+﻿Imports System.Text.RegularExpressions
 Imports FastColoredTextBoxNS
 
 Public Class Main
@@ -8,35 +6,37 @@ Public Class Main
     Public CodeToExecute As String = ""
     Public CodeToExecutePos As Integer() = {0, 0}
     Private WithEvents _commandExecutor As New OCaml()
-    Private KeyWords As List(Of String) = KeyWordList()
+    'Private KeyWords As List(Of String) = KeyWordList()
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        My.Settings.Upgrade()
+
         AddNewPage()
 
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
         OutputBox.SelectionTabs = {32, 64, 96, 128, 160, 192, 224, 256, 288, 320}
 
         If My.Settings.Detailed_Output Then
-            ComplèteToolStripMenuItem.Enabled = False
-            ComplèteToolStripMenuItem.Checked = True
+            FullOutputMenuItem.Enabled = False
+            FullOutputMenuItem.Checked = True
         Else
-            PartielleToolStripMenuItem.Enabled = False
-            PartielleToolStripMenuItem.Checked = True
+            PartialOutputMenuItem.Enabled = False
+            PartialOutputMenuItem.Checked = True
         End If
 
         If My.Settings.Dark_Theme Then
-            DarkModeToolStripMenuItem.Enabled = False
-            DarkModeToolStripMenuItem.Checked = True
+            DarkModeMenuItem.Enabled = False
+            DarkModeMenuItem.Checked = True
         Else
-            LightModeToolStripMenuItem.Enabled = False
-            LightModeToolStripMenuItem.Checked = True
+            LightModeMenuItem.Enabled = False
+            LightModeMenuItem.Checked = True
         End If
 
         StartOcaml()
 
         If My.Settings.Autosave Then
-            ActiverToolStripMenuItem.Checked = True
+            EnableAutoSaveMenuItem.Checked = True
         End If
 
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
@@ -81,7 +81,7 @@ Public Class Main
     End Sub
 
     ''' Execution et affichage des scripts
-    Private Sub Executer(sender As Object, e As EventArgs) Handles ExécuterToolStripMenuItem.Click
+    Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
         If Not _commandExecutor.GetState() Then
             Dim LibsPath As String = ""
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
@@ -111,7 +111,7 @@ Public Class Main
     End Sub
 
     ''' Interactions avec les menus
-    Private Sub SaveFile() Handles EnregistrerToolStripMenuItem.Click
+    Private Sub SaveFile() Handles SaveMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         If TabControl.SelectedTab.Tag(0) = "" Or Not System.IO.File.Exists(TabControl.SelectedTab.Tag(0)) Then
             SaveAsFile()
@@ -124,7 +124,7 @@ Public Class Main
         TabControl.SelectedTab.Text = TabControl.SelectedTab.Tag(0).ToString.Substring(TabControl.SelectedTab.Tag(0).ToString.LastIndexOf("\") + 1)
     End Sub
 
-    Private Sub SaveAsFile() Handles EnregistrerSousToolStripMenuItem.Click
+    Private Sub SaveAsFile() Handles SaveAsMenuItem.Click
         SaveFileDialog.ShowDialog()
     End Sub
 
@@ -138,7 +138,7 @@ Public Class Main
         TabControl.SelectedTab.Tag(1) = True
     End Sub
 
-    Private Sub OpenFile() Handles OuvrirToolStripMenuItem.Click
+    Private Sub OpenFile() Handles OpenMenuItem.Click
         OpenFileDialog.ShowDialog()
     End Sub
 
@@ -152,25 +152,25 @@ Public Class Main
         CurrentTextbox.Text = System.IO.File.ReadAllText(openPath, System.Text.Encoding.Default)
     End Sub
 
-    Private Sub NouveauToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NouveauToolStripMenuItem.Click
+    Private Sub NewMenuItem_Click(sender As Object, e As EventArgs) Handles NewMenuItem.Click
         AddNewPage()
     End Sub
 
-    Private Sub ComplèteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComplèteToolStripMenuItem.Click
-        PartielleToolStripMenuItem.Checked = False
-        PartielleToolStripMenuItem.Enabled = True
-        ComplèteToolStripMenuItem.Enabled = False
+    Private Sub FullOutputMenuItem_Click(sender As Object, e As EventArgs) Handles FullOutputMenuItem.Click
+        PartialOutputMenuItem.Checked = False
+        PartialOutputMenuItem.Enabled = True
+        FullOutputMenuItem.Enabled = False
         My.Settings.Detailed_Output = True
     End Sub
 
-    Private Sub PartielleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartielleToolStripMenuItem.Click
-        ComplèteToolStripMenuItem.Checked = False
-        ComplèteToolStripMenuItem.Enabled = True
-        PartielleToolStripMenuItem.Enabled = False
+    Private Sub PartialOutputMenuItem_Click(sender As Object, e As EventArgs) Handles PartialOutputMenuItem.Click
+        FullOutputMenuItem.Checked = False
+        FullOutputMenuItem.Enabled = True
+        PartialOutputMenuItem.Enabled = False
         My.Settings.Detailed_Output = False
     End Sub
 
-    Private Sub DarkModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeToolStripMenuItem.Click
+    Private Sub DarkModeMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeMenuItem.Click
         For Each tab As TabPage In TabControl.TabPages
             With Me
                 .BackColor = Color.FromArgb(60, 60, 60)
@@ -202,15 +202,15 @@ Public Class Main
             Next
         Next
 
-        LightModeToolStripMenuItem.Checked = False
-        LightModeToolStripMenuItem.Enabled = True
-        DarkModeToolStripMenuItem.Enabled = False
+        LightModeMenuItem.Checked = False
+        LightModeMenuItem.Enabled = True
+        DarkModeMenuItem.Enabled = False
         'My.Settings.Dark_Theme = True
 
         MsgBox("Dark Mode expérimental, redemarrez l'application pour réinitialiser les paramètres du thème (Dsl je peux pas faire mieux, faudra attendre la v2)")
     End Sub
 
-    Private Sub LightModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeToolStripMenuItem.Click
+    Private Sub LightModeMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeMenuItem.Click
         For Each tab As TabPage In TabControl.TabPages
             With Me
                 .BackColor = Color.FromArgb(60, 60, 60)
@@ -242,26 +242,26 @@ Public Class Main
             Next
         Next
 
-        DarkModeToolStripMenuItem.Checked = False
-        DarkModeToolStripMenuItem.Enabled = True
-        LightModeToolStripMenuItem.Enabled = False
+        DarkModeMenuItem.Checked = False
+        DarkModeMenuItem.Enabled = True
+        LightModeMenuItem.Enabled = False
         My.Settings.Dark_Theme = False
     End Sub
 
-    Private Sub AProposToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AProposToolStripMenuItem.Click
+    Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click
         MsgBox("OCaml c'est trivial", Title:="Aquatique")
     End Sub
 
-    Private Sub FermerToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles FermerToolStripMenuItem1.Click
+    Private Sub CloseOcamlMenuItem_Click(sender As Object, e As EventArgs) Handles CloseOcamlMenuItem.Click
         _commandExecutor.Dispose()
         OutputBox.AppendText("OCaml a été fermé" & vbLf)
     End Sub
 
-    Private Sub NettoyerLaSortieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NettoyerLaSortieToolStripMenuItem.Click
+    Private Sub CleanOutputMenuItem_Click(sender As Object, e As EventArgs) Handles CleanOutputMenuItem.Click
         OutputBox.Clear()
     End Sub
 
-    Private Sub SauvegardeAutomatiqueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActiverToolStripMenuItem.Click
+    Private Sub EnableAutoSaveMenuItem_Click(sender As Object, e As EventArgs) Handles EnableAutoSaveMenuItem.Click
         My.Settings.Autosave = Not My.Settings.Autosave
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
@@ -270,7 +270,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub DelaiSauvegardeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DelaiSauvegardeToolStripMenuItem.Click
+    Private Sub AutoSaveDelayMenuItem_Click(sender As Object, e As EventArgs) Handles AutoSaveDelayMenuItem.Click
         Try
             Dim Delay As Integer = InputBox("Veuillez définir le délai en secondes entre deux sauvegardes automatiques", "Délai de sauvegarde", My.Settings.Autosave_delay)
             My.Settings.Autosave_delay = Delay
@@ -325,9 +325,10 @@ Public Class Main
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             .Dock = DockStyle.Fill
             .Select()
-            AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .Click, AddressOf InputBox_KeyUp
+            AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .PaintLine, AddressOf PaintLines
+            AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
         End With
         'TabControl.SelectedTab.Controls.Add(New RichTextBox)
         'With TryCast(TabControl.SelectedTab.Controls.Item(0), RichTextBox)
@@ -341,7 +342,7 @@ Public Class Main
         'End With
         TabControl.SelectedTab.Controls.Add(New ListBox)
         With TryCast(TabControl.SelectedTab.Controls(1), ListBox)
-            .DataSource = KeyWords
+            '.DataSource = KeyWords
             .Visible = False
         End With
     End Sub
