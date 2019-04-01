@@ -1,7 +1,17 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
-    Dim style As TextStyle = New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
+    Private KeywordStyle As TextStyle = New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
+    Private NumericStyle As TextStyle = New TextStyle(Brushes.RoyalBlue, Nothing, FontStyle.Regular)
+    Private StringStyle As TextStyle = New TextStyle(Brushes.RosyBrown, Nothing, FontStyle.Regular)
+    Private KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
+            "else|end|exception|external|false|for|function|functor|fun|if|" &
+            "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
+            "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
+            "of|open!|open|or|private|rec|sig|struct|then|to|" &
+            "true|try|type|val|virtual|when|while|with)\s"
+    Private NumericRegex As String = "[0-9]"
+    Private StringRegex As String = "[""].*[""]"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
@@ -39,15 +49,6 @@ Module Utils
     '        "true", "try", "type", "val", "virtual", "when", "while", "with"}.ToList()
     'End Function
 
-    Public Function KeyWordRegex() As String
-        Return "(and|asr|assert|as|begin|class|constraint|done|downto|do" &
-            "else|end|exception|external|false|for|function|functor|fun|if" &
-            "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr" &
-            "lxor|match|method|module|mod|mutable|open|new|nonrec|object" &
-            "of|open!|open|or|private|rec|sig|struct|then|to" &
-            "true|try|type|val|virtual|when|while|with)[\s]"
-    End Function
-
     Public Sub PaintLines(sender As Object, e As PaintLineEventArgs)
         If Main.LinesToExecute(0) <= e.LineIndex And e.LineIndex <= Main.LinesToExecute(1) Then
             e.Graphics.FillRectangle(Brushes.MistyRose, e.LineRect.X, e.LineRect.Y, e.LineRect.Width, e.LineRect.Height)
@@ -69,7 +70,11 @@ Module Utils
     End Sub
 
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
-        e.ChangedRange.ClearStyle(New Style() {style})
-        e.ChangedRange.SetStyle(style, KeyWordRegex())
+        e.ChangedRange.ClearStyle(New Style() {StringStyle})
+        e.ChangedRange.ClearStyle(New Style() {KeywordStyle})
+        e.ChangedRange.ClearStyle(New Style() {NumericStyle})
+        e.ChangedRange.SetStyle(StringStyle, StringRegex)
+        e.ChangedRange.SetStyle(KeywordStyle, KeywordRegex)
+        e.ChangedRange.SetStyle(NumericStyle, NumericRegex)
     End Sub
 End Module

@@ -104,6 +104,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MenuHandler.vb" />
     <Compile Include="OCaml.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
