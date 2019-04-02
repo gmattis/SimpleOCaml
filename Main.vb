@@ -12,8 +12,8 @@ Public Class Main
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.Autoreset Then
-            MsgBox("A des fins de tests, les paramètres seront automatiquements réinitialisés à chaque redémarrages de l'application. Pour désactiver cette fonctionnalité, veuillez la décocher dans le menu Paramètres.")
             AutoresetToolStripMenuItem.Checked = True
+            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
         Else
             AutoresetToolStripMenuItem.Checked = False
         End If
@@ -224,5 +224,10 @@ Public Class Main
 
     Private Sub AutoresetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoresetToolStripMenuItem.Click
         My.Settings.Autoreset = AutoresetToolStripMenuItem.Checked
+        If AutoresetToolStripMenuItem.Checked Then
+            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
+        Else
+            StateLabel.Text = ""
+        End If
     End Sub
 End Class

@@ -25,6 +25,7 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer = New System.Windows.Forms.SplitContainer()
+        Me.TabControl = New TradeWright.UI.Forms.TabControlExtra()
         Me.OutputBox = New System.Windows.Forms.RichTextBox()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
@@ -49,6 +50,7 @@ Partial Class Main
         Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AutoresetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,8 +60,7 @@ Partial Class Main
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.SaveProgressBar = New System.Windows.Forms.ToolStripProgressBar()
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.TabControl = New TradeWright.UI.Forms.TabControlExtra()
-        Me.AutoresetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -84,6 +85,76 @@ Partial Class Main
         Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
         Me.SplitContainer.SplitterDistance = 403
         Me.SplitContainer.TabIndex = 2
+        '
+        'TabControl
+        '
+        '
+        '
+        '
+        Me.TabControl.DisplayStyleProvider.BlendStyle = TradeWright.UI.Forms.BlendStyle.Normal
+        Me.TabControl.DisplayStyleProvider.BorderColorDisabled = System.Drawing.SystemColors.ControlLight
+        Me.TabControl.DisplayStyleProvider.BorderColorFocused = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(157, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.TabControl.DisplayStyleProvider.BorderColorHighlighted = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.BorderColorSelected = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.BorderColorUnselected = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorFocused = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorFocusedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorHighlighted = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorHighlightedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorSelected = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorSelectedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorUnselected = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorFocused = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorFocusedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorHighlighted = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorHighlightedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorSelected = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorSelectedActive = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorUnselected = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.CloserColorFocused = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorFocusedActive = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorHighlighted = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorHighlightedActive = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorSelected = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorSelectedActive = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.CloserColorUnselected = System.Drawing.Color.Empty
+        Me.TabControl.DisplayStyleProvider.FocusTrack = False
+        Me.TabControl.DisplayStyleProvider.HotTrack = True
+        Me.TabControl.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.TabControl.DisplayStyleProvider.Opacity = 1.0!
+        Me.TabControl.DisplayStyleProvider.Overlap = 0
+        Me.TabControl.DisplayStyleProvider.Padding = New System.Drawing.Point(6, 3)
+        Me.TabControl.DisplayStyleProvider.PageBackgroundColorDisabled = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.PageBackgroundColorFocused = System.Drawing.SystemColors.ControlLight
+        Me.TabControl.DisplayStyleProvider.PageBackgroundColorHighlighted = System.Drawing.Color.FromArgb(CType(CType(236, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(252, Byte), Integer))
+        Me.TabControl.DisplayStyleProvider.PageBackgroundColorSelected = System.Drawing.SystemColors.ControlLightLight
+        Me.TabControl.DisplayStyleProvider.PageBackgroundColorUnselected = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.Radius = 2
+        Me.TabControl.DisplayStyleProvider.SelectedTabIsLarger = True
+        Me.TabControl.DisplayStyleProvider.ShowTabCloser = False
+        Me.TabControl.DisplayStyleProvider.TabColorDisabled1 = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.TabColorDisabled2 = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.TabColorFocused1 = System.Drawing.SystemColors.ControlLight
+        Me.TabControl.DisplayStyleProvider.TabColorFocused2 = System.Drawing.SystemColors.ControlLight
+        Me.TabControl.DisplayStyleProvider.TabColorHighLighted1 = System.Drawing.Color.FromArgb(CType(CType(236, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(252, Byte), Integer))
+        Me.TabControl.DisplayStyleProvider.TabColorHighLighted2 = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(252, Byte), Integer))
+        Me.TabControl.DisplayStyleProvider.TabColorSelected1 = System.Drawing.SystemColors.ControlLightLight
+        Me.TabControl.DisplayStyleProvider.TabColorSelected2 = System.Drawing.SystemColors.ControlLightLight
+        Me.TabControl.DisplayStyleProvider.TabColorUnSelected1 = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.TabColorUnSelected2 = System.Drawing.SystemColors.Control
+        Me.TabControl.DisplayStyleProvider.TabPageMargin = New System.Windows.Forms.Padding(1)
+        Me.TabControl.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark
+        Me.TabControl.DisplayStyleProvider.TextColorFocused = System.Drawing.SystemColors.ControlText
+        Me.TabControl.DisplayStyleProvider.TextColorHighlighted = System.Drawing.SystemColors.ControlText
+        Me.TabControl.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText
+        Me.TabControl.DisplayStyleProvider.TextColorUnselected = System.Drawing.SystemColors.ControlText
+        Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl.HotTrack = True
+        Me.TabControl.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl.Name = "TabControl"
+        Me.TabControl.SelectedIndex = 0
+        Me.TabControl.Size = New System.Drawing.Size(403, 345)
+        Me.TabControl.TabIndex = 0
         '
         'OutputBox
         '
@@ -252,6 +323,13 @@ Partial Class Main
         Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(179, 22)
         Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
         '
+        'AutoresetToolStripMenuItem
+        '
+        Me.AutoresetToolStripMenuItem.CheckOnClick = True
+        Me.AutoresetToolStripMenuItem.Name = "AutoresetToolStripMenuItem"
+        Me.AutoresetToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.AutoresetToolStripMenuItem.Text = "Autoreset"
+        '
         'HelpMenuItem
         '
         Me.HelpMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OcamlDocMenuItem, Me.AboutMenuItem})
@@ -277,7 +355,7 @@ Partial Class Main
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveProgressBar, Me.SaveLabel})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveProgressBar, Me.SaveLabel, Me.StateLabel})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 369)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(769, 22)
@@ -294,82 +372,10 @@ Partial Class Main
         Me.SaveLabel.Name = "SaveLabel"
         Me.SaveLabel.Size = New System.Drawing.Size(0, 17)
         '
-        'TabControl
+        'StateLabel
         '
-        '
-        '
-        '
-        Me.TabControl.DisplayStyleProvider.BlendStyle = TradeWright.UI.Forms.BlendStyle.Normal
-        Me.TabControl.DisplayStyleProvider.BorderColorDisabled = System.Drawing.SystemColors.ControlLight
-        Me.TabControl.DisplayStyleProvider.BorderColorFocused = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(157, Byte), Integer), CType(CType(185, Byte), Integer))
-        Me.TabControl.DisplayStyleProvider.BorderColorHighlighted = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.BorderColorSelected = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.BorderColorUnselected = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorFocused = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorFocusedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorHighlighted = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorHighlightedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorSelected = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorSelectedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonFillColorUnselected = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorFocused = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorFocusedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorHighlighted = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorHighlightedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorSelected = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorSelectedActive = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserButtonOutlineColorUnselected = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.CloserColorFocused = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorFocusedActive = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorHighlighted = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorHighlightedActive = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorSelected = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorSelectedActive = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.CloserColorUnselected = System.Drawing.Color.Empty
-        Me.TabControl.DisplayStyleProvider.FocusTrack = False
-        Me.TabControl.DisplayStyleProvider.HotTrack = True
-        Me.TabControl.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.TabControl.DisplayStyleProvider.Opacity = 1.0!
-        Me.TabControl.DisplayStyleProvider.Overlap = 0
-        Me.TabControl.DisplayStyleProvider.Padding = New System.Drawing.Point(6, 3)
-        Me.TabControl.DisplayStyleProvider.PageBackgroundColorDisabled = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.PageBackgroundColorFocused = System.Drawing.SystemColors.ControlLight
-        Me.TabControl.DisplayStyleProvider.PageBackgroundColorHighlighted = System.Drawing.Color.FromArgb(CType(CType(236, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.TabControl.DisplayStyleProvider.PageBackgroundColorSelected = System.Drawing.SystemColors.ControlLightLight
-        Me.TabControl.DisplayStyleProvider.PageBackgroundColorUnselected = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.Radius = 2
-        Me.TabControl.DisplayStyleProvider.SelectedTabIsLarger = True
-        Me.TabControl.DisplayStyleProvider.ShowTabCloser = False
-        Me.TabControl.DisplayStyleProvider.TabColorDisabled1 = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.TabColorDisabled2 = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.TabColorFocused1 = System.Drawing.SystemColors.ControlLight
-        Me.TabControl.DisplayStyleProvider.TabColorFocused2 = System.Drawing.SystemColors.ControlLight
-        Me.TabControl.DisplayStyleProvider.TabColorHighLighted1 = System.Drawing.Color.FromArgb(CType(CType(236, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.TabControl.DisplayStyleProvider.TabColorHighLighted2 = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.TabControl.DisplayStyleProvider.TabColorSelected1 = System.Drawing.SystemColors.ControlLightLight
-        Me.TabControl.DisplayStyleProvider.TabColorSelected2 = System.Drawing.SystemColors.ControlLightLight
-        Me.TabControl.DisplayStyleProvider.TabColorUnSelected1 = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.TabColorUnSelected2 = System.Drawing.SystemColors.Control
-        Me.TabControl.DisplayStyleProvider.TabPageMargin = New System.Windows.Forms.Padding(1)
-        Me.TabControl.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark
-        Me.TabControl.DisplayStyleProvider.TextColorFocused = System.Drawing.SystemColors.ControlText
-        Me.TabControl.DisplayStyleProvider.TextColorHighlighted = System.Drawing.SystemColors.ControlText
-        Me.TabControl.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText
-        Me.TabControl.DisplayStyleProvider.TextColorUnselected = System.Drawing.SystemColors.ControlText
-        Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl.HotTrack = True
-        Me.TabControl.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl.Name = "TabControl"
-        Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(403, 345)
-        Me.TabControl.TabIndex = 0
-        '
-        'AutoresetToolStripMenuItem
-        '
-        Me.AutoresetToolStripMenuItem.CheckOnClick = True
-        Me.AutoresetToolStripMenuItem.Name = "AutoresetToolStripMenuItem"
-        Me.AutoresetToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.AutoresetToolStripMenuItem.Text = "Autoreset"
+        Me.StateLabel.Name = "StateLabel"
+        Me.StateLabel.Size = New System.Drawing.Size(0, 17)
         '
         'Main
         '
@@ -431,4 +437,5 @@ Partial Class Main
     Friend WithEvents SaveProgressBar As ToolStripProgressBar
     Friend WithEvents TabControl As TradeWright.UI.Forms.TabControlExtra
     Friend WithEvents AutoresetToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StateLabel As ToolStripStatusLabel
 End Class
