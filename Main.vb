@@ -7,6 +7,7 @@ Public Class Main
     Public CodeToExecutePos As Integer() = {0, 0}
     Public WithEvents _commandExecutor As New OCaml()
     Public MenuHandling As MenuHandler
+    Public PopupMenu As AutocompleteMenu
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -85,10 +86,11 @@ Public Class Main
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
         If Not _commandExecutor.GetState() Then
-            Dim LibsPath As String = ""
+            Dim LibsPath As String = "-I " + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + " "
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
                 LibsPath += "-I " + path + " "
             Next
+            MsgBox(LibsPath)
             _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
         End If
         If CodeToExecute <> "" Then
@@ -114,11 +116,6 @@ Public Class Main
 
     ''' Le reste
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
-        If TabControl.SelectedTab.Tag(1) Then
-            TabControl.SelectedTab.Tag(1) = False
-            TabControl.SelectedTab.Text = "*" & TabControl.SelectedTab.Text
-        End If
-
         ' Code a exécuter
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
@@ -143,6 +140,8 @@ Public Class Main
             LinesToExecute = {-1, -1}
             CurrentTextbox.Invalidate()
         End If
+
+        ' Parenthèses et accolades
 
         ' Autocomplétion
         'Dim CurrentList As ListBox = TryCast(TabControl.SelectedTab.Controls.Item(2), ListBox)

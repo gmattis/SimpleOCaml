@@ -28,7 +28,6 @@
             _process = Nothing
         End If
         _process.StandardInput.WriteLineAsync(command)
-        'RaiseEvent OutputRead(command)
     End Sub
 
     Private Sub _process_OutputDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles _process.OutputDataReceived

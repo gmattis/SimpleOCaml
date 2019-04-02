@@ -196,14 +196,14 @@ Partial Class Main
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.PartialOutputMenuItem.Text = "Partielle"
         '
         'FullOutputMenuItem
         '
         Me.FullOutputMenuItem.CheckOnClick = True
         Me.FullOutputMenuItem.Name = "FullOutputMenuItem"
-        Me.FullOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.FullOutputMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.FullOutputMenuItem.Text = "Complète"
         '
         'CloseOcamlMenuItem

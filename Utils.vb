@@ -3,7 +3,7 @@
 Module Utils
     Private KeywordStyle As TextStyle = New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
     Private NumericStyle As TextStyle = New TextStyle(Brushes.RoyalBlue, Nothing, FontStyle.Regular)
-    Private StringStyle As TextStyle = New TextStyle(Brushes.RosyBrown, Nothing, FontStyle.Regular)
+    Private StringStyle As TextStyle = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
     Private KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
             "else|end|exception|external|false|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
@@ -40,15 +40,6 @@ Module Utils
         End If
     End Function
 
-    'Public Function KeyWordList() As List(Of String)
-    '    Return {"and", "as", "asr", "assert", "begin", "class", "constraint", "do", "done", "downto",
-    '        "else", "end", "exception", "external", "false", "for", "fun", "function", "functor", "if",
-    '        "in", "include", "inherit", "initializer", "land", "lazy", "let", "lor", "lsl", "lsr",
-    '        "lxor", "match", "method", "mod", "module", "mutable", "open", "new", "nonrec", "object",
-    '        "of", "open", "open!", "or", "private", "rec", "sig", "struct", "then", "to",
-    '        "true", "try", "type", "val", "virtual", "when", "while", "with"}.ToList()
-    'End Function
-
     Public Sub PaintLines(sender As Object, e As PaintLineEventArgs)
         If Main.LinesToExecute(0) <= e.LineIndex And e.LineIndex <= Main.LinesToExecute(1) Then
             e.Graphics.FillRectangle(Brushes.MistyRose, e.LineRect.X, e.LineRect.Y, e.LineRect.Width, e.LineRect.Height)
@@ -76,5 +67,10 @@ Module Utils
         e.ChangedRange.SetStyle(StringStyle, StringRegex)
         e.ChangedRange.SetStyle(KeywordStyle, KeywordRegex)
         e.ChangedRange.SetStyle(NumericStyle, NumericRegex)
+
+        If Main.TabControl.SelectedTab.Tag(1) Then
+            Main.TabControl.SelectedTab.Tag(1) = False
+            Main.TabControl.SelectedTab.Text = "*" & Main.TabControl.SelectedTab.Text
+        End If
     End Sub
 End Module
