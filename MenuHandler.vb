@@ -35,10 +35,9 @@ Public Class MenuHandler
         Else
             Dim savePath As String = Main.TabControl.SelectedTab.Tag(0)
             System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+            Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(Main.TabControl.SelectedTab.Tag(0))
+            Main.TabControl.SelectedTab.Tag(1) = True
         End If
-
-        Main.TabControl.SelectedTab.Tag(1) = True
-        Main.TabControl.SelectedTab.Text = Main.TabControl.SelectedTab.Tag(0).ToString.Substring(Main.TabControl.SelectedTab.Tag(0).ToString.LastIndexOf("\") + 1)
     End Sub
 
     Private Sub SaveAsFile() Handles SaveAsMenuItem.Click
@@ -49,9 +48,8 @@ Public Class MenuHandler
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim savePath As String = SaveFileDialog.FileName
         System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+        Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(SaveFileDialog.FileName)
         Main.TabControl.SelectedTab.Tag(0) = savePath
-        Main.TabControl.SelectedTab.Text = SaveFileDialog.FileName.Substring(SaveFileDialog.FileName.LastIndexOf("\") + 1)
-
         Main.TabControl.SelectedTab.Tag(1) = True
     End Sub
 

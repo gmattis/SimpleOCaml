@@ -214,8 +214,9 @@ Public Class Main
             SaveProgressBar.Value = 100 * tab.TabIndex / Count
             If Not tab.Tag(0) = "" Then
                 Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-                Dim savePath As String = TabControl.SelectedTab.Tag(0)
+                Dim savePath As String = tab.Tag(0)
                 System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+                tab.Text = System.IO.Path.GetFileName(savePath)
             End If
         Next
         SaveProgressBar.Value = 100
