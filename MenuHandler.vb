@@ -88,81 +88,13 @@ Public Class MenuHandler
     End Sub
 
     Private Sub DarkModeMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeMenuItem.Click
-        For Each tab As TabPage In Main.TabControl.TabPages
-            With Main
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.SplitContainer
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            With TryCast(tab.Controls(0), FastColoredTextBox)
-                .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.OutputBox
-                .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.MenuStrip
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            For Each ctrl As TabPage In Main.TabControl.TabPages
-                ctrl.BackColor = Color.FromArgb(60, 60, 60)
-                ctrl.ForeColor = Color.LightGray
-            Next
-            For Each ctrl As ToolStripMenuItem In Main.MenuStrip.Controls
-                ctrl.BackColor = Color.FromArgb(45, 45, 45)
-                ctrl.ForeColor = Color.LightGray
-            Next
-        Next
-
-        LightModeMenuItem.Checked = False
-        LightModeMenuItem.Enabled = True
-        DarkModeMenuItem.Enabled = False
-        'My.Settings.Dark_Theme = True
+        Main.ThemeManager.SwitchTheme(ThemeManager.Themes.DarkTheme)
 
         MsgBox("Dark Mode expérimental, redemarrez l'application pour réinitialiser les paramètres du thème (Dsl je peux pas faire mieux, faudra attendre la v2)")
     End Sub
 
     Private Sub LightModeMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeMenuItem.Click
-        For Each tab As TabPage In Main.TabControl.TabPages
-            With Main
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.SplitContainer
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            With TryCast(tab.Controls(0), FastColoredTextBox)
-                .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.OutputBox
-                .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
-            End With
-            With Main.MenuStrip
-                .BackColor = Color.FromArgb(60, 60, 60)
-                .ForeColor = Color.LightGray
-            End With
-            For Each ctrl As TabPage In Main.TabControl.TabPages
-                ctrl.BackColor = Color.FromArgb(60, 60, 60)
-                ctrl.ForeColor = Color.LightGray
-            Next
-            For Each ctrl As ToolStripMenuItem In Main.MenuStrip.Controls
-                ctrl.BackColor = Color.FromArgb(45, 45, 45)
-                ctrl.ForeColor = Color.LightGray
-            Next
-        Next
-
-        DarkModeMenuItem.Checked = False
-        DarkModeMenuItem.Enabled = True
-        LightModeMenuItem.Enabled = False
-        My.Settings.Dark_Theme = False
+        Main.ThemeManager.SwitchTheme(ThemeManager.Themes.LightTheme)
     End Sub
 
     Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click

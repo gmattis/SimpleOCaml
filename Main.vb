@@ -7,10 +7,17 @@ Public Class Main
     Public CodeToExecutePos As Integer() = {0, 0}
     Public WithEvents _commandExecutor As New OCaml()
     Public MenuHandling As MenuHandler
-    Public PopupMenu As AutocompleteMenu
+    Public ThemeManager As New ThemeManager()
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If My.Settings.Autoreset Then
+            MsgBox("A des fins de tests, les paramètres seront automatiquements réinitialisés à chaque redémarrages de l'application. Pour désactiver cette fonctionnalité, veuillez la décocher dans le menu Paramètres.")
+            AutoresetToolStripMenuItem.Checked = True
+        Else
+            AutoresetToolStripMenuItem.Checked = False
+        End If
+
         My.Settings.Upgrade()
 
         AddNewPage()
@@ -26,7 +33,7 @@ Public Class Main
             PartialOutputMenuItem.Checked = True
         End If
 
-        If My.Settings.Dark_Theme Then
+        If My.Settings.Theme = ThemeManager.Themes.DarkTheme Then
             DarkModeMenuItem.Enabled = False
             DarkModeMenuItem.Checked = True
         Else
@@ -34,19 +41,21 @@ Public Class Main
             LightModeMenuItem.Checked = True
         End If
 
-        StartOcaml()
-
         If My.Settings.Autosave Then
             EnableAutoSaveMenuItem.Checked = True
         End If
+
+        StartOcaml()
 
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         End If
 
-        AddHandler TabControl.CloseButtonClick, AddressOf OnTabClose
+        AddHandler TabControl.TabClosed, AddressOf OnTabClose
         AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
+
+        TabControl.DisplayStyleProvider.ShowTabCloser = True
 
         MenuHandling = New MenuHandler()
     End Sub
@@ -90,7 +99,6 @@ Public Class Main
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
                 LibsPath += "-I " + path + " "
             Next
-            MsgBox(LibsPath)
             _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
         End If
         If CodeToExecute <> "" Then
@@ -166,6 +174,7 @@ Public Class Main
             '.DataSource = KeyWords
             .Visible = False
         End With
+        ThemeManager.ApplyTabPageStyle(TabControl.SelectedTab)
     End Sub
 
     Private Sub TabControl_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs)
@@ -182,7 +191,7 @@ Public Class Main
         If TabControl.SelectedIndex = e.Index Then
             'this is the background color of the tabpage
             'you could make this a standard color for the selected page
-            br = New SolidBrush(tp.BackColor)
+            br = New SolidBrush(Color.Red) 'New SolidBrush(tp.BackColor)
             'this is the background color of the tab page
             g.FillRectangle(br, e.Bounds)
             'this is the foreground color of the tab page
@@ -190,10 +199,10 @@ Public Class Main
             br = New SolidBrush(tp.ForeColor)
             g.DrawString(strTitle, TabControl.Font, br, r, sf)
             'these are the standard colors for the unselected tab pages
-            br = New SolidBrush(Color.WhiteSmoke)
-            g.FillRectangle(br, e.Bounds)
-            br = New SolidBrush(Color.Black)
-            g.DrawString(strTitle, TabControl.Font, br, r, sf)
+            'br = New SolidBrush(Color.WhiteSmoke)
+            'g.FillRectangle(br, e.Bounds)
+            'br = New SolidBrush(Color.Black)
+            'g.DrawString(strTitle, TabControl.Font, br, r, sf)
         End If
     End Sub
 
@@ -211,5 +220,9 @@ Public Class Main
         Next
         SaveProgressBar.Value = 100
         SaveLabel.Text = "Autosave done!"
+    End Sub
+
+    Private Sub AutoresetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoresetToolStripMenuItem.Click
+        My.Settings.Autoreset = AutoresetToolStripMenuItem.Checked
     End Sub
 End Class

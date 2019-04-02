@@ -1,9 +1,7 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
-    Private KeywordStyle As TextStyle = New TextStyle(Brushes.Purple, Nothing, FontStyle.Regular)
-    Private NumericStyle As TextStyle = New TextStyle(Brushes.RoyalBlue, Nothing, FontStyle.Regular)
-    Private StringStyle As TextStyle = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
+    Private OperatorRegex As String = "(=|:|;|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
     Private KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
             "else|end|exception|external|false|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
@@ -42,7 +40,7 @@ Module Utils
 
     Public Sub PaintLines(sender As Object, e As PaintLineEventArgs)
         If Main.LinesToExecute(0) <= e.LineIndex And e.LineIndex <= Main.LinesToExecute(1) Then
-            e.Graphics.FillRectangle(Brushes.MistyRose, e.LineRect.X, e.LineRect.Y, e.LineRect.Width, e.LineRect.Height)
+            e.Graphics.FillRectangle(Main.ThemeManager.HighlightBrush, e.LineRect.X, e.LineRect.Y, e.LineRect.Width, e.LineRect.Height)
         End If
     End Sub
 
@@ -55,18 +53,19 @@ Module Utils
     End Function
 
     Public Sub OnTabClose(sender As Object, e As EventArgs)
-        If Main.TabControl.TabCount = 1 Then
+        If Main.TabControl.TabCount = 0 Then
             Main.AddNewPage()
         End If
     End Sub
 
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
-        e.ChangedRange.ClearStyle(New Style() {StringStyle})
-        e.ChangedRange.ClearStyle(New Style() {KeywordStyle})
-        e.ChangedRange.ClearStyle(New Style() {NumericStyle})
-        e.ChangedRange.SetStyle(StringStyle, StringRegex)
-        e.ChangedRange.SetStyle(KeywordStyle, KeywordRegex)
-        e.ChangedRange.SetStyle(NumericStyle, NumericRegex)
+        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.StringStyle})
+        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.KeywordStyle})
+        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.NumericStyle})
+        e.ChangedRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
+        e.ChangedRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
+        e.ChangedRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
+        e.ChangedRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
 
         If Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False
