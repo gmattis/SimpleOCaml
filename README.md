@@ -5,4 +5,4 @@ Pour tester l'IDE, clonez le repo et lancez "bin/debug/simpleOCaml.exe" (et si Ã
 #
 Using:  
 * FastColoredTextBox Control: https://github.com/PavelTorgashov/FastColoredTextBox  
-* TabControlEx Control: http://www.vbforums.com/showthread.php?622242-TabControl-with-Close-button-on-TabPages-(with-Design-Time-support)
+* TabControl-Extra Control: https://github.com/tradewright/tabcontrol-extra
