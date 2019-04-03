@@ -7,10 +7,17 @@ Public Class ThemeManager
     End Enum
 
     Public Sub New()
-        keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-        numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
-        stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
-        highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
+        If My.Settings.Theme = Themes.DarkTheme Then
+            keywordStyleValue = New TextStyle(Brushes.PaleVioletRed, Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(Brushes.DodgerBlue, Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(Brushes.Firebrick, Nothing, FontStyle.Regular)
+            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
+        Else
+            keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
+            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
+        End If
 
         SwitchTheme(My.Settings.Theme)
     End Sub
@@ -66,7 +73,12 @@ Public Class ThemeManager
     End Property
 
     Public Sub SwitchTheme(theme As Integer)
-        If theme = Themes.LightTheme And Not My.Settings.Theme = Themes.LightTheme Then
+        If theme = Themes.LightTheme Then
+            keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
+            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
+
             My.Settings.Theme = Themes.LightTheme
             With Main.SplitContainer
                 .BackColor = SplitContainer.DefaultBackColor
@@ -79,10 +91,6 @@ Public Class ThemeManager
                 .BackColor = RichTextBox.DefaultBackColor
                 .ForeColor = RichTextBox.DefaultForeColor
             End With
-            For Each page As TabPage In Main.TabControl.TabPages
-                page.BackColor = TabPage.DefaultBackColor
-                page.ForeColor = TabPage.DefaultForeColor
-            Next
             With Main.TabControl
                 .DisplayStyleProvider = TradeWright.UI.Forms.TabStyleDefaultProvider.CreateProvider(Main.TabControl)
                 .DisplayStyleProvider.ShowTabCloser = True
@@ -91,7 +99,12 @@ Public Class ThemeManager
             Main.DarkModeMenuItem.Checked = False
             Main.DarkModeMenuItem.Enabled = True
             Main.LightModeMenuItem.Enabled = False
-        ElseIf theme = Themes.DarkTheme And Not My.Settings.Theme = Themes.DarkTheme Then
+        ElseIf theme = Themes.DarkTheme Then
+            keywordStyleValue = New TextStyle(Brushes.DeepPink, Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(Brushes.SteelBlue, Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(Brushes.Coral, Nothing, FontStyle.Regular)
+            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
+
             My.Settings.Theme = Themes.DarkTheme
             With Main.SplitContainer
                 .BackColor = Color.FromArgb(60, 60, 60)
@@ -104,17 +117,13 @@ Public Class ThemeManager
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.LightGray
             End With
-            For Each page As TabPage In Main.TabControl.TabPages
-                page.BackColor = Color.FromArgb(60, 60, 60)
-                page.ForeColor = Color.LightGray
-            Next
             With Main.TabControl
-                .DisplayStyleProvider.TabColorUnSelected1 = Color.FromArgb(60, 60, 60)
-                .DisplayStyleProvider.TabColorUnSelected2 = Color.FromArgb(60, 60, 60)
-                .DisplayStyleProvider.TabColorFocused1 = Color.Gray
-                .DisplayStyleProvider.TabColorFocused2 = Color.Gray
-                .DisplayStyleProvider.TabColorHighLighted1 = Color.Blue
-                .DisplayStyleProvider.TabColorHighLighted2 = Color.Blue
+                .DisplayStyleProvider.TabColorUnSelected1 = Color.FromArgb(70, 70, 70)
+                .DisplayStyleProvider.TabColorUnSelected2 = Color.FromArgb(70, 70, 70)
+                .DisplayStyleProvider.TabColorFocused1 = Color.DimGray
+                .DisplayStyleProvider.TabColorFocused2 = Color.DimGray
+                .DisplayStyleProvider.TabColorHighLighted1 = Color.Gray
+                .DisplayStyleProvider.TabColorHighLighted2 = Color.Gray
             End With
 
             Main.LightModeMenuItem.Checked = False
@@ -133,7 +142,9 @@ Public Class ThemeManager
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.LightGray
                 .SelectionColor = Color.DarkBlue
+                .LineNumberColor = Color.SteelBlue
             End If
+            .OnTextChanged(0, .LinesCount - 1)
         End With
     End Sub
 End Class

@@ -8,7 +8,7 @@ Public Class Main
     Public CodeToExecutePos As Integer() = {0, 0}
     Public WithEvents _commandExecutor As New OCaml()
     Public MenuHandling As MenuHandler
-    Public ThemeManager As New ThemeManager()
+    Public ThemeManager As ThemeManager
 
     Private LastSaved As Date = Nothing
 
@@ -22,6 +22,9 @@ Public Class Main
         End If
 
         My.Settings.Upgrade()
+
+        MenuHandling = New MenuHandler()
+        ThemeManager = New ThemeManager()
 
         AddNewPage()
 
@@ -60,8 +63,6 @@ Public Class Main
         AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
 
         TabControl.DisplayStyleProvider.ShowTabCloser = True
-
-        MenuHandling = New MenuHandler()
     End Sub
 
     Private Sub StartOcaml()

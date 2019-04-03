@@ -131,7 +131,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Settings.vb" />
     <Compile Include="ThemeManager.vb" />
     <Compile Include="Utils.vb" />
   </ItemGroup>

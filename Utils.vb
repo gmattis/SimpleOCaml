@@ -1,7 +1,7 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
-    Private OperatorRegex As String = "(=|:|;|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
+    Private OperatorRegex As String = "(=|:|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
     Private KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
             "else|end|exception|external|false|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &

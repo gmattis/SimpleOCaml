@@ -89,8 +89,6 @@ Public Class MenuHandler
 
     Private Sub DarkModeMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeMenuItem.Click
         Main.ThemeManager.SwitchTheme(ThemeManager.Themes.DarkTheme)
-
-        MsgBox("Dark Mode expérimental, redemarrez l'application pour réinitialiser les paramètres du thème (Dsl je peux pas faire mieux, faudra attendre la v2)")
     End Sub
 
     Private Sub LightModeMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeMenuItem.Click
