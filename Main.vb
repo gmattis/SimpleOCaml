@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.ComponentModel
+Imports System.Text.RegularExpressions
 Imports FastColoredTextBoxNS
 
 Public Class Main
@@ -9,13 +10,15 @@ Public Class Main
     Public MenuHandling As MenuHandler
     Public ThemeManager As New ThemeManager()
 
+    Private LastSaved As Date = Nothing
+
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.Autoreset Then
-            AutoresetToolStripMenuItem.Checked = True
+            AutoresetMenuItem.Checked = True
             StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
         Else
-            AutoresetToolStripMenuItem.Checked = False
+            AutoresetMenuItem.Checked = False
         End If
 
         My.Settings.Upgrade()
@@ -51,6 +54,7 @@ Public Class Main
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         End If
+        ElapsedTimer.Start()
 
         AddHandler TabControl.TabClosed, AddressOf OnTabClose
         AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
@@ -127,7 +131,7 @@ Public Class Main
         ' Code a exécuter
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(][\s\S]+?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(\#][\s\S]+?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, "[(][*][\s\S]*?[*][)][\s]*", "")
@@ -207,11 +211,11 @@ Public Class Main
     End Sub
 
     Private Sub AutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles AutoSaveTimer.Tick
+        ElapsedTimer.Stop()
+        ElapsedTimer.Enabled = False
         Dim Count As Integer = TabControl.TabCount
         SaveLabel.Text = "Autosaving..."
-        SaveProgressBar.Value = 0
         For Each tab As TabPage In TabControl.TabPages
-            SaveProgressBar.Value = 100 * tab.TabIndex / Count
             If Not tab.Tag(0) = "" Then
                 Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
                 Dim savePath As String = tab.Tag(0)
@@ -219,16 +223,15 @@ Public Class Main
                 tab.Text = System.IO.Path.GetFileName(savePath)
             End If
         Next
-        SaveProgressBar.Value = 100
         SaveLabel.Text = "Autosave done!"
+        LastSaved = Now
+        ElapsedTimer.Enabled = True
+        ElapsedTimer.Start()
     End Sub
 
-    Private Sub AutoresetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoresetToolStripMenuItem.Click
-        My.Settings.Autoreset = AutoresetToolStripMenuItem.Checked
-        If AutoresetToolStripMenuItem.Checked Then
-            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
-        Else
-            StateLabel.Text = ""
+    Private Sub ElapsedTimer_Tick(sender As Object, e As EventArgs) Handles ElapsedTimer.Tick
+        If LastSaved.CompareTo(New Date) <> 0 Then
+            SaveLabel.Text = String.Format("Last saved {0} minutes ago.", (Now - LastSaved).Minutes)
         End If
     End Sub
 End Class

@@ -24,6 +24,8 @@ Public Class MenuHandler
     Private WithEvents HelpMenuItem As ToolStripMenuItem = Main.HelpMenuItem
     Private WithEvents OcamlDocMenuItem As ToolStripMenuItem = Main.OcamlDocMenuItem
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
+    Private WithEvents AutoresetMenuItem As ToolStripMenuItem = Main.AutoresetMenuItem
+    Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopierMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -34,7 +36,7 @@ Public Class MenuHandler
             SaveAsFile()
         Else
             Dim savePath As String = Main.TabControl.SelectedTab.Tag(0)
-            System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+            CurrentTextbox.SaveToFile(savePath, System.Text.Encoding.Default)
             Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(Main.TabControl.SelectedTab.Tag(0))
             Main.TabControl.SelectedTab.Tag(1) = True
         End If
@@ -47,7 +49,7 @@ Public Class MenuHandler
     Private Sub OnSaveAsFile(sender As Object, e As EventArgs) Handles SaveFileDialog.FileOk
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim savePath As String = SaveFileDialog.FileName
-        System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
+        CurrentTextbox.SaveToFile(savePath, System.Text.Encoding.Default)
         Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(SaveFileDialog.FileName)
         Main.TabControl.SelectedTab.Tag(0) = savePath
         Main.TabControl.SelectedTab.Tag(1) = True
@@ -61,10 +63,10 @@ Public Class MenuHandler
         Main.AddNewPage()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim openPath As String = OpenFileDialog.FileName
+        CurrentTextbox.OpenFile(openPath, System.Text.Encoding.Default)
         Main.TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
         Main.TabControl.SelectedTab.Tag(0) = openPath
         Main.TabControl.SelectedTab.Tag(1) = True
-        CurrentTextbox.Text = System.IO.File.ReadAllText(openPath, System.Text.Encoding.Default)
     End Sub
 
     Private Sub NewMenuItem_Click(sender As Object, e As EventArgs) Handles NewMenuItem.Click
@@ -125,5 +127,19 @@ Public Class MenuHandler
         Catch
             MsgBox("Veuillez entrer un nombre valide")
         End Try
+    End Sub
+
+    Private Sub AutoresetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoresetMenuItem.Click
+        My.Settings.Autoreset = AutoresetMenuItem.Checked
+        If AutoresetMenuItem.Checked Then
+            Main.StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
+        Else
+            Main.StateLabel.Text = ""
+        End If
+    End Sub
+
+    Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        Clipboard.SetText(CurrentTextbox.SelectedText)
     End Sub
 End Class

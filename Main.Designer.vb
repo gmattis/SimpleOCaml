@@ -37,6 +37,7 @@ Partial Class Main
         Me.SaveAsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopierMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExecuteMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -50,7 +51,7 @@ Partial Class Main
         Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AutoresetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AutoresetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,9 +59,9 @@ Partial Class Main
         Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
-        Me.SaveProgressBar = New System.Windows.Forms.ToolStripProgressBar()
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ElapsedTimer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -223,7 +224,7 @@ Partial Class Main
         '
         'EditMenuItem
         '
-        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem})
+        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopierMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
         Me.EditMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.EditMenuItem.Text = "Edition"
@@ -233,6 +234,13 @@ Partial Class Main
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
         Me.CleanOutputMenuItem.Size = New System.Drawing.Size(164, 22)
         Me.CleanOutputMenuItem.Text = "Nettoyer la sortie"
+        '
+        'CopierMenuItem
+        '
+        Me.CopierMenuItem.Name = "CopierMenuItem"
+        Me.CopierMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.CopierMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CopierMenuItem.Text = "Copier"
         '
         'OcamlMenuItem
         '
@@ -277,7 +285,7 @@ Partial Class Main
         '
         'SettingsMenuItem
         '
-        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.AutoresetToolStripMenuItem})
+        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.AutoresetMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
         Me.SettingsMenuItem.Size = New System.Drawing.Size(78, 20)
         Me.SettingsMenuItem.Text = "Paramètres"
@@ -323,12 +331,12 @@ Partial Class Main
         Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(179, 22)
         Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
         '
-        'AutoresetToolStripMenuItem
+        'AutoresetMenuItem
         '
-        Me.AutoresetToolStripMenuItem.CheckOnClick = True
-        Me.AutoresetToolStripMenuItem.Name = "AutoresetToolStripMenuItem"
-        Me.AutoresetToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.AutoresetToolStripMenuItem.Text = "Autoreset"
+        Me.AutoresetMenuItem.CheckOnClick = True
+        Me.AutoresetMenuItem.Name = "AutoresetMenuItem"
+        Me.AutoresetMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.AutoresetMenuItem.Text = "Autoreset"
         '
         'HelpMenuItem
         '
@@ -355,17 +363,12 @@ Partial Class Main
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveProgressBar, Me.SaveLabel, Me.StateLabel})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveLabel, Me.StateLabel})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 369)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(769, 22)
         Me.StatusStrip.TabIndex = 4
         Me.StatusStrip.Text = "StatusStrip"
-        '
-        'SaveProgressBar
-        '
-        Me.SaveProgressBar.Name = "SaveProgressBar"
-        Me.SaveProgressBar.Size = New System.Drawing.Size(100, 16)
         '
         'SaveLabel
         '
@@ -376,6 +379,10 @@ Partial Class Main
         '
         Me.StateLabel.Name = "StateLabel"
         Me.StateLabel.Size = New System.Drawing.Size(0, 17)
+        '
+        'ElapsedTimer
+        '
+        Me.ElapsedTimer.Interval = 30000
         '
         'Main
         '
@@ -434,8 +441,9 @@ Partial Class Main
     Friend WithEvents SaveLabel As ToolStripStatusLabel
     Friend WithEvents EnableAutoSaveMenuItem As ToolStripMenuItem
     Friend WithEvents AutoSaveDelayMenuItem As ToolStripMenuItem
-    Friend WithEvents SaveProgressBar As ToolStripProgressBar
     Friend WithEvents TabControl As TradeWright.UI.Forms.TabControlExtra
-    Friend WithEvents AutoresetToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AutoresetMenuItem As ToolStripMenuItem
     Friend WithEvents StateLabel As ToolStripStatusLabel
+    Friend WithEvents ElapsedTimer As Timer
+    Friend WithEvents CopierMenuItem As ToolStripMenuItem
 End Class
