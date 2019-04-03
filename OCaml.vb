@@ -27,7 +27,7 @@
             _process.Dispose()
             _process = Nothing
         End If
-        _process.StandardInput.WriteLineAsync(command)
+        _process.StandardInput.WriteLine(command)
     End Sub
 
     Private Sub _process_OutputDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles _process.OutputDataReceived
