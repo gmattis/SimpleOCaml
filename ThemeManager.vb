@@ -9,13 +9,17 @@ Public Class ThemeManager
     Public Sub New()
         If My.Settings.Theme = Themes.DarkTheme Then
             keywordStyleValue = New TextStyle(Brushes.PaleVioletRed, Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(Brushes.PaleVioletRed, Nothing, FontStyle.Regular)
             numericStyleValue = New TextStyle(Brushes.DodgerBlue, Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(Brushes.Firebrick, Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
         Else
             keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
             numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
         End If
 
@@ -62,6 +66,16 @@ Public Class ThemeManager
         End Set
     End Property
 
+    Private operatorStyleValue As TextStyle
+    Public Property OperatorStyle() As TextStyle
+        Get
+            Return operatorStyleValue
+        End Get
+        Set(ByVal value As TextStyle)
+            operatorStyleValue = value
+        End Set
+    End Property
+
     Private highlightBrushValue As Brush
     Public Property HighlightBrush() As Brush
         Get
@@ -75,8 +89,10 @@ Public Class ThemeManager
     Public Sub SwitchTheme(theme As Integer)
         If theme = Themes.LightTheme Then
             keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
             numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
 
             My.Settings.Theme = Themes.LightTheme
@@ -101,8 +117,10 @@ Public Class ThemeManager
             Main.LightModeMenuItem.Enabled = False
         ElseIf theme = Themes.DarkTheme Then
             keywordStyleValue = New TextStyle(Brushes.DeepPink, Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
             numericStyleValue = New TextStyle(Brushes.SteelBlue, Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(Brushes.Coral, Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
 
             My.Settings.Theme = Themes.DarkTheme

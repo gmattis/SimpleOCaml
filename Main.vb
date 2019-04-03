@@ -114,6 +114,9 @@ Public Class Main
                 OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf)) + " ..." + vbCrLf)
             End If
             _commandExecutor.Execute(Normalise_Text(CodeToExecute))
+            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            CurrentTextbox.SelectionStart = If(CodeToExecutePos(0) + CodeToExecutePos(1) + 2 > CurrentTextbox.TextLength, CurrentTextbox.TextLength, CodeToExecutePos(0) + CodeToExecutePos(1) + 2)
+            CurrentTextbox.DoCaretVisible()
         End If
     End Sub
 

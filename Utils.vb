@@ -9,7 +9,8 @@ Module Utils
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
             "true|try|type|val|virtual|when|while|with)\s"
     Private NumericRegex As String = "[0-9]"
-    Private StringRegex As String = "[""].*[""]"
+    Private CommentRegex As String = "[(][*][\s\S]*?[*][)]"
+    Private StringRegex As String = "[""][\s\S]*?[""]"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
@@ -45,11 +46,7 @@ Module Utils
     End Sub
 
     Public Function Max(a, b)
-        If a > b Then
-            Return a
-        Else
-            Return b
-        End If
+        If a > b Then Return a Else Return b
     End Function
 
     Public Sub OnTabClose(sender As Object, e As EventArgs)
@@ -59,13 +56,20 @@ Module Utils
     End Sub
 
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
-        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.StringStyle})
-        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.KeywordStyle})
-        e.ChangedRange.ClearStyle(New Style() {Main.ThemeManager.NumericStyle})
-        e.ChangedRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
-        e.ChangedRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
-        e.ChangedRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
-        e.ChangedRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
+        Dim CurrentRange As Range = e.ChangedRange
+        Dim TextRange As Range = e.ChangedRange.tb.Range()
+
+        TextRange.ClearStyle(New Style() {Main.ThemeManager.CommentStyle})
+        TextRange.ClearStyle(New Style() {Main.ThemeManager.StringStyle})
+        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.KeywordStyle})
+        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.OperatorStyle})
+        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.NumericStyle})
+
+        TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
+        TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
 
         If Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False
