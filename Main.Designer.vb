@@ -38,6 +38,8 @@ Partial Class Main
         Me.EditMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopierMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UndoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RedoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExecuteMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -224,7 +226,7 @@ Partial Class Main
         '
         'EditMenuItem
         '
-        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopierMenuItem})
+        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopierMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
         Me.EditMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.EditMenuItem.Text = "Edition"
@@ -241,6 +243,20 @@ Partial Class Main
         Me.CopierMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
         Me.CopierMenuItem.Size = New System.Drawing.Size(164, 22)
         Me.CopierMenuItem.Text = "Copier"
+        '
+        'UndoMenuItem
+        '
+        Me.UndoMenuItem.Name = "UndoMenuItem"
+        Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.UndoMenuItem.Text = "Undo"
+        '
+        'RedoMenuItem
+        '
+        Me.RedoMenuItem.Name = "RedoMenuItem"
+        Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
         '
@@ -446,4 +462,6 @@ Partial Class Main
     Friend WithEvents StateLabel As ToolStripStatusLabel
     Friend WithEvents ElapsedTimer As Timer
     Friend WithEvents CopierMenuItem As ToolStripMenuItem
+    Friend WithEvents UndoMenuItem As ToolStripMenuItem
+    Friend WithEvents RedoMenuItem As ToolStripMenuItem
 End Class

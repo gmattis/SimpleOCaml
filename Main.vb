@@ -9,8 +9,9 @@ Public Class Main
     Public WithEvents _commandExecutor As New OCaml()
     Public MenuHandling As MenuHandler
     Public ThemeManager As ThemeManager
+    Public LastSaved As Date = Nothing
 
-    Private LastSaved As Date = Nothing
+    Private BracketStyle As New MarkerStyle(New SolidBrush(Color.FromArgb(192, Color.DarkRed)))
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -59,7 +60,8 @@ Public Class Main
         End If
         ElapsedTimer.Start()
 
-        AddHandler TabControl.TabClosed, AddressOf OnTabClose
+        AddHandler TabControl.TabClosing, AddressOf OnTabClosing
+        AddHandler TabControl.TabClosed, AddressOf OnTabClosed
         AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
 
         TabControl.DisplayStyleProvider.ShowTabCloser = True
@@ -93,7 +95,20 @@ Public Class Main
         _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
     End Sub
 
-    Private Sub Main_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub Main_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        Dim allSaved As Boolean = True
+        For Each page As TabPage In TabControl.TabPages
+            If Not page.Tag(1) Then
+                allSaved = False
+                Exit For
+            End If
+        Next
+        If Not allSaved Then
+            If MsgBox("Certaines pages n'ont pas été sauvegardées. Voulez-vous continuer ?", MsgBoxStyle.OkCancel, "Pages non sauvegardées") = MsgBoxResult.Cancel Then
+                e.Cancel = True
+            End If
+        End If
+
         _commandExecutor.Dispose()
     End Sub
 
@@ -170,6 +185,12 @@ Public Class Main
         TabControl.SelectedTab.Tag = {"", False}
         TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            .LeftBracket = "("
+            .RightBracket = ")"
+            .LeftBracket2 = "["
+            .RightBracket2 = "]"
+            .BracketsStyle = BracketStyle
+            .BracketsStyle2 = BracketStyle
             .Dock = DockStyle.Fill
             .Select()
             AddHandler .Click, AddressOf InputBox_KeyUp
@@ -233,7 +254,7 @@ Public Class Main
         ElapsedTimer.Start()
     End Sub
 
-    Private Sub ElapsedTimer_Tick(sender As Object, e As EventArgs) Handles ElapsedTimer.Tick
+    Public Sub ElapsedTimer_Tick() Handles ElapsedTimer.Tick
         If LastSaved.CompareTo(New Date) <> 0 Then
             SaveLabel.Text = String.Format("Last saved {0} minutes ago.", (Now - LastSaved).Minutes)
         End If

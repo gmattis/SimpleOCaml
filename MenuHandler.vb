@@ -26,6 +26,8 @@ Public Class MenuHandler
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
     Private WithEvents AutoresetMenuItem As ToolStripMenuItem = Main.AutoresetMenuItem
     Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopierMenuItem
+    Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
+    Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -39,6 +41,8 @@ Public Class MenuHandler
             CurrentTextbox.SaveToFile(savePath, System.Text.Encoding.Default)
             Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(Main.TabControl.SelectedTab.Tag(0))
             Main.TabControl.SelectedTab.Tag(1) = True
+            Main.LastSaved = Now
+            Main.ElapsedTimer_Tick()
         End If
     End Sub
 
@@ -53,6 +57,8 @@ Public Class MenuHandler
         Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(SaveFileDialog.FileName)
         Main.TabControl.SelectedTab.Tag(0) = savePath
         Main.TabControl.SelectedTab.Tag(1) = True
+        Main.LastSaved = Now
+        Main.ElapsedTimer_Tick()
     End Sub
 
     Private Sub OpenFile() Handles OpenMenuItem.Click
@@ -139,5 +145,13 @@ Public Class MenuHandler
     Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Clipboard.SetText(CurrentTextbox.SelectedText)
+    End Sub
+
+    Private Sub UndoMenuItem_Click(sender As Object, e As EventArgs) Handles UndoMenuItem.Click
+        TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Undo()
+    End Sub
+
+    Private Sub RedoMenuItem_Click(sender As Object, e As EventArgs) Handles RedoMenuItem.Click
+        TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Redo()
     End Sub
 End Class

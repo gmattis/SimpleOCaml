@@ -7,8 +7,8 @@ Module Utils
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
             "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
-            "true|try|type|val|virtual|when|while|with)\s"
-    Private NumericRegex As String = "[0-9]"
+            "true|try|type|val|virtual|when|while|with)\b"
+    Private NumericRegex As String = "\b\d+(\.\d+)?"
     Private CommentRegex As String = "[(][*][\s\S]*?[*][)]"
     Private StringRegex As String = "[""][\s\S]*?[""]"
 
@@ -49,7 +49,15 @@ Module Utils
         If a > b Then Return a Else Return b
     End Function
 
-    Public Sub OnTabClose(sender As Object, e As EventArgs)
+    Public Sub OnTabClosing(sender As Object, e As TabControlCancelEventArgs)
+        If Not e.TabPage.Tag(1) Then
+            If MsgBox("Cette page n'a pas été sauvegardée. Voulez-vous continuer ?", MsgBoxStyle.OkCancel, "Page non sauvegardée") = MsgBoxResult.Cancel Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
+
+    Public Sub OnTabClosed(sender As Object, e As TabControlEventArgs)
         If Main.TabControl.TabCount = 0 Then
             Main.AddNewPage()
         End If
@@ -59,17 +67,20 @@ Module Utils
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()
 
-        TextRange.ClearStyle(New Style() {Main.ThemeManager.CommentStyle})
-        TextRange.ClearStyle(New Style() {Main.ThemeManager.StringStyle})
-        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.KeywordStyle})
-        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.OperatorStyle})
-        CurrentRange.ClearStyle(New Style() {Main.ThemeManager.NumericStyle})
+        e.ChangedRange.tb.ClearStylesBuffer()
+
+        ' Ancienne syntaxe: New Style() {Main.ThemeManager.<LeStyle>}
+        TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
+        TextRange.ClearStyle(Main.ThemeManager.StringStyle)
+        CurrentRange.ClearStyle(Main.ThemeManager.NumericStyle)
+        CurrentRange.ClearStyle(Main.ThemeManager.KeywordStyle)
+        CurrentRange.ClearStyle(Main.ThemeManager.OperatorStyle)
 
         TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
         TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        CurrentRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
 
         If Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False
