@@ -8,7 +8,7 @@ Module Utils
             "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
             "true|try|type|val|virtual|when|while|with)\b"
-    Private NumericRegex As String = "\b\d+(\.\d+)?"
+    Private NumericRegex As String = "\b\d+(\.(\d+)?)?"
     Private CommentRegex As String = "[(][*][\s\S]*?[*][)]"
     Private StringRegex As String = "[""][\s\S]*?[""]"
 
@@ -66,8 +66,6 @@ Module Utils
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()
-
-        e.ChangedRange.tb.ClearStylesBuffer()
 
         ' Ancienne syntaxe: New Style() {Main.ThemeManager.<LeStyle>}
         TextRange.ClearStyle(Main.ThemeManager.CommentStyle)

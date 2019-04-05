@@ -152,6 +152,7 @@ Public Class ThemeManager
 
     Public Sub ApplyTabPageStyle(page As TabPage)
         With TryCast(page.Controls(0), FastColoredTextBox)
+            .ClearStylesBuffer()
             If My.Settings.Theme = Themes.LightTheme Then
                 .BackColor = FastColoredTextBox.DefaultBackColor
                 .ForeColor = FastColoredTextBox.DefaultForeColor
