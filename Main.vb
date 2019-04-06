@@ -88,9 +88,9 @@ Public Class Main
                 LibrariesBrowserDialog.Reset()
             End If
         End While
-        Dim LibsPath As String = "-I " + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + " "
+        Dim LibsPath As String = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
         For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
-            LibsPath += "-I " + path + " "
+            LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
         Next
         _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
     End Sub
@@ -115,9 +115,9 @@ Public Class Main
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
         If Not _commandExecutor.GetState() Then
-            Dim LibsPath As String = "-I " + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + " "
+            Dim LibsPath As String = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
-                LibsPath += "-I " + path + " "
+                LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
             Next
             _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
         End If
