@@ -7,22 +7,6 @@ Public Class ThemeManager
     End Enum
 
     Public Sub New()
-        If My.Settings.Theme = Themes.DarkTheme Then
-            keywordStyleValue = New TextStyle(Brushes.PaleVioletRed, Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(Brushes.PaleVioletRed, Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(Brushes.DodgerBlue, Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(Brushes.Firebrick, Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
-            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
-        Else
-            keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
-            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
-        End If
-
         SwitchTheme(My.Settings.Theme)
     End Sub
 
@@ -88,11 +72,11 @@ Public Class ThemeManager
 
     Public Sub SwitchTheme(theme As Integer)
         If theme = Themes.LightTheme Then
-            keywordStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(234, 128, 11)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
+            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(0, 0, 255)), Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(0, 0, 255)), Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(128, 0, 0)), Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(69, 143, 34)), Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(173, 173, 173)), Nothing, FontStyle.Regular)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
 
             My.Settings.Theme = Themes.LightTheme
@@ -116,12 +100,12 @@ Public Class ThemeManager
             Main.DarkModeMenuItem.Enabled = True
             Main.LightModeMenuItem.Enabled = False
         ElseIf theme = Themes.DarkTheme Then
-            keywordStyleValue = New TextStyle(Brushes.DeepPink, Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(Brushes.Orchid, Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(Brushes.SteelBlue, Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(Brushes.Coral, Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(Brushes.Gray, Nothing, FontStyle.Italic)
-            highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.CornflowerBlue))
+            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(172, 106, 200)), Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(231, 219, 116)), Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(116, 112, 93)), Nothing, FontStyle.Italic)
+            highlightBrushValue = New SolidBrush(Color.FromArgb(64, Color.Gray))
 
             My.Settings.Theme = Themes.DarkTheme
             With Main.SplitContainer
@@ -143,13 +127,11 @@ Public Class ThemeManager
                 .DisplayStyleProvider.TabColorHighLighted1 = Color.Gray
                 .DisplayStyleProvider.TabColorHighLighted2 = Color.Gray
             End With
-
             Main.LightModeMenuItem.Checked = False
             Main.LightModeMenuItem.Enabled = True
             Main.DarkModeMenuItem.Enabled = False
         End If
     End Sub
-
     Public Sub ApplyTabPageStyle(page As TabPage)
         With TryCast(page.Controls(0), FastColoredTextBox)
             .ClearStylesBuffer()
@@ -157,13 +139,18 @@ Public Class ThemeManager
                 .BackColor = FastColoredTextBox.DefaultBackColor
                 .ForeColor = FastColoredTextBox.DefaultForeColor
                 .SelectionColor = Color.DarkBlue
+                .LineNumberColor = Color.DarkBlue
+                .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 0, 0, 100)))
             ElseIf My.Settings.Theme = Themes.DarkTheme Then
                 .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
-                .SelectionColor = Color.DarkBlue
-                .LineNumberColor = Color.SteelBlue
+                .ForeColor = Color.White
+                .SelectionColor = Color.Gray
+                .LineNumberColor = Color.FromArgb(45, 45, 45)
+                .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 150, 150, 150)))
             End If
             .OnTextChanged(0, .LinesCount - 1)
         End With
     End Sub
+
+
 End Class

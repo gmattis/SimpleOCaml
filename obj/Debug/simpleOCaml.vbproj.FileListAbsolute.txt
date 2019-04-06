@@ -29,3 +29,18 @@ C:\Users\tmdu1\Desktop\Folder with space\simpleOcaml\obj\Debug\simpleOCaml.vbpro
 C:\Users\tmdu1\Desktop\Folder with space\simpleOcaml\obj\Debug\simpleOCaml.exe
 C:\Users\tmdu1\Desktop\Folder with space\simpleOcaml\obj\Debug\simpleOCaml.xml
 C:\Users\tmdu1\Desktop\Folder with space\simpleOcaml\obj\Debug\simpleOCaml.pdb
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\simpleOCaml.exe.config
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\simpleOCaml.exe
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\simpleOCaml.pdb
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\simpleOCaml.xml
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\FastColoredTextBox.xml
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\bin\Debug\TradeWright.TabControlExtra.pdb
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.vbprojAssemblyReference.cache
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.Main.resources
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.Resources.resources
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.vbproj.GenerateResource.cache
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.vbproj.CoreCompileInputs.cache
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.vbproj.CopyComplete
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.exe
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.xml
+C:\Users\tmdu1\Documents\Projets_Info\OCaml\simpleOcaml\obj\Debug\simpleOCaml.pdb

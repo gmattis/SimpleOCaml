@@ -193,6 +193,7 @@ Public Class Main
             .BracketsStyle2 = BracketStyle
             .Dock = DockStyle.Fill
             .Select()
+            .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .PaintLine, AddressOf PaintLines
