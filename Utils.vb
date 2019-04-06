@@ -51,8 +51,23 @@ Module Utils
 
     Public Sub OnTabClosing(sender As Object, e As TabControlCancelEventArgs)
         If Not e.TabPage.Tag(1) Then
-            If MsgBox("Cette page n'a pas été sauvegardée. Voulez-vous continuer ?", MsgBoxStyle.OkCancel, "Page non sauvegardée") = MsgBoxResult.Cancel Then
-                e.Cancel = True
+            Dim result As MsgBoxResult
+            If e.TabPage.Tag(0) = "" Then
+                result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé, le sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                If result = MsgBoxResult.Cancel Then
+                    e.Cancel = True
+                ElseIf result = MsgBoxResult.Yes Then
+                    If Not SaveAsPage(e.TabPage) Then
+                        e.Cancel = True
+                    End If
+                End If
+            Else
+                result = MsgBox(String.Format("{0} a été modifié, le sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                If result = MsgBoxResult.Cancel Then
+                    e.Cancel = True
+                ElseIf result = MsgBoxResult.Yes Then
+                    SavePage(e.TabPage, e.TabPage.Tag(0))
+                End If
             End If
         End If
     End Sub
@@ -85,4 +100,20 @@ Module Utils
             Main.TabControl.SelectedTab.Text = "*" & Main.TabControl.SelectedTab.Text
         End If
     End Sub
+
+    Private Sub SavePage(page As TabPage, path As String)
+        TryCast(page.Controls.Item(0), FastColoredTextBox).SaveToFile(path, System.Text.Encoding.Default)
+    End Sub
+
+    Private Function SaveAsPage(page As TabPage) As Boolean
+        Main.SaveFileDialog.FileName = ""
+        Main.SaveFileDialog.ShowDialog()
+        MsgBox(Main.SaveFileDialog.FileName)
+        If Main.SaveFileDialog.FileName <> "" Then
+            TryCast(page.Controls.Item(0), FastColoredTextBox).SaveToFile(Main.SaveFileDialog.FileName, System.Text.Encoding.Default)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 End Module

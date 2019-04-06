@@ -139,18 +139,18 @@ Public Class ThemeManager
                 .BackColor = FastColoredTextBox.DefaultBackColor
                 .ForeColor = FastColoredTextBox.DefaultForeColor
                 .SelectionColor = Color.DarkBlue
+                .IndentBackColor = FastColoredTextBox.DefaultBackColor
                 .LineNumberColor = Color.DarkBlue
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 0, 0, 100)))
             ElseIf My.Settings.Theme = Themes.DarkTheme Then
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.White
                 .SelectionColor = Color.Gray
-                .LineNumberColor = Color.FromArgb(45, 45, 45)
+                .IndentBackColor = Color.FromArgb(45, 45, 45)
+                .LineNumberColor = Color.White
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 150, 150, 150)))
             End If
             .OnTextChanged(0, .LinesCount - 1)
         End With
     End Sub
-
-
 End Class

@@ -28,7 +28,7 @@ simpleOCaml
 <member name="M:simpleOCaml.Main.Executer(System.Object,System.EventArgs)">
  Execution et affichage des scripts
 </member>
-<member name="M:simpleOCaml.Main.InputBox_KeyUp(System.Object,System.EventArgs)">
+<member name="M:simpleOCaml.Main.InputBox_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
  Le reste
 </member>
 </members>

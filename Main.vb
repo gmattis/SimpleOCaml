@@ -16,6 +16,7 @@ Public Class Main
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.Autoreset Then
+            My.Settings.Reset()
             AutoresetMenuItem.Checked = True
             StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
         Else
@@ -146,6 +147,19 @@ Public Class Main
     End Sub
 
     ''' Le reste
+    Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = Keys.Back Then
+            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            If CurrentTextbox.SelectionStart > 4 Then
+                Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
+                Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
+                If match.Success Then
+                    Dim numToRemove As Integer = match.Length Mod 4
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Code a exécuter
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
@@ -171,12 +185,6 @@ Public Class Main
             LinesToExecute = {-1, -1}
             CurrentTextbox.Invalidate()
         End If
-
-        ' Parenthèses et accolades
-
-        ' Autocomplétion
-        'Dim CurrentList As ListBox = TryCast(TabControl.SelectedTab.Controls.Item(2), ListBox)
-        'CurrentList.Location = CurrentTextbox.Selection
     End Sub
 
     Public Sub AddNewPage()
@@ -196,13 +204,9 @@ Public Class Main
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
+            'AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
             AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
-        End With
-        TabControl.SelectedTab.Controls.Add(New ListBox)
-        With TryCast(TabControl.SelectedTab.Controls(1), ListBox)
-            '.DataSource = KeyWords
-            .Visible = False
         End With
         ThemeManager.ApplyTabPageStyle(TabControl.SelectedTab)
     End Sub

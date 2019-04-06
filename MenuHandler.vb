@@ -144,7 +144,9 @@ Public Class MenuHandler
 
     Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Clipboard.SetText(CurrentTextbox.SelectedText)
+        If CurrentTextbox.SelectedText <> "" Then
+            Clipboard.SetText(CurrentTextbox.SelectedText)
+        End If
     End Sub
 
     Private Sub UndoMenuItem_Click(sender As Object, e As EventArgs) Handles UndoMenuItem.Click
