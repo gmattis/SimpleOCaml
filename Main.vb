@@ -11,8 +11,6 @@ Public Class Main
     Public ThemeManager As ThemeManager
     Public LastSaved As Date = Nothing
 
-    Private BracketStyle As New MarkerStyle(New SolidBrush(Color.FromArgb(192, Color.DarkRed)))
-
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.Autoreset Then
@@ -197,8 +195,6 @@ Public Class Main
             .RightBracket = ")"
             .LeftBracket2 = "["
             .RightBracket2 = "]"
-            .BracketsStyle = BracketStyle
-            .BracketsStyle2 = BracketStyle
             .Dock = DockStyle.Fill
             .Select()
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2

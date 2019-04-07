@@ -59,6 +59,15 @@ Public Class ThemeManager
             operatorStyleValue = value
         End Set
     End Property
+    Private functionStyleValue As TextStyle
+    Public Property FunctionStyle() As TextStyle
+        Get
+            Return functionStyleValue
+        End Get
+        Set(ByVal value As TextStyle)
+            functionStyleValue = value
+        End Set
+    End Property
 
     Private highlightBrushValue As Brush
     Public Property HighlightBrush() As Brush
@@ -77,6 +86,7 @@ Public Class ThemeManager
             numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(128, 0, 0)), Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(69, 143, 34)), Nothing, FontStyle.Regular)
             commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(173, 173, 173)), Nothing, FontStyle.Regular)
+            functionStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(144, 0, 144)), Nothing, FontStyle.Regular)
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
 
             My.Settings.Theme = Themes.LightTheme
@@ -104,7 +114,8 @@ Public Class ThemeManager
             operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
             numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(172, 106, 200)), Nothing, FontStyle.Regular)
             stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(231, 219, 116)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(116, 112, 93)), Nothing, FontStyle.Italic)
+            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(116, 112, 93)), Nothing, FontStyle.Regular)
+            functionStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(166, 226, 43)), Nothing, FontStyle.Regular)
             highlightBrushValue = New SolidBrush(Color.FromArgb(64, Color.Gray))
 
             My.Settings.Theme = Themes.DarkTheme

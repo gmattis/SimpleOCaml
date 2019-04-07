@@ -11,6 +11,7 @@ Module Utils
     Private NumericRegex As String = "\b\d+(\.(\d+)?)?"
     Private CommentRegex As String = "[(][*][\s\S]*?[*][)]"
     Private StringRegex As String = "[""][\s\S]*?[""]"
+    Private FunctionRegex As String = "(?<=let |rec )(\w|,)*"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
@@ -88,12 +89,14 @@ Module Utils
         CurrentRange.ClearStyle(Main.ThemeManager.NumericStyle)
         CurrentRange.ClearStyle(Main.ThemeManager.KeywordStyle)
         CurrentRange.ClearStyle(Main.ThemeManager.OperatorStyle)
+        CurrentRange.ClearStyle(Main.ThemeManager.FunctionStyle)
 
         TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
         TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
         CurrentRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
 
         If Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False
