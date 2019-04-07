@@ -5,9 +5,6 @@
     <Setting Name="Font_Family" Type="System.String" Scope="User">
       <Value Profile="(Default)">Lucida Console</Value>
     </Setting>
-    <Setting Name="Font_Size" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
     <Setting Name="Font_Style" Type="System.Drawing.FontStyle" Scope="User">
       <Value Profile="(Default)">Regular</Value>
     </Setting>
@@ -34,6 +31,9 @@
     </Setting>
     <Setting Name="Autoreset" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Font_Size" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">11</Value>
     </Setting>
   </Settings>
 </SettingsFile>

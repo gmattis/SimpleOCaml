@@ -94,21 +94,22 @@ Public Class Main
         _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
     End Sub
 
-    Private Sub Main_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        Dim allSaved As Boolean = True
+    Private Sub Main_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         For Each page As TabPage In TabControl.TabPages
-            If Not page.Tag(1) Then
-                allSaved = False
+            TabControl.SelectedTab = page
+            Dim eventArgs As New TabControlCancelEventArgs(page, page.TabIndex, False, TabControlAction.Selected)
+            OnTabClosing(Me, eventArgs)
+            If eventArgs.Cancel Then
+                e.Cancel = True
                 Exit For
+            Else
+                TabControl.TabPages.Remove(page)
             End If
         Next
-        If Not allSaved Then
-            If MsgBox("Certaines pages n'ont pas été sauvegardées. Voulez-vous continuer ?", MsgBoxStyle.OkCancel, "Pages non sauvegardées") = MsgBoxResult.Cancel Then
-                e.Cancel = True
-            End If
-        End If
 
-        _commandExecutor.Dispose()
+        If Not e.Cancel Then
+            _commandExecutor.Dispose()
+        End If
     End Sub
 
     ''' Execution et affichage des scripts

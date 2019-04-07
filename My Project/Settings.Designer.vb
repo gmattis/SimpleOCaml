@@ -68,18 +68,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
-        Public Property Font_Size() As Short
-            Get
-                Return CType(Me("Font_Size"),Short)
-            End Get
-            Set
-                Me("Font_Size") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Regular")>  _
         Public Property Font_Style() As Global.System.Drawing.FontStyle
             Get
@@ -183,6 +171,18 @@ Namespace My
             End Get
             Set
                 Me("Autoreset") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("11")>  _
+        Public Property Font_Size() As Short
+            Get
+                Return CType(Me("Font_Size"),Short)
+            End Get
+            Set
+                Me("Font_Size") = value
             End Set
         End Property
     End Class
