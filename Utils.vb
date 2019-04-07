@@ -54,7 +54,7 @@ Module Utils
         If Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
             If e.TabPage.Tag(0) = "" Then
-                result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé, le sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -63,7 +63,7 @@ Module Utils
                     End If
                 End If
             Else
-                result = MsgBox(String.Format("{0} a été modifié, le sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                result = MsgBox(String.Format("{0} a été modifié." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -111,7 +111,6 @@ Module Utils
     Private Function SaveAsPage(page As TabPage) As Boolean
         Main.SaveFileDialog.FileName = ""
         Main.SaveFileDialog.ShowDialog()
-        MsgBox(Main.SaveFileDialog.FileName)
         If Main.SaveFileDialog.FileName <> "" Then
             TryCast(page.Controls.Item(0), FastColoredTextBox).SaveToFile(Main.SaveFileDialog.FileName, System.Text.Encoding.Default)
             Return True

@@ -147,12 +147,13 @@ Public Class ThemeManager
         With TryCast(page.Controls(0), FastColoredTextBox)
             .ClearStylesBuffer()
             If My.Settings.Theme = Themes.LightTheme Then
-                .BackColor = FastColoredTextBox.DefaultBackColor
-                .ForeColor = FastColoredTextBox.DefaultForeColor
+                .BackColor = Color.White
+                .ForeColor = Color.Black
                 .SelectionColor = Color.DarkBlue
                 .IndentBackColor = FastColoredTextBox.DefaultBackColor
                 .LineNumberColor = Color.DarkBlue
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 0, 0, 100)))
+                .CaretColor = Color.Black
             ElseIf My.Settings.Theme = Themes.DarkTheme Then
                 .BackColor = Color.FromArgb(45, 45, 45)
                 .ForeColor = Color.White
@@ -160,6 +161,7 @@ Public Class ThemeManager
                 .IndentBackColor = Color.FromArgb(45, 45, 45)
                 .LineNumberColor = Color.White
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 150, 150, 150)))
+                .CaretColor = Color.FromArgb(210, 210, 210)
             End If
             .OnTextChanged(0, .LinesCount - 1)
         End With

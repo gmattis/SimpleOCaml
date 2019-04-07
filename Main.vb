@@ -16,7 +16,7 @@ Public Class Main
         If My.Settings.Autoreset Then
             My.Settings.Reset()
             AutoresetMenuItem.Checked = True
-            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
+            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain démarrage"
         Else
             AutoresetMenuItem.Checked = False
         End If
@@ -250,7 +250,7 @@ Public Class Main
                 tab.Text = System.IO.Path.GetFileName(savePath)
             End If
         Next
-        SaveLabel.Text = "Autosave done!"
+        SaveLabel.Text = "Sauvegarde automatique effectuée!"
         LastSaved = Now
         ElapsedTimer.Enabled = True
         ElapsedTimer.Start()
@@ -258,7 +258,7 @@ Public Class Main
 
     Public Sub ElapsedTimer_Tick() Handles ElapsedTimer.Tick
         If LastSaved.CompareTo(New Date) <> 0 Then
-            SaveLabel.Text = String.Format("Last saved {0} minutes ago.", (Now - LastSaved).Minutes)
+            SaveLabel.Text = String.Format("Denière sauvegarde il y a {0} min.", (Now - LastSaved).Minutes)
         End If
     End Sub
 End Class
