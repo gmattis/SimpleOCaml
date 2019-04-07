@@ -35,6 +35,7 @@ Partial Class Main
         Me.OpenMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToutEnregistrerMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopierMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -190,7 +191,7 @@ Partial Class Main
         '
         'FileMenuItem
         '
-        Me.FileMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMenuItem, Me.OpenMenuItem, Me.SaveMenuItem, Me.SaveAsMenuItem})
+        Me.FileMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMenuItem, Me.OpenMenuItem, Me.SaveMenuItem, Me.SaveAsMenuItem, Me.ToutEnregistrerMenuItem})
         Me.FileMenuItem.Name = "FileMenuItem"
         Me.FileMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.FileMenuItem.Text = "Fichier"
@@ -223,6 +224,12 @@ Partial Class Main
             Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.SaveAsMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.SaveAsMenuItem.Text = "Enregistrer sous"
+        '
+        'ToutEnregistrerMenuItem
+        '
+        Me.ToutEnregistrerMenuItem.Name = "ToutEnregistrerMenuItem"
+        Me.ToutEnregistrerMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.ToutEnregistrerMenuItem.Text = "Tout enregistrer"
         '
         'EditMenuItem
         '
@@ -464,4 +471,5 @@ Partial Class Main
     Friend WithEvents CopierMenuItem As ToolStripMenuItem
     Friend WithEvents UndoMenuItem As ToolStripMenuItem
     Friend WithEvents RedoMenuItem As ToolStripMenuItem
+    Friend WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem
 End Class

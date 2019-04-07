@@ -28,6 +28,7 @@ Public Class MenuHandler
     Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopierMenuItem
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
+    Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.ToutEnregistrerMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -155,5 +156,15 @@ Public Class MenuHandler
 
     Private Sub RedoMenuItem_Click(sender As Object, e As EventArgs) Handles RedoMenuItem.Click
         TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Redo()
+    End Sub
+
+    Private Sub ToutEnregistrerMenuItem_Click(sender As Object, e As EventArgs) Handles ToutEnregistrerMenuItem.Click
+        For Each page As TabPage In Main.TabControl.TabPages
+            If page.Tag(0) <> "" And Not page.Tag(1) Then
+                TryCast(page.Controls.Item(0), FastColoredTextBox).SaveToFile(page.Tag(0), System.Text.Encoding.Default)
+                page.Tag(1) = True
+                page.Text = System.IO.Path.GetFileName(page.Tag(0))
+            End If
+        Next
     End Sub
 End Class
