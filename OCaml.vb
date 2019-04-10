@@ -4,6 +4,7 @@
     Public Event OutputRead(ByVal output As String)
 
     Private WithEvents _process As Process
+    Private WithEvents _processIoMgr As ProcessReadWriteUtils.ProcessIoManager
 
     Public Sub Start(ByVal filePath As String, ByVal arguments As String)
         If _process IsNot Nothing Then
@@ -18,8 +19,11 @@
             .RedirectStandardInput = True
             .RedirectStandardOutput = True
         End With
+
         _process.Start()
-        _process.BeginOutputReadLine()
+        _processIoMgr = New ProcessReadWriteUtils.ProcessIoManager(_process)
+        AddHandler _processIoMgr.StdoutTextRead, New ProcessReadWriteUtils.StringReadEventHandler(AddressOf OutputDataReceived)
+        _processIoMgr.StartProcessOutputRead()
     End Sub
 
     Public Sub Execute(ByVal command As String)
@@ -30,12 +34,12 @@
         _process.StandardInput.WriteLine(command)
     End Sub
 
-    Private Sub _process_OutputDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles _process.OutputDataReceived
+    Private Sub OutputDataReceived(str As String)
         If _process.HasExited Then
             _process.Dispose()
             _process = Nothing
         End If
-        RaiseEvent OutputRead(e.Data)
+        RaiseEvent OutputRead(str)
     End Sub
 
     Private disposedValue As Boolean = False
