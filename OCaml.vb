@@ -1,8 +1,6 @@
 ﻿Public Class OCaml
     Implements IDisposable
 
-    Public Event OutputRead(ByVal output As String)
-
     Private WithEvents _process As Process
     Private WithEvents _processIoMgr As ProcessReadWriteUtils.ProcessIoManager
 
@@ -22,7 +20,6 @@
 
         _process.Start()
         _processIoMgr = New ProcessReadWriteUtils.ProcessIoManager(_process)
-        AddHandler _processIoMgr.StdoutTextRead, New ProcessReadWriteUtils.StringReadEventHandler(AddressOf OutputDataReceived)
         _processIoMgr.StartProcessOutputRead()
     End Sub
 
@@ -34,13 +31,9 @@
         _process.StandardInput.WriteLine(command)
     End Sub
 
-    Private Sub OutputDataReceived(str As String)
-        If _process.HasExited Then
-            _process.Dispose()
-            _process = Nothing
-        End If
-        RaiseEvent OutputRead(str)
-    End Sub
+    Public Function Refresh()
+        Return _processIoMgr.Refresh()
+    End Function
 
     Private disposedValue As Boolean = False
     Protected Overridable Sub Dispose(ByVal disposing As Boolean)

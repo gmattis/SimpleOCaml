@@ -135,13 +135,9 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub _commandExecutor_OutputRead(ByVal output As String) Handles _commandExecutor.OutputRead
-        Me.Invoke(New processCommandOutputDelegate(AddressOf processCommandOutput), output)
-    End Sub
-
     Private Delegate Sub processCommandOutputDelegate(ByVal output As String)
     Private Sub processCommandOutput(ByVal output As String)
-        OutputBox.AppendText(output & vbCrLf)
+        OutputBox.AppendText(output)
         OutputBox.ScrollToCaret()
     End Sub
 
@@ -259,6 +255,13 @@ Public Class Main
     Public Sub ElapsedTimer_Tick() Handles ElapsedTimer.Tick
         If LastSaved.CompareTo(New Date) <> 0 Then
             SaveLabel.Text = String.Format("Denière sauvegarde il y a {0} min.", (Now - LastSaved).Minutes)
+        End If
+    End Sub
+
+    Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
+        Dim s = _commandExecutor.Refresh()
+        If s <> "" Then
+            processCommandOutput(s)
         End If
     End Sub
 End Class

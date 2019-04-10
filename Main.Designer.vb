@@ -65,6 +65,7 @@ Partial Class Main
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ElapsedTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -76,7 +77,8 @@ Partial Class Main
         'SplitContainer
         '
         Me.SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer.Location = New System.Drawing.Point(0, 24)
+        Me.SplitContainer.Location = New System.Drawing.Point(0, 28)
+        Me.SplitContainer.Margin = New System.Windows.Forms.Padding(4)
         Me.SplitContainer.Name = "SplitContainer"
         '
         'SplitContainer.Panel1
@@ -86,8 +88,9 @@ Partial Class Main
         'SplitContainer.Panel2
         '
         Me.SplitContainer.Panel2.Controls.Add(Me.OutputBox)
-        Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
-        Me.SplitContainer.SplitterDistance = 403
+        Me.SplitContainer.Size = New System.Drawing.Size(1025, 431)
+        Me.SplitContainer.SplitterDistance = 537
+        Me.SplitContainer.SplitterWidth = 5
         Me.SplitContainer.TabIndex = 2
         '
         'TabControl
@@ -155,9 +158,10 @@ Partial Class Main
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.HotTrack = True
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl.Margin = New System.Windows.Forms.Padding(4)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(403, 345)
+        Me.TabControl.Size = New System.Drawing.Size(537, 431)
         Me.TabControl.TabIndex = 0
         '
         'OutputBox
@@ -165,10 +169,10 @@ Partial Class Main
         Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.OutputBox.Location = New System.Drawing.Point(0, 0)
-        Me.OutputBox.Margin = New System.Windows.Forms.Padding(6)
+        Me.OutputBox.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.OutputBox.Name = "OutputBox"
         Me.OutputBox.ReadOnly = True
-        Me.OutputBox.Size = New System.Drawing.Size(362, 345)
+        Me.OutputBox.Size = New System.Drawing.Size(483, 431)
         Me.OutputBox.TabIndex = 2
         Me.OutputBox.Text = ""
         '
@@ -182,10 +186,12 @@ Partial Class Main
         '
         'MenuStrip
         '
+        Me.MenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileMenuItem, Me.EditMenuItem, Me.OcamlMenuItem, Me.SettingsMenuItem, Me.HelpMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
-        Me.MenuStrip.Size = New System.Drawing.Size(769, 24)
+        Me.MenuStrip.Padding = New System.Windows.Forms.Padding(8, 2, 0, 2)
+        Me.MenuStrip.Size = New System.Drawing.Size(1025, 28)
         Me.MenuStrip.TabIndex = 3
         Me.MenuStrip.Text = "MenuStrip1"
         '
@@ -193,28 +199,28 @@ Partial Class Main
         '
         Me.FileMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMenuItem, Me.OpenMenuItem, Me.SaveMenuItem, Me.SaveAsMenuItem, Me.ToutEnregistrerMenuItem})
         Me.FileMenuItem.Name = "FileMenuItem"
-        Me.FileMenuItem.Size = New System.Drawing.Size(54, 20)
+        Me.FileMenuItem.Size = New System.Drawing.Size(64, 24)
         Me.FileMenuItem.Text = "Fichier"
         '
         'NewMenuItem
         '
         Me.NewMenuItem.Name = "NewMenuItem"
         Me.NewMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NewMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.NewMenuItem.Size = New System.Drawing.Size(273, 26)
         Me.NewMenuItem.Text = "Nouveau"
         '
         'OpenMenuItem
         '
         Me.OpenMenuItem.Name = "OpenMenuItem"
         Me.OpenMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.OpenMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.OpenMenuItem.Size = New System.Drawing.Size(273, 26)
         Me.OpenMenuItem.Text = "Ouvrir"
         '
         'SaveMenuItem
         '
         Me.SaveMenuItem.Name = "SaveMenuItem"
         Me.SaveMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.SaveMenuItem.Size = New System.Drawing.Size(273, 26)
         Me.SaveMenuItem.Text = "Enregistrer"
         '
         'SaveAsMenuItem
@@ -222,162 +228,162 @@ Partial Class Main
         Me.SaveAsMenuItem.Name = "SaveAsMenuItem"
         Me.SaveAsMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveAsMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.SaveAsMenuItem.Size = New System.Drawing.Size(273, 26)
         Me.SaveAsMenuItem.Text = "Enregistrer sous"
         '
         'ToutEnregistrerMenuItem
         '
         Me.ToutEnregistrerMenuItem.Name = "ToutEnregistrerMenuItem"
-        Me.ToutEnregistrerMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.ToutEnregistrerMenuItem.Size = New System.Drawing.Size(273, 26)
         Me.ToutEnregistrerMenuItem.Text = "Tout enregistrer"
         '
         'EditMenuItem
         '
         Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopierMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
-        Me.EditMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.EditMenuItem.Size = New System.Drawing.Size(68, 24)
         Me.EditMenuItem.Text = "Edition"
         '
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(199, 26)
         Me.CleanOutputMenuItem.Text = "Nettoyer la sortie"
         '
         'CopierMenuItem
         '
         Me.CopierMenuItem.Name = "CopierMenuItem"
         Me.CopierMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopierMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.CopierMenuItem.Size = New System.Drawing.Size(199, 26)
         Me.CopierMenuItem.Text = "Copier"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(199, 26)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(199, 26)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
         '
         Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem})
         Me.OcamlMenuItem.Name = "OcamlMenuItem"
-        Me.OcamlMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.OcamlMenuItem.Size = New System.Drawing.Size(66, 24)
         Me.OcamlMenuItem.Text = "OCaml"
         '
         'ExecuteMenuItem
         '
         Me.ExecuteMenuItem.Name = "ExecuteMenuItem"
         Me.ExecuteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.[Return]), System.Windows.Forms.Keys)
-        Me.ExecuteMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.ExecuteMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.ExecuteMenuItem.Text = "Exécuter"
         '
         'OutputMenuItem
         '
         Me.OutputMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartialOutputMenuItem, Me.FullOutputMenuItem})
         Me.OutputMenuItem.Name = "OutputMenuItem"
-        Me.OutputMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.OutputMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.OutputMenuItem.Text = "Sortie"
         '
         'PartialOutputMenuItem
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(149, 26)
         Me.PartialOutputMenuItem.Text = "Partielle"
         '
         'FullOutputMenuItem
         '
         Me.FullOutputMenuItem.CheckOnClick = True
         Me.FullOutputMenuItem.Name = "FullOutputMenuItem"
-        Me.FullOutputMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.FullOutputMenuItem.Size = New System.Drawing.Size(149, 26)
         Me.FullOutputMenuItem.Text = "Complète"
         '
         'CloseOcamlMenuItem
         '
         Me.CloseOcamlMenuItem.Name = "CloseOcamlMenuItem"
-        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.CloseOcamlMenuItem.Text = "Fermer"
         '
         'SettingsMenuItem
         '
         Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.AutoresetMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
-        Me.SettingsMenuItem.Size = New System.Drawing.Size(78, 20)
+        Me.SettingsMenuItem.Size = New System.Drawing.Size(94, 24)
         Me.SettingsMenuItem.Text = "Paramètres"
         '
         'ThemeMenuItem
         '
         Me.ThemeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightModeMenuItem, Me.DarkModeMenuItem})
         Me.ThemeMenuItem.Name = "ThemeMenuItem"
-        Me.ThemeMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ThemeMenuItem.Size = New System.Drawing.Size(251, 26)
         Me.ThemeMenuItem.Text = "Thème"
         '
         'LightModeMenuItem
         '
         Me.LightModeMenuItem.CheckOnClick = True
         Me.LightModeMenuItem.Name = "LightModeMenuItem"
-        Me.LightModeMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.LightModeMenuItem.Size = New System.Drawing.Size(198, 26)
         Me.LightModeMenuItem.Text = "Light Mode"
         '
         'DarkModeMenuItem
         '
         Me.DarkModeMenuItem.CheckOnClick = True
         Me.DarkModeMenuItem.Name = "DarkModeMenuItem"
-        Me.DarkModeMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.DarkModeMenuItem.Size = New System.Drawing.Size(198, 26)
         Me.DarkModeMenuItem.Text = "Dark Mode [WIP]"
         '
         'AutoSaveMenuItem
         '
         Me.AutoSaveMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableAutoSaveMenuItem, Me.AutoSaveDelayMenuItem})
         Me.AutoSaveMenuItem.Name = "AutoSaveMenuItem"
-        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(251, 26)
         Me.AutoSaveMenuItem.Text = "Sauvegarde automatique"
         '
         'EnableAutoSaveMenuItem
         '
         Me.EnableAutoSaveMenuItem.CheckOnClick = True
         Me.EnableAutoSaveMenuItem.Name = "EnableAutoSaveMenuItem"
-        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(220, 26)
         Me.EnableAutoSaveMenuItem.Text = "Activer"
         '
         'AutoSaveDelayMenuItem
         '
         Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
-        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(220, 26)
         Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
         '
         'AutoresetMenuItem
         '
         Me.AutoresetMenuItem.CheckOnClick = True
         Me.AutoresetMenuItem.Name = "AutoresetMenuItem"
-        Me.AutoresetMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.AutoresetMenuItem.Size = New System.Drawing.Size(251, 26)
         Me.AutoresetMenuItem.Text = "Autoreset"
         '
         'HelpMenuItem
         '
         Me.HelpMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OcamlDocMenuItem, Me.AboutMenuItem})
         Me.HelpMenuItem.Name = "HelpMenuItem"
-        Me.HelpMenuItem.Size = New System.Drawing.Size(43, 20)
+        Me.HelpMenuItem.Size = New System.Drawing.Size(52, 24)
         Me.HelpMenuItem.Text = "Aide"
         '
         'OcamlDocMenuItem
         '
         Me.OcamlDocMenuItem.Name = "OcamlDocMenuItem"
-        Me.OcamlDocMenuItem.Size = New System.Drawing.Size(197, 22)
+        Me.OcamlDocMenuItem.Size = New System.Drawing.Size(236, 26)
         Me.OcamlDocMenuItem.Text = "Documentation OCaml"
         '
         'AboutMenuItem
         '
         Me.AboutMenuItem.Name = "AboutMenuItem"
-        Me.AboutMenuItem.Size = New System.Drawing.Size(197, 22)
+        Me.AboutMenuItem.Size = New System.Drawing.Size(236, 26)
         Me.AboutMenuItem.Text = "A propos"
         '
         'AutoSaveTimer
@@ -386,10 +392,12 @@ Partial Class Main
         '
         'StatusStrip
         '
+        Me.StatusStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveLabel, Me.StateLabel})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 369)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 459)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(769, 22)
+        Me.StatusStrip.Padding = New System.Windows.Forms.Padding(1, 0, 19, 0)
+        Me.StatusStrip.Size = New System.Drawing.Size(1025, 22)
         Me.StatusStrip.TabIndex = 4
         Me.StatusStrip.Text = "StatusStrip"
         '
@@ -407,16 +415,21 @@ Partial Class Main
         '
         Me.ElapsedTimer.Interval = 30000
         '
+        'RefreshTimer
+        '
+        Me.RefreshTimer.Enabled = True
+        '
         'Main
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(769, 391)
+        Me.ClientSize = New System.Drawing.Size(1025, 481)
         Me.Controls.Add(Me.SplitContainer)
         Me.Controls.Add(Me.MenuStrip)
         Me.Controls.Add(Me.StatusStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Main"
         Me.Text = "SimpleOCaml"
         Me.SplitContainer.Panel1.ResumeLayout(False)
@@ -472,4 +485,5 @@ Partial Class Main
     Friend WithEvents UndoMenuItem As ToolStripMenuItem
     Friend WithEvents RedoMenuItem As ToolStripMenuItem
     Friend WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem
+    Friend WithEvents RefreshTimer As Timer
 End Class
