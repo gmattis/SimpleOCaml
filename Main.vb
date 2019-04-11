@@ -13,13 +13,6 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If My.Settings.Autoreset Then
-            My.Settings.Reset()
-            AutoresetMenuItem.Checked = True
-            StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain démarrage"
-        Else
-            AutoresetMenuItem.Checked = False
-        End If
 
         My.Settings.Upgrade()
 
@@ -116,17 +109,33 @@ Public Class Main
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
         If CodeToExecute <> "" Then
+            OutputBox.SelectionColor = ThemeManager.OutputCommandColor
             If My.Settings.Detailed_Output Or Not CodeToExecute.Contains(vbLf) Then
-                OutputBox.AppendText(CodeToExecute + vbCrLf)
+                OutputBox.AppendText(CodeToExecute + vbLf)
             Else
-                OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf)) + " ..." + vbCrLf)
+                OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
             End If
+            OutputBox.SelectionColor = ThemeManager.OutputColor
             CommandExecutor.Execute(Normalise_Text(CodeToExecute))
             Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-            CurrentTextbox.SelectionStart = If(CodeToExecutePos(0) + CodeToExecutePos(1) + 2 > CurrentTextbox.TextLength, CurrentTextbox.TextLength, CodeToExecutePos(0) + CodeToExecutePos(1) + 2)
-            CurrentTextbox.DoCaretVisible()
+            WarpToNextCode()
         End If
     End Sub
+
+    Private Sub WarpToNextCode()
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(\#][\s\S]+?(;;)")
+        For Each expr As Match In Mat
+            If expr.Index > CurrentTextbox.SelectionStart Then
+                CurrentTextbox.SelectionStart = expr.Index
+                CurrentTextbox.DoCaretVisible()
+                UpdateCodeToExecute()
+                Exit Sub
+            End If
+        Next
+    End Sub
+
 
     Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
     Private Sub ProcessCommandOutput(ByVal output As String)
@@ -148,14 +157,12 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
-        ' Code a exécuter
+    Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
         Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(\#][\s\S]+?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
-                Dim code As String = Regex.Replace(expr.Value, "[(][*][\s\S]*?[*][)][\s]*", "")
+                Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
                 If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({expr.Index, expr.Length}) Then
                     CodeToExecute = code
                     CodeToExecutePos = {expr.Index, expr.Length}
@@ -173,6 +180,11 @@ Public Class Main
             LinesToExecute = {-1, -1}
             CurrentTextbox.Invalidate()
         End If
+    End Sub
+
+    Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
+        ' Code a exécuter
+        UpdateCodeToExecute()
     End Sub
 
     Public Sub AddNewPage()

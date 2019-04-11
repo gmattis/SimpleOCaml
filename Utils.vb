@@ -1,17 +1,17 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
-    Private ReadOnly OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
-    Private ReadOnly KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
+    Public ReadOnly OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
+    Public ReadOnly KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
             "else|end|exception|external|false|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
             "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
             "true|try|type|val|virtual|when|while|with)\b"
-    Private ReadOnly NumericRegex As String = "\b\d+(\.(\d+)?)?"
-    Private ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)]"
-    Private ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
-    Private ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
+    Public ReadOnly NumericRegex As String = "\b\d+(\.(\d+)?)?"
+    Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)]"
+    Public ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
+    Public ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str

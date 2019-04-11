@@ -1,6 +1,8 @@
 ﻿Imports FastColoredTextBoxNS
 
 Public Class ThemeManager
+    Public OutputColor As Color
+    Public OutputCommandColor As Color
     Public Enum Themes
         LightTheme = 0
         DarkTheme = 1
@@ -97,9 +99,11 @@ Public Class ThemeManager
             For Each page As TabPage In Main.TabControl.TabPages
                 ApplyTabPageStyle(page)
             Next
+            OutputColor = Color.Black
+            OutputCommandColor = Color.Blue
             With Main.OutputBox
-                .BackColor = RichTextBox.DefaultBackColor
-                .ForeColor = RichTextBox.DefaultForeColor
+                .BackColor = Color.FromArgb(240, 240, 240)
+                .ForeColor = OutputColor
             End With
             With Main.TabControl
                 .DisplayStyleProvider = TradeWright.UI.Forms.TabStyleDefaultProvider.CreateProvider(Main.TabControl)
@@ -126,9 +130,11 @@ Public Class ThemeManager
             For Each page As TabPage In Main.TabControl.TabPages
                 ApplyTabPageStyle(page)
             Next
+            OutputColor = Color.White
+            OutputCommandColor = Color.FromArgb(249, 36, 114)
             With Main.OutputBox
                 .BackColor = Color.FromArgb(45, 45, 45)
-                .ForeColor = Color.LightGray
+                .ForeColor = OutputColor
             End With
             With Main.TabControl
                 .DisplayStyleProvider.TabColorUnSelected1 = Color.FromArgb(70, 70, 70)

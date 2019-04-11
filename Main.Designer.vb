@@ -54,7 +54,6 @@ Partial Class Main
         Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AutoresetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -296,14 +295,14 @@ Partial Class Main
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(149, 26)
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(216, 26)
         Me.PartialOutputMenuItem.Text = "Partielle"
         '
         'FullOutputMenuItem
         '
         Me.FullOutputMenuItem.CheckOnClick = True
         Me.FullOutputMenuItem.Name = "FullOutputMenuItem"
-        Me.FullOutputMenuItem.Size = New System.Drawing.Size(149, 26)
+        Me.FullOutputMenuItem.Size = New System.Drawing.Size(216, 26)
         Me.FullOutputMenuItem.Text = "Complète"
         '
         'CloseOcamlMenuItem
@@ -314,7 +313,7 @@ Partial Class Main
         '
         'SettingsMenuItem
         '
-        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.AutoresetMenuItem})
+        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
         Me.SettingsMenuItem.Size = New System.Drawing.Size(94, 24)
         Me.SettingsMenuItem.Text = "Paramètres"
@@ -359,13 +358,6 @@ Partial Class Main
         Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
         Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(220, 26)
         Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
-        '
-        'AutoresetMenuItem
-        '
-        Me.AutoresetMenuItem.CheckOnClick = True
-        Me.AutoresetMenuItem.Name = "AutoresetMenuItem"
-        Me.AutoresetMenuItem.Size = New System.Drawing.Size(251, 26)
-        Me.AutoresetMenuItem.Text = "Autoreset"
         '
         'HelpMenuItem
         '
@@ -479,7 +471,6 @@ Partial Class Main
     Friend WithEvents EnableAutoSaveMenuItem As ToolStripMenuItem
     Friend WithEvents AutoSaveDelayMenuItem As ToolStripMenuItem
     Friend WithEvents TabControl As TradeWright.UI.Forms.TabControlExtra
-    Friend WithEvents AutoresetMenuItem As ToolStripMenuItem
     Friend WithEvents StateLabel As ToolStripStatusLabel
     Friend WithEvents ElapsedTimer As Timer
     Friend WithEvents CopierMenuItem As ToolStripMenuItem

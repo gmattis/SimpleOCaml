@@ -24,7 +24,6 @@ Public Class MenuHandler
     Private WithEvents HelpMenuItem As ToolStripMenuItem = Main.HelpMenuItem
     Private WithEvents OcamlDocMenuItem As ToolStripMenuItem = Main.OcamlDocMenuItem
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
-    Private WithEvents AutoresetMenuItem As ToolStripMenuItem = Main.AutoresetMenuItem
     Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopierMenuItem
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
@@ -133,15 +132,6 @@ Public Class MenuHandler
         Catch
             MsgBox("Veuillez entrer un nombre valide")
         End Try
-    End Sub
-
-    Private Sub AutoresetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoresetMenuItem.Click
-        My.Settings.Autoreset = AutoresetMenuItem.Checked
-        If AutoresetMenuItem.Checked Then
-            Main.StateLabel.Text = "Attention, les paramètres seront réinitialisés au prochain redémarrage"
-        Else
-            Main.StateLabel.Text = ""
-        End If
     End Sub
 
     Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
