@@ -243,12 +243,12 @@ Public Class Main
         ElapsedTimer.Enabled = False
         Dim Count As Integer = TabControl.TabCount
         SaveLabel.Text = "Autosaving..."
-        For Each tab As TabPage In TabControl.TabPages
-            If Not tab.Tag(0) = "" Then
-                Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-                Dim savePath As String = tab.Tag(0)
-                System.IO.File.WriteAllText(savePath, CurrentTextbox.Text, System.Text.Encoding.Default)
-                tab.Text = System.IO.Path.GetFileName(savePath)
+        For Each page As TabPage In TabControl.TabPages
+            If page.Tag(0) <> "" And Not page.Tag(1) Then
+                Dim CurrentTextbox As FastColoredTextBox = TryCast(page.Controls.Item(0), FastColoredTextBox)
+                Dim savePath As String = page.Tag(0)
+                CurrentTextbox.SaveToFile(savePath, System.Text.Encoding.Default)
+                page.Text = System.IO.Path.GetFileName(savePath)
             End If
         Next
         SaveLabel.Text = "Sauvegarde automatique effectuée!"
