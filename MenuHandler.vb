@@ -107,8 +107,9 @@ Public Class MenuHandler
     End Sub
 
     Private Sub CloseOcamlMenuItem_Click(sender As Object, e As EventArgs) Handles CloseOcamlMenuItem.Click
-        Main._commandExecutor.Dispose()
-        Main.OutputBox.AppendText("OCaml a été fermé" & vbLf)
+        Main.CommandExecutor.Dispose()
+        Main.OutputBox.AppendText("OCaml a été fermé" & vbLf & "Redémarrage ..." & vbLf & vbLf)
+        Main.CommandExecutor.Start()
     End Sub
 
     Private Sub CleanOutputMenuItem_Click(sender As Object, e As EventArgs) Handles CleanOutputMenuItem.Click

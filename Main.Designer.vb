@@ -330,15 +330,15 @@ Partial Class Main
         '
         Me.LightModeMenuItem.CheckOnClick = True
         Me.LightModeMenuItem.Name = "LightModeMenuItem"
-        Me.LightModeMenuItem.Size = New System.Drawing.Size(198, 26)
+        Me.LightModeMenuItem.Size = New System.Drawing.Size(216, 26)
         Me.LightModeMenuItem.Text = "Light Mode"
         '
         'DarkModeMenuItem
         '
         Me.DarkModeMenuItem.CheckOnClick = True
         Me.DarkModeMenuItem.Name = "DarkModeMenuItem"
-        Me.DarkModeMenuItem.Size = New System.Drawing.Size(198, 26)
-        Me.DarkModeMenuItem.Text = "Dark Mode [WIP]"
+        Me.DarkModeMenuItem.Size = New System.Drawing.Size(216, 26)
+        Me.DarkModeMenuItem.Text = "Dark Mode"
         '
         'AutoSaveMenuItem
         '
@@ -418,6 +418,7 @@ Partial Class Main
         'RefreshTimer
         '
         Me.RefreshTimer.Enabled = True
+        Me.RefreshTimer.Interval = 50
         '
         'Main
         '

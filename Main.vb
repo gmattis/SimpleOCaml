@@ -6,7 +6,7 @@ Public Class Main
     Public LinesToExecute As Integer() = {-1, -1}
     Public CodeToExecute As String = ""
     Public CodeToExecutePos As Integer() = {0, 0}
-    Public WithEvents _commandExecutor As New OCaml()
+    Public WithEvents CommandExecutor As New OCaml()
     Public MenuHandling As MenuHandler
     Public ThemeManager As ThemeManager
     Public LastSaved As Date = Nothing
@@ -51,7 +51,7 @@ Public Class Main
             EnableAutoSaveMenuItem.Checked = True
         End If
 
-        StartOcaml()
+        InitOcaml()
 
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
         If My.Settings.Autosave Then
@@ -66,7 +66,7 @@ Public Class Main
         TabControl.DisplayStyleProvider.ShowTabCloser = True
     End Sub
 
-    Private Sub StartOcaml()
+    Private Sub InitOcaml()
         While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
             MsgBox("Exécutable OCaml non trouvé ! Veuillez spécifier son emplacement")
             OcamlFileDialog.ShowDialog()
@@ -91,7 +91,8 @@ Public Class Main
         For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
             LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
         Next
-        _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
+        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
+        CommandExecutor.Start()
     End Sub
 
     Private Sub Main_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -108,35 +109,27 @@ Public Class Main
         Next
 
         If Not e.Cancel Then
-            _commandExecutor.Dispose()
+            CommandExecutor.Dispose()
         End If
     End Sub
 
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
-        If Not _commandExecutor.GetState() Then
-            Dim LibsPath As String = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
-            For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
-                LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
-            Next
-            _commandExecutor.Start(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
-        End If
         If CodeToExecute <> "" Then
-            OutputBox.AppendText("> ")
             If My.Settings.Detailed_Output Or Not CodeToExecute.Contains(vbLf) Then
                 OutputBox.AppendText(CodeToExecute + vbCrLf)
             Else
                 OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf)) + " ..." + vbCrLf)
             End If
-            _commandExecutor.Execute(Normalise_Text(CodeToExecute))
+            CommandExecutor.Execute(Normalise_Text(CodeToExecute))
             Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             CurrentTextbox.SelectionStart = If(CodeToExecutePos(0) + CodeToExecutePos(1) + 2 > CurrentTextbox.TextLength, CurrentTextbox.TextLength, CodeToExecutePos(0) + CodeToExecutePos(1) + 2)
             CurrentTextbox.DoCaretVisible()
         End If
     End Sub
 
-    Private Delegate Sub processCommandOutputDelegate(ByVal output As String)
-    Private Sub processCommandOutput(ByVal output As String)
+    Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
+    Private Sub ProcessCommandOutput(ByVal output As String)
         OutputBox.AppendText(output)
         OutputBox.ScrollToCaret()
     End Sub
@@ -259,9 +252,10 @@ Public Class Main
     End Sub
 
     Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
-        Dim s = _commandExecutor.Refresh()
+        Dim s = CommandExecutor.Refresh()
         If s <> "" Then
-            processCommandOutput(s)
+            Me.Invoke(New ProcessCommandOutputDelegate(AddressOf ProcessCommandOutput), s)
         End If
     End Sub
+
 End Class

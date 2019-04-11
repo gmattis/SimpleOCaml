@@ -1,21 +1,21 @@
 ﻿Imports FastColoredTextBoxNS
 
 Module Utils
-    Private OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
-    Private KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
+    Private ReadOnly OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
+    Private ReadOnly KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
             "else|end|exception|external|false|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
             "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
             "true|try|type|val|virtual|when|while|with)\b"
-    Private NumericRegex As String = "\b\d+(\.(\d+)?)?"
-    Private CommentRegex As String = "[(][*][\s\S]*?[*][)]"
-    Private StringRegex As String = "[""][\s\S]*?[""]"
-    Private FunctionRegex As String = "(?<=let |rec )(\w|,)*"
+    Private ReadOnly NumericRegex As String = "\b\d+(\.(\d+)?)?"
+    Private ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)]"
+    Private ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
+    Private ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
-        If Not ret.EndsWith(";;") Then ret = ret + ";;"
+        If Not ret.EndsWith(";;") Then ret += ";;"
         ret = ret.Replace(vbCr, " ").Replace(vbLf, "")
         ret = ret.Replace(vbTab, " ")
         Return ret
