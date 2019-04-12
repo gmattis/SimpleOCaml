@@ -13,7 +13,6 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         My.Settings.Upgrade()
 
         MenuHandling = New MenuHandler()

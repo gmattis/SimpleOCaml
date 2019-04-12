@@ -76,7 +76,7 @@ Public Class OCaml
         SyncLock Me
             If readmode Then
                 Dim str = streambuffer.ToString
-                streambuffer.Length = 0
+                streambuffer = New StringBuilder()
                 Return str
             ElseIf ch > -1 Then
                 streambuffer.Append(ChrW(ch))
