@@ -262,11 +262,12 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
+    Private Sub Refresh_Output(sender As Object, e As EventArgs) Handles RefreshTimer.Tick, CommandExecutor.RefreshDemand
         Dim s = CommandExecutor.Refresh()
         If s <> "" Then
             Me.Invoke(New ProcessCommandOutputDelegate(AddressOf ProcessCommandOutput), s)
         End If
     End Sub
+
 
 End Class

@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Threading
 Public Class OCaml
     Implements IDisposable
+    Public Event RefreshDemand(sender As Object, e As EventArgs)
 
     Private WithEvents OcamlProcess As Process
     Private stdoutThread As Thread
@@ -54,7 +55,7 @@ Public Class OCaml
         Try
             If stdoutThread IsNot Nothing Then stdoutThread.Abort()
         Catch ex As Exception
-            Console.WriteLine("ProcessIoManager.StopReadThreads()-Exception caught on stopping stdout thread." & vbLf & "Exception Message:" & vbLf & ex.Message & vbLf & "Stack Trace:" & vbLf & ex.StackTrace)
+            Console.WriteLine("StopReadThreads()-Exception caught on stopping stdout thread." & vbLf & "Exception Message:" & vbLf & ex.Message & vbLf & "Stack Trace:" & vbLf & ex.StackTrace)
         End Try
         stdoutThread = Nothing
     End Sub
@@ -64,11 +65,14 @@ Public Class OCaml
 
             While OcamlProcess IsNot Nothing
                 UpdateStreamBuffer(False, ch)
+                If streambuffer.Length > 123456 Then
+                    RaiseEvent RefreshDemand(Me, Nothing)
+                End If
                 ch = OcamlProcess.StandardOutput.Read()
             End While
 
         Catch ex As Exception
-            Console.WriteLine("ProcessIoManager.ReadStandardOutputThreadMethod()- Exception caught:" & ex.Message & vbLf & "Stack Trace:" & ex.StackTrace)
+            Console.WriteLine("ReadStandardOutputThreadMethod()- Exception caught:" & ex.Message & vbLf & "Stack Trace:" & ex.StackTrace)
         End Try
     End Sub
 
@@ -76,7 +80,7 @@ Public Class OCaml
         SyncLock Me
             If readmode Then
                 Dim str = streambuffer.ToString
-                streambuffer = New StringBuilder()
+                streambuffer.Length = 0
                 Return str
             ElseIf ch > -1 Then
                 streambuffer.Append(ChrW(ch))
