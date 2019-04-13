@@ -121,6 +121,22 @@ Public Class Main
         End If
     End Sub
 
+    Private Sub ToutExecuter(sender As Object, e As EventArgs) Handles ToutExecuterMenuItem.Click
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        Dim currentPosition As Integer = CurrentTextbox.SelectionStart
+        Dim prevPosition As Integer = -1
+        CurrentTextbox.SelectionStart = 0
+        UpdateCodeToExecute()
+        While prevPosition <> CurrentTextbox.SelectionStart
+            prevPosition = CurrentTextbox.SelectionStart
+            Executer(Me, Nothing)
+            Do Until OutputBox.Text.Substring(OutputBox.TextLength - 2, 2) = "# " ' CONDITION A AMELIORER
+                Application.DoEvents()
+            Loop
+        End While
+        CurrentTextbox.SelectionStart = currentPosition
+    End Sub
+
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
@@ -135,7 +151,6 @@ Public Class Main
         Next
     End Sub
 
-
     Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
     Private Sub ProcessCommandOutput(ByVal output As String)
         OutputBox.AppendText(output)
@@ -146,11 +161,12 @@ Public Class Main
     Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Back Then
             Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-            If CurrentTextbox.SelectionStart > 4 Then
+            If CurrentTextbox.SelectionStart > 1 Then
                 Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
                 Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
-                If match.Success Then
-                    Dim numToRemove As Integer = match.Length Mod 4
+                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length Then
+                    CurrentTextbox.DecreaseIndent()
+                    e.SuppressKeyPress = True
                 End If
             End If
         End If
@@ -201,7 +217,7 @@ Public Class Main
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
-            'AddHandler .KeyDown, AddressOf InputBox_KeyDown
+            AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
             AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
         End With
@@ -268,6 +284,4 @@ Public Class Main
             Me.Invoke(New ProcessCommandOutputDelegate(AddressOf ProcessCommandOutput), s)
         End If
     End Sub
-
-
 End Class
