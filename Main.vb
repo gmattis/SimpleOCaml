@@ -121,6 +121,22 @@ Public Class Main
         End If
     End Sub
 
+    Private Sub ToutExecuter(sender As Object, e As EventArgs) Handles ToutExecuterMenuItem.Click
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        Dim currentPosition As Integer = CurrentTextbox.SelectionStart
+        Dim prevPosition As Integer = -1
+        CurrentTextbox.SelectionStart = 0
+        UpdateCodeToExecute()
+        While prevPosition <> CurrentTextbox.SelectionStart
+            prevPosition = CurrentTextbox.SelectionStart
+            Executer(Me, Nothing)
+            Do Until OutputBox.Text.Substring(OutputBox.TextLength - 2, 2) = "# " ' CONDITION A AMELIORER
+                Application.DoEvents()
+            Loop
+        End While
+        CurrentTextbox.SelectionStart = currentPosition
+    End Sub
+
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
@@ -134,7 +150,6 @@ Public Class Main
             End If
         Next
     End Sub
-
 
     Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
     Private Sub ProcessCommandOutput(ByVal output As String)
@@ -269,6 +284,4 @@ Public Class Main
             Me.Invoke(New ProcessCommandOutputDelegate(AddressOf ProcessCommandOutput), s)
         End If
     End Sub
-
-
 End Class

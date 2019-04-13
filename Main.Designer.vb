@@ -43,6 +43,7 @@ Partial Class Main
         Me.RedoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExecuteMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToutExecuterMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartialOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FullOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -165,7 +166,7 @@ Partial Class Main
         Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.OutputBox.Location = New System.Drawing.Point(0, 0)
-        Me.OutputBox.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.OutputBox.Margin = New System.Windows.Forms.Padding(6)
         Me.OutputBox.Name = "OutputBox"
         Me.OutputBox.ReadOnly = True
         Me.OutputBox.Size = New System.Drawing.Size(363, 345)
@@ -268,7 +269,7 @@ Partial Class Main
         '
         'OcamlMenuItem
         '
-        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem})
+        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.ToutExecuterMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem})
         Me.OcamlMenuItem.Name = "OcamlMenuItem"
         Me.OcamlMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OcamlMenuItem.Text = "OCaml"
@@ -277,14 +278,22 @@ Partial Class Main
         '
         Me.ExecuteMenuItem.Name = "ExecuteMenuItem"
         Me.ExecuteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.[Return]), System.Windows.Forms.Keys)
-        Me.ExecuteMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.ExecuteMenuItem.Size = New System.Drawing.Size(240, 22)
         Me.ExecuteMenuItem.Text = "Exécuter"
+        '
+        'ToutExecuterMenuItem
+        '
+        Me.ToutExecuterMenuItem.Name = "ToutExecuterMenuItem"
+        Me.ToutExecuterMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.[Return]), System.Windows.Forms.Keys)
+        Me.ToutExecuterMenuItem.Size = New System.Drawing.Size(240, 22)
+        Me.ToutExecuterMenuItem.Text = "Tout exécuter"
         '
         'OutputMenuItem
         '
         Me.OutputMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartialOutputMenuItem, Me.FullOutputMenuItem})
         Me.OutputMenuItem.Name = "OutputMenuItem"
-        Me.OutputMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.OutputMenuItem.Size = New System.Drawing.Size(240, 22)
         Me.OutputMenuItem.Text = "Sortie"
         '
         'PartialOutputMenuItem
@@ -304,7 +313,7 @@ Partial Class Main
         'CloseOcamlMenuItem
         '
         Me.CloseOcamlMenuItem.Name = "CloseOcamlMenuItem"
-        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(240, 22)
         Me.CloseOcamlMenuItem.Text = "Fermer"
         '
         'SettingsMenuItem
@@ -472,4 +481,5 @@ Partial Class Main
     Friend WithEvents RedoMenuItem As ToolStripMenuItem
     Friend WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem
     Friend WithEvents RefreshTimer As Timer
+    Friend WithEvents ToutExecuterMenuItem As ToolStripMenuItem
 End Class
