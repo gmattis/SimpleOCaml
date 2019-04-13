@@ -164,7 +164,7 @@ Public Class Main
             If CurrentTextbox.SelectionStart > 1 Then
                 Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
                 Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
-                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length Then
+                If match.Length > 0 Then
                     CurrentTextbox.DecreaseIndent()
                     e.SuppressKeyPress = True
                 End If
