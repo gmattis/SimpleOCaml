@@ -28,6 +28,7 @@ Public Class MenuHandler
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
     Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.ToutEnregistrerMenuItem
+    Private WithEvents ReductionCodeMenuItem As ToolStripMenuItem = Main.ReductionCodeMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -126,9 +127,13 @@ Public Class MenuHandler
 
     Private Sub AutoSaveDelayMenuItem_Click(sender As Object, e As EventArgs) Handles AutoSaveDelayMenuItem.Click
         Try
-            Dim Delay As Integer = InputBox("Veuillez définir le délai en secondes entre deux sauvegardes automatiques", "Délai de sauvegarde", My.Settings.Autosave_delay)
-            My.Settings.Autosave_delay = Delay
-            Main.AutoSaveTimer.Interval = Delay * 1000
+            Dim Delay As Integer = InputBox("Veuillez définir le délai en secondes entre deux sauvegardes automatiques (minimum 10)", "Délai de sauvegarde", My.Settings.Autosave_delay)
+            If Delay < 10 Then
+                MsgBox("Veuillez entrer un nombre supérieur à 10")
+            Else
+                My.Settings.Autosave_delay = Delay
+                Main.AutoSaveTimer.Interval = Delay * 1000
+            End If
         Catch
             MsgBox("Veuillez entrer un nombre valide")
         End Try
@@ -157,5 +162,10 @@ Public Class MenuHandler
                 page.Text = System.IO.Path.GetFileName(page.Tag(0))
             End If
         Next
+    End Sub
+
+    Private Sub ReductionCodeMenuItem_Click(sender As Object, e As EventArgs) Handles ReductionCodeMenuItem.Click
+        My.Settings.Code_Folding = Not My.Settings.Code_Folding
+        TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Range.ClearFoldingMarkers()
     End Sub
 End Class

@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 Imports FastColoredTextBoxNS
 
 Public Class Main
@@ -13,23 +12,28 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Settings init
         My.Settings.Upgrade()
 
+        'Class inits
         MenuHandling = New MenuHandler()
         ThemeManager = New ThemeManager()
 
+        'TabControl init
+        TabControl.DisplayStyleProvider.ShowTabCloser = True
         AddNewPage()
+        AddHandler TabControl.TabClosing, AddressOf OnTabClosing
+        AddHandler TabControl.TabClosed, AddressOf OnTabClosed
 
+        'OutputBox init
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
         OutputBox.SelectionTabs = {32, 64, 96, 128, 160, 192, 224, 256, 288, 320}
 
-        If My.Settings.Detailed_Output Then
-            FullOutputMenuItem.Enabled = False
-            FullOutputMenuItem.Checked = True
-        Else
-            PartialOutputMenuItem.Enabled = False
-            PartialOutputMenuItem.Checked = True
-        End If
+        'MenuItems init
+        FullOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
+        FullOutputMenuItem.Checked = My.Settings.Detailed_Output
+        PartialOutputMenuItem.Enabled = My.Settings.Detailed_Output
+        PartialOutputMenuItem.Checked = Not My.Settings.Detailed_Output
 
         If My.Settings.Theme = ThemeManager.Themes.DarkTheme Then
             DarkModeMenuItem.Enabled = False
@@ -39,23 +43,14 @@ Public Class Main
             LightModeMenuItem.Checked = True
         End If
 
-        If My.Settings.Autosave Then
-            EnableAutoSaveMenuItem.Checked = True
-        End If
-
-        InitOcaml()
-
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
         End If
         ElapsedTimer.Start()
 
-        AddHandler TabControl.TabClosing, AddressOf OnTabClosing
-        AddHandler TabControl.TabClosed, AddressOf OnTabClosed
-        AddHandler TabControl.DrawItem, AddressOf TabControl_DrawItem
-
-        TabControl.DisplayStyleProvider.ShowTabCloser = True
+        'OCaml init
+        InitOcaml()
     End Sub
 
     Private Sub InitOcaml()
@@ -164,7 +159,7 @@ Public Class Main
             If CurrentTextbox.SelectionStart > 1 Then
                 Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
                 Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
-                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length Then
+                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length And match.Length > 0 Then
                     CurrentTextbox.DecreaseIndent()
                     e.SuppressKeyPress = True
                 End If
@@ -200,19 +195,24 @@ Public Class Main
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Code a exécuter
         UpdateCodeToExecute()
-        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        CurrentTextbox.Range.ClearFoldingMarkers()
-        Dim isOpened As Boolean = False
-        For i As Integer = 0 To CurrentTextbox.LinesCount - 1
-            Dim line As Line = CurrentTextbox(i)
-            If Not isOpened AndAlso line.Text.Contains("let") Then
-                line.FoldingStartMarker = line.Text
-                isOpened = True
-            ElseIf line.Text.Contains(";;") Then
-                line.FoldingEndMarker = ";;"
-                isOpened = False
-            End If
-        Next
+
+        ' Code Folding
+        If My.Settings.Code_Folding Then
+            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            CurrentTextbox.Range.ClearFoldingMarkers()
+            Dim isOpened As Boolean = False
+            For i As Integer = 0 To CurrentTextbox.LinesCount - 1
+                Dim line As Line = CurrentTextbox(i)
+                If Not isOpened AndAlso line.Text.Contains("let") Then
+                    line.FoldingStartMarker = line.Text
+                    isOpened = True
+                End If
+                If line.Text.Contains(";;") Then
+                    line.FoldingEndMarker = ";;"
+                    isOpened = False
+                End If
+            Next
+        End If
     End Sub
 
     Public Sub AddNewPage()

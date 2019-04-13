@@ -185,6 +185,18 @@ Namespace My
                 Me("Font_Size") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property Code_Folding() As Boolean
+            Get
+                Return CType(Me("Code_Folding"),Boolean)
+            End Get
+            Set
+                Me("Code_Folding") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

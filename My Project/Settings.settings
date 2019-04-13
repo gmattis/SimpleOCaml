@@ -35,5 +35,8 @@
     <Setting Name="Font_Size" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">11</Value>
     </Setting>
+    <Setting Name="Code_Folding" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -55,6 +55,7 @@ Partial Class Main
         Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReductionCodeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -300,14 +301,14 @@ Partial Class Main
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.PartialOutputMenuItem.Text = "Partielle"
         '
         'FullOutputMenuItem
         '
         Me.FullOutputMenuItem.CheckOnClick = True
         Me.FullOutputMenuItem.Name = "FullOutputMenuItem"
-        Me.FullOutputMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.FullOutputMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.FullOutputMenuItem.Text = "Complète"
         '
         'CloseOcamlMenuItem
@@ -318,7 +319,7 @@ Partial Class Main
         '
         'SettingsMenuItem
         '
-        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem})
+        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.ReductionCodeMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
         Me.SettingsMenuItem.Size = New System.Drawing.Size(78, 20)
         Me.SettingsMenuItem.Text = "Paramètres"
@@ -334,14 +335,14 @@ Partial Class Main
         '
         Me.LightModeMenuItem.CheckOnClick = True
         Me.LightModeMenuItem.Name = "LightModeMenuItem"
-        Me.LightModeMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.LightModeMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.LightModeMenuItem.Text = "Light Mode"
         '
         'DarkModeMenuItem
         '
         Me.DarkModeMenuItem.CheckOnClick = True
         Me.DarkModeMenuItem.Name = "DarkModeMenuItem"
-        Me.DarkModeMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.DarkModeMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DarkModeMenuItem.Text = "Dark Mode"
         '
         'AutoSaveMenuItem
@@ -353,7 +354,9 @@ Partial Class Main
         '
         'EnableAutoSaveMenuItem
         '
+        Me.EnableAutoSaveMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Autosave
         Me.EnableAutoSaveMenuItem.CheckOnClick = True
+        Me.EnableAutoSaveMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.EnableAutoSaveMenuItem.Name = "EnableAutoSaveMenuItem"
         Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(179, 22)
         Me.EnableAutoSaveMenuItem.Text = "Activer"
@@ -363,6 +366,15 @@ Partial Class Main
         Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
         Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(179, 22)
         Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
+        '
+        'ReductionCodeMenuItem
+        '
+        Me.ReductionCodeMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Code_Folding
+        Me.ReductionCodeMenuItem.CheckOnClick = True
+        Me.ReductionCodeMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ReductionCodeMenuItem.Name = "ReductionCodeMenuItem"
+        Me.ReductionCodeMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ReductionCodeMenuItem.Text = "Réduction de code"
         '
         'HelpMenuItem
         '
@@ -482,4 +494,5 @@ Partial Class Main
     Friend WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem
     Friend WithEvents RefreshTimer As Timer
     Friend WithEvents ToutExecuterMenuItem As ToolStripMenuItem
+    Friend WithEvents ReductionCodeMenuItem As ToolStripMenuItem
 End Class
