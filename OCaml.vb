@@ -65,7 +65,7 @@ Public Class OCaml
 
             While OcamlProcess IsNot Nothing
                 UpdateStreamBuffer(False, ch)
-                If streambuffer.Length > 123456 Then
+                If streambuffer.Length > 16384 Then
                     RaiseEvent RefreshDemand(Me, Nothing)
                 End If
                 ch = OcamlProcess.StandardOutput.Read()
