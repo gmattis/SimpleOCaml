@@ -146,11 +146,12 @@ Public Class Main
     Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Back Then
             Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-            If CurrentTextbox.SelectionStart > 4 Then
+            If CurrentTextbox.SelectionStart > 1 Then
                 Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
                 Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
-                If match.Success Then
-                    Dim numToRemove As Integer = match.Length Mod 4
+                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length Then
+                    CurrentTextbox.DecreaseIndent()
+                    e.SuppressKeyPress = True
                 End If
             End If
         End If
@@ -201,7 +202,7 @@ Public Class Main
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
-            'AddHandler .KeyDown, AddressOf InputBox_KeyDown
+            AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
             AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
         End With
