@@ -200,6 +200,19 @@ Public Class Main
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Code a exécuter
         UpdateCodeToExecute()
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        CurrentTextbox.Range.ClearFoldingMarkers()
+        Dim isOpened As Boolean = False
+        For i As Integer = 0 To CurrentTextbox.LinesCount - 1
+            Dim line As Line = CurrentTextbox(i)
+            If Not isOpened AndAlso line.Text.Contains("let") Then
+                line.FoldingStartMarker = line.Text
+                isOpened = True
+            ElseIf line.Text.Contains(";;") Then
+                line.FoldingEndMarker = ";;"
+                isOpened = False
+            End If
+        Next
     End Sub
 
     Public Sub AddNewPage()

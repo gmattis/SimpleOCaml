@@ -36,7 +36,8 @@ Module Utils
                 End If
             End While
             Return res
-        Else Return New List(Of Integer)
+        Else
+            Return New List(Of Integer)
         End If
     End Function
 
