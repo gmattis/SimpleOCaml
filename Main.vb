@@ -198,12 +198,11 @@ Public Class Main
         Dim isOpened As Boolean = False
         For i As Integer = 0 To CurrentTextbox.LinesCount - 1
             Dim line As Line = CurrentTextbox(i)
-            If Not isOpened Then
-                If line.Text.Contains("let") Then
-                    line.FoldingStartMarker = line.Text
-                    isOpened = True
-                End If
-            ElseIf line.Text.Contains(";;") Then
+            If Not isOpened AndAlso line.Text.Contains("let") Then
+                line.FoldingStartMarker = line.Text
+                isOpened = True
+            End If
+            If isOpened AndAlso line.Text.Contains(";;") Then
                 line.FoldingEndMarker = ";;"
                 isOpened = False
             End If
