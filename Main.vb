@@ -192,26 +192,31 @@ Public Class Main
         End If
     End Sub
 
+    Private Sub DrawCodeFoldingMarkers()
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        CurrentTextbox.Range.ClearFoldingMarkers()
+        Dim isOpened As Boolean = False
+        For i As Integer = 0 To CurrentTextbox.LinesCount - 1
+            Dim line As Line = CurrentTextbox(i)
+            If Not isOpened Then
+                If line.Text.Contains("let") Then
+                    line.FoldingStartMarker = line.Text
+                    isOpened = True
+                End If
+            ElseIf line.Text.Contains(";;") Then
+                line.FoldingEndMarker = ";;"
+                isOpened = False
+            End If
+        Next
+    End Sub
+
     Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
         ' Code a exécuter
         UpdateCodeToExecute()
 
         ' Code Folding
         If My.Settings.Code_Folding Then
-            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-            CurrentTextbox.Range.ClearFoldingMarkers()
-            Dim isOpened As Boolean = False
-            For i As Integer = 0 To CurrentTextbox.LinesCount - 1
-                Dim line As Line = CurrentTextbox(i)
-                If Not isOpened AndAlso line.Text.Contains("let") Then
-                    line.FoldingStartMarker = line.Text
-                    isOpened = True
-                End If
-                If line.Text.Contains(";;") Then
-                    line.FoldingEndMarker = ";;"
-                    isOpened = False
-                End If
-            Next
+            DrawCodeFoldingMarkers()
         End If
     End Sub
 
@@ -265,6 +270,7 @@ Public Class Main
             'g.DrawString(strTitle, TabControl.Font, br, r, sf)
         End If
     End Sub
+
 
     Private Sub AutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles AutoSaveTimer.Tick
         ElapsedTimer.Stop()
