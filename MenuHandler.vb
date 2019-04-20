@@ -103,7 +103,7 @@ Public Class MenuHandler
     End Sub
 
     Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click
-        MsgBox("Un IDE OCaml, développé par Mattis GOLLIET et Thomas MICHEL", Title:="SimpleOCaml")
+        MsgBox("Un IDE OCaml, développé par Mattis GOLLIET et Thomas MICHEL", Title:="SimpleOCaml v1.0")
     End Sub
 
     Private Sub CloseOcamlMenuItem_Click(sender As Object, e As EventArgs) Handles CloseOcamlMenuItem.Click

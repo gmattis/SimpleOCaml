@@ -152,30 +152,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0.5.0")>  _
-        Public Property Version() As String
-            Get
-                Return CType(Me("Version"),String)
-            End Get
-            Set
-                Me("Version") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property Autoreset() As Boolean
-            Get
-                Return CType(Me("Autoreset"),Boolean)
-            End Get
-            Set
-                Me("Autoreset") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("11")>  _
         Public Property Font_Size() As Short
             Get
