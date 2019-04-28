@@ -33,7 +33,6 @@ C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.exe
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.pdb
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\simpleOCaml.xml
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\FastColoredTextBox.dll
-C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\TradeWright.TabControlExtra.dll
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\FastColoredTextBox.xml
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\bin\Debug\TradeWright.TabControlExtra.pdb
 C:\Users\matti\source\repos\simpleOCaml\simpleOCaml\obj\Debug\simpleOCaml.Main.resources

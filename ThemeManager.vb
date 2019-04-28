@@ -106,7 +106,7 @@ Public Class ThemeManager
                 .ForeColor = OutputColor
             End With
             With Main.TabControl
-                .DisplayStyleProvider = TradeWright.UI.Forms.TabStyleDefaultProvider.CreateProvider(Main.TabControl)
+                .DisplayStyleProvider = TradeWright.UI.Forms.TabStyleProvider.CreateProvider(Main.TabControl)
                 .DisplayStyleProvider.ShowTabCloser = True
             End With
 

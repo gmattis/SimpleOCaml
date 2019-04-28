@@ -21,7 +21,7 @@ Public Class Main
 
         'TabControl init
         TabControl.DisplayStyleProvider.ShowTabCloser = True
-        AddNewPage()
+        AddNewPage(False)
         AddHandler TabControl.TabClosing, AddressOf OnTabClosing
         AddHandler TabControl.TabClosed, AddressOf OnTabClosed
 
@@ -104,7 +104,7 @@ Public Class Main
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
         If CodeToExecute <> "" Then
             OutputBox.SelectionColor = ThemeManager.OutputCommandColor
-            If My.Settings.Detailed_Output Or Not CodeToExecute.Contains(vbLf) Then
+            If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
                 OutputBox.AppendText(CodeToExecute + vbLf)
             Else
                 OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
@@ -174,7 +174,7 @@ Public Class Main
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
                 If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({expr.Index, expr.Length}) Then
-                    CodeToExecute = code
+                    CodeToExecute = Utils.Normalise_Text(code)
                     CodeToExecutePos = {expr.Index, expr.Length}
                     If Not LinesToExecute.SequenceEqual({CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}) Then
                         LinesToExecute = {CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}
@@ -219,8 +219,8 @@ Public Class Main
         End If
     End Sub
 
-    Public Sub AddNewPage()
-        TabControl.TabPages.Add("*")
+    Public Sub AddNewPage(opened As Boolean)
+        TabControl.TabPages.Add("*untitled")
         TabControl.SelectTab(TabControl.TabCount - 1)
         TabControl.SelectedTab.Tag = {"", False}
         TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
@@ -236,7 +236,9 @@ Public Class Main
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
-            AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
+            If Not opened Then
+                AddHandler .TextChanged, AddressOf InputBoxTextChanged
+            End If
         End With
         ThemeManager.ApplyTabPageStyle(TabControl.SelectedTab)
     End Sub

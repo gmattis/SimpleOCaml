@@ -67,17 +67,18 @@ Public Class MenuHandler
     End Sub
 
     Private Sub OnOpenFile(sender As Object, e As EventArgs) Handles OpenFileDialog.FileOk
-        Main.AddNewPage()
+        Main.AddNewPage(True)
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim openPath As String = OpenFileDialog.FileName
         CurrentTextbox.OpenFile(openPath, System.Text.Encoding.Default)
         Main.TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
         Main.TabControl.SelectedTab.Tag(0) = openPath
         Main.TabControl.SelectedTab.Tag(1) = True
+        AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
     End Sub
 
     Private Sub NewMenuItem_Click(sender As Object, e As EventArgs) Handles NewMenuItem.Click
-        Main.AddNewPage()
+        Main.AddNewPage(False)
     End Sub
 
     Private Sub FullOutputMenuItem_Click(sender As Object, e As EventArgs) Handles FullOutputMenuItem.Click

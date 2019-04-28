@@ -1,4 +1,5 @@
-﻿Imports FastColoredTextBoxNS
+﻿Imports System.Text.RegularExpressions
+Imports FastColoredTextBoxNS
 
 Module Utils
     Public ReadOnly OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
@@ -9,15 +10,18 @@ Module Utils
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
             "true|try|type|val|virtual|when|while|with)\b"
     Public ReadOnly NumericRegex As String = "\b\d+(\.(\d+)?)?"
-    Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)]"
+    Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)][\s]*"
     Public ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
     Public ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str
         If Not ret.EndsWith(";;") Then ret += ";;"
-        ret = ret.Replace(vbCr, " ").Replace(vbLf, "")
-        ret = ret.Replace(vbTab, " ")
+        Dim matches As MatchCollection = Regex.Matches(ret, CommentRegex)
+        For i As Integer = matches.Count - 1 To 0 Step -1
+            Dim match As Match = matches.Item(i)
+            ret = ret.Substring(0, match.Index) & ret.Substring(match.Index + match.Length, ret.Length - 1)
+        Next
         Return ret
     End Function
 
@@ -52,7 +56,7 @@ Module Utils
     End Function
 
     Public Sub OnTabClosing(sender As Object, e As TabControlCancelEventArgs)
-        If Not e.TabPage.Tag(1) Then
+        If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text <> "" AndAlso Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
             If e.TabPage.Tag(0) = "" Then
                 result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
@@ -76,7 +80,7 @@ Module Utils
 
     Public Sub OnTabClosed(sender As Object, e As TabControlEventArgs)
         If Main.TabControl.TabCount = 0 Then
-            Main.AddNewPage()
+            Main.AddNewPage(False)
         End If
     End Sub
 
@@ -84,7 +88,6 @@ Module Utils
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()
 
-        ' Ancienne syntaxe: New Style() {Main.ThemeManager.<LeStyle>}
         TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
         TextRange.ClearStyle(Main.ThemeManager.StringStyle)
         CurrentRange.ClearStyle(Main.ThemeManager.NumericStyle)
