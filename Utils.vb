@@ -84,6 +84,23 @@ Module Utils
         End If
     End Sub
 
+    Public Sub UpdateTextStyle(tb As FastColoredTextBox)
+        Dim TextRange As Range = tb.Range.tb.Range()
+        TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
+        TextRange.ClearStyle(Main.ThemeManager.StringStyle)
+        TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
+        TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
+        TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
+        TextRange.ClearStyle(Main.ThemeManager.FunctionStyle)
+
+        TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
+        TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
+        TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
+        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
+        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
+        TextRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
+    End Sub
+
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()

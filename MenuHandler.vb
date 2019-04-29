@@ -74,6 +74,7 @@ Public Class MenuHandler
         Main.TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
         Main.TabControl.SelectedTab.Tag(0) = openPath
         Main.TabControl.SelectedTab.Tag(1) = True
+        UpdateTextStyle(CurrentTextbox)
         AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
     End Sub
 
