@@ -78,7 +78,7 @@ Public Class OCaml
 
     Private Function UpdateStreamBuffer(readmode As Boolean, Optional ch As Integer = -1)
         SyncLock Me
-            If readmode Then
+            If readmode And streambuffer IsNot Nothing Then
                 Dim str = streambuffer.ToString
                 streambuffer.Length = 0
                 Return str
