@@ -56,7 +56,7 @@ Module Utils
     End Function
 
     Public Sub OnTabClosing(sender As Object, e As TabControlCancelEventArgs)
-        If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text <> "" AndAlso Not e.TabPage.Tag(1) Then
+        If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text.Trim() <> "" AndAlso Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
             If e.TabPage.Tag(0) = "" Then
                 result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
