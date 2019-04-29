@@ -1,7 +1,6 @@
 # simpleOcaml
 A simple OCaml IDE  
-DarkTheme is finally here!  
-First release in a few days.  
+v1.1 "MakeOCamlGreatAgain" release is out!  
 #
 Using:  
 * FastColoredTextBox Control: https://github.com/PavelTorgashov/FastColoredTextBox  
