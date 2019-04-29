@@ -154,8 +154,8 @@ Public Class Main
 
     ''' Le reste
     Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         If e.KeyCode = Keys.Back Then
-            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             If CurrentTextbox.SelectionStart > 1 Then
                 Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
                 Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
@@ -164,6 +164,11 @@ Public Class Main
                     e.SuppressKeyPress = True
                 End If
             End If
+        End If
+
+        If e.KeyCode = Keys.Space Or e.KeyCode = Keys.Enter Then
+            CurrentTextbox.EndAutoUndo()
+            CurrentTextbox.BeginAutoUndo()
         End If
     End Sub
 
@@ -232,6 +237,7 @@ Public Class Main
             .Dock = DockStyle.Fill
             .Select()
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
+            .BeginAutoUndo()
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .KeyDown, AddressOf InputBox_KeyDown
