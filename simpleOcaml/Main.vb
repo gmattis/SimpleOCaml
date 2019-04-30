@@ -64,7 +64,7 @@ Public Class Main
                 OcamlFileDialog.Reset()
             End If
         End While
-        While Not System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
+        While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
             MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
             LibrariesBrowserDialog.ShowDialog()
             If LibrariesBrowserDialog.SelectedPath = "" Then

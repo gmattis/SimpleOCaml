@@ -92,7 +92,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\lib")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute(".\")>  _
         Public Property Ocaml_Lib() As String
             Get
                 Return CType(Me("Ocaml_Lib"),String)
@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\bin\ocaml.exe")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml.exe")>  _
         Public Property Ocaml_Exe() As String
             Get
                 Return CType(Me("Ocaml_Exe"),String)

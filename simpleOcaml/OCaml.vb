@@ -104,7 +104,9 @@ Public Class OCaml
     Protected Overridable Sub Dispose(ByVal disposing As Boolean)
         If disposing Then
             If OcamlProcess IsNot Nothing Then
-                OcamlProcess.Kill()
+                If Not OcamlProcess.HasExited Then
+                    OcamlProcess.Kill()
+                End If
                 OcamlProcess.Dispose()
                 OcamlProcess = Nothing
             End If
