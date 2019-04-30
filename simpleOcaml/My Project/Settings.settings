@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="Font_Family" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Lucida Console</Value>
+    </Setting>
+    <Setting Name="Font_Style" Type="System.Drawing.FontStyle" Scope="User">
+      <Value Profile="(Default)">Regular</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Ocaml_Lib" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\ocaml64\miniocaml\lib</Value>
+    </Setting>
+    <Setting Name="Detailed_Output" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Ocaml_Exe" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\ocaml64\miniocaml\bin\ocaml.exe</Value>
+    </Setting>
+    <Setting Name="Autosave" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Autosave_delay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="Font_Size" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">11</Value>
+    </Setting>
+    <Setting Name="Code_Folding" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

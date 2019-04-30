@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "simpleOCaml", "simpleOCaml.vbproj", "{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD8B83B3-ACA1-419F-BA09-E7520FBCD9FC}
+	EndGlobalSection
+EndGlobal
