@@ -54,30 +54,38 @@ Public Class Main
     End Sub
 
     Private Sub InitOcaml()
-        While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
-            MsgBox("Exécutable OCaml non trouvé ! Veuillez spécifier son emplacement")
-            OcamlFileDialog.ShowDialog()
-            If OcamlFileDialog.FileName = "" Then
-                End
-            Else
-                My.Settings.Ocaml_Exe = OcamlFileDialog.FileName
-                OcamlFileDialog.Reset()
-            End If
-        End While
-        While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
-            MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
-            LibrariesBrowserDialog.ShowDialog()
-            If LibrariesBrowserDialog.SelectedPath = "" Then
-                End
-            Else
-                My.Settings.Ocaml_Lib = LibrariesBrowserDialog.SelectedPath
-                LibrariesBrowserDialog.Reset()
-            End If
-        End While
-        Dim LibsPath As String = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
-        For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
-            LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
-        Next
+        Dim LibsPath As String
+
+        If Utils.IsLinux Then
+            My.Settings.Ocaml_Exe = "/usr/bin/ocaml"
+            My.Settings.Ocaml_Lib = ""
+            LibsPath = ""
+        Else
+            While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
+                MsgBox("Exécutable OCaml non trouvé ! Veuillez spécifier son emplacement")
+                OcamlFileDialog.ShowDialog()
+                If OcamlFileDialog.FileName = "" Then
+                    End
+                Else
+                    My.Settings.Ocaml_Exe = OcamlFileDialog.FileName
+                    OcamlFileDialog.Reset()
+                End If
+            End While
+            While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
+                MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
+                LibrariesBrowserDialog.ShowDialog()
+                If LibrariesBrowserDialog.SelectedPath = "" Then
+                    End
+                Else
+                    My.Settings.Ocaml_Lib = LibrariesBrowserDialog.SelectedPath
+                    LibrariesBrowserDialog.Reset()
+                End If
+            End While
+            LibsPath = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
+            For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
+                LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
+            Next
+        End If
         CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
         CommandExecutor.Start()
     End Sub

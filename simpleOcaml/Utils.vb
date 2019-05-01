@@ -139,4 +139,11 @@ Module Utils
             Return False
         End If
     End Function
+
+    Public ReadOnly Property IsLinux As Boolean
+        Get
+            Dim p As PlatformID = Environment.OSVersion.Platform
+            Return (p = PlatformID.Unix) Or (p = PlatformID.MacOSX)
+        End Get
+    End Property
 End Module
