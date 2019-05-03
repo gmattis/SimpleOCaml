@@ -31,7 +31,6 @@ Public Class Main
 
         'OutputBox init
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
-        OutputBox.SelectionTabs = {32, 64, 96, 128, 160, 192, 224, 256, 288, 320}
 
         'MenuItems init
         FullOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
@@ -320,6 +319,13 @@ Public Class Main
         Dim s = CommandExecutor.Refresh()
         If s <> "" Then
             Me.Invoke(New ProcessCommandOutputDelegate(AddressOf ProcessCommandOutput), s)
+        End If
+    End Sub
+
+    Private Sub OutputBox_TextAdded(sender As Object, e As EventArgs) Handles OutputBox.TextChanged
+        Dim length As Integer = OutputBox.TextLength
+        If length > 362144 Then '2^18 + 100.000, create a little delay before cleaning
+            OutputBox.Text = OutputBox.Text.Substring(length - 262144)
         End If
     End Sub
 End Class

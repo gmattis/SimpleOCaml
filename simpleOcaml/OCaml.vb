@@ -16,6 +16,7 @@ Public Class OCaml
         Me.args = arguments
         Me.streambuffer = New StringBuilder()
     End Sub
+
     Public Sub Start()
         If exePath = "" Then
             Throw New Exception("No path to OCaml executable given.")
@@ -59,6 +60,7 @@ Public Class OCaml
         End Try
         stdoutThread = Nothing
     End Sub
+
     Private Sub ReadStandardOutputThreadMethod()
         Try
             Dim ch As Integer = OcamlProcess.StandardOutput.Read()
@@ -117,5 +119,4 @@ Public Class OCaml
         Dispose(True)
         GC.SuppressFinalize(Me)
     End Sub
-
 End Class
