@@ -26,6 +26,7 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer = New System.Windows.Forms.SplitContainer()
         Me.TabControl = New TradeWright.UI.Forms.TabControlExtra()
+        Me.OutputBox = New System.Windows.Forms.RichTextBox()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
@@ -66,7 +67,6 @@ Partial Class Main
         Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ElapsedTimer = New System.Windows.Forms.Timer(Me.components)
         Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.OutputBox = New System.Windows.Forms.RichTextBox()
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
@@ -161,6 +161,17 @@ Partial Class Main
         Me.TabControl.SelectedIndex = 0
         Me.TabControl.Size = New System.Drawing.Size(402, 345)
         Me.TabControl.TabIndex = 0
+        '
+        'OutputBox
+        '
+        Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.OutputBox.Location = New System.Drawing.Point(0, 0)
+        Me.OutputBox.Name = "OutputBox"
+        Me.OutputBox.ReadOnly = True
+        Me.OutputBox.Size = New System.Drawing.Size(363, 345)
+        Me.OutputBox.TabIndex = 0
+        Me.OutputBox.Text = ""
         '
         'SaveFileDialog
         '
@@ -415,17 +426,6 @@ Partial Class Main
         '
         Me.RefreshTimer.Enabled = True
         Me.RefreshTimer.Interval = 50
-        '
-        'OutputBox
-        '
-        Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.OutputBox.Location = New System.Drawing.Point(0, 0)
-        Me.OutputBox.Name = "OutputBox"
-        Me.OutputBox.ReadOnly = True
-        Me.OutputBox.Size = New System.Drawing.Size(363, 345)
-        Me.OutputBox.TabIndex = 0
-        Me.OutputBox.Text = ""
         '
         'Main
         '

@@ -104,8 +104,12 @@ Public Class MenuHandler
         Main.ThemeManager.SwitchTheme(ThemeManager.Themes.LightTheme)
     End Sub
 
+    Private Sub OcamlDocMenuItem_Click(sender As Object, e As EventArgs) Handles OcamlDocMenuItem.Click
+        Process.Start("http://caml.inria.fr/pub/docs/manual-ocaml/")
+    End Sub
+
     Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click
-        MsgBox("Un IDE OCaml, développé par Mattis GOLLIET et Thomas MICHEL", Title:="SimpleOCaml v1.0")
+        MsgBox("Un IDE OCaml, développé par Mattis GOLLIET, Thomas MICHEL et Bastien PASCAL.", Title:="SimpleOCaml v1.1")
     End Sub
 
     Private Sub CloseOcamlMenuItem_Click(sender As Object, e As EventArgs) Handles CloseOcamlMenuItem.Click
