@@ -9,6 +9,8 @@ Please note that for the moment, it will only use OCaml executables installed wi
 #
 Using:  
 * FastColoredTextBox Control: https://github.com/PavelTorgashov/FastColoredTextBox  
-* TabControl-Extra Control: https://github.com/tradewright/tabcontrol-extra
+* TabControl-Extra Control: https://github.com/tradewright/tabcontrol-extra  
+  
+You should use included FastColoredTextBox dll instead of compiling it, as it is a modified version of it to enable using it with mono (clone my fork to compile it)  
 #
 Released under the GNU General Public License v3.0 (GPLv3): [License](https://github.com/gmattis/simpleOcaml/blob/master/LICENSE)
