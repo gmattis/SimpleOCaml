@@ -12,6 +12,8 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Utils.CheckUpdate()
+
         If Utils.IsLinux Then
             MsgBox("Attention : Il semble que vous lancez le projet depuis une distribution Unix. OCaml sera chargé depuis '/usr/bin/ocaml'.")
         End If

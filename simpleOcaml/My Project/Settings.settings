@@ -32,5 +32,8 @@
     <Setting Name="Code_Folding" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Version" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v1.1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

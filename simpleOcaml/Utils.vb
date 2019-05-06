@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports System.Web.Script.Serialization
 Imports FastColoredTextBoxNS
 
 Module Utils
@@ -146,4 +147,23 @@ Module Utils
             Return (p = PlatformID.Unix) Or (p = PlatformID.MacOSX)
         End Get
     End Property
+
+    Public Sub CheckUpdate()
+        Dim webClient As New System.Net.WebClient
+        webClient.Headers.Add("User-Agent", "request")
+        Try
+            Dim result As String = webClient.DownloadString("https://api.github.com/repos/gmattis/simpleocaml/releases/latest")
+            Dim jss As New JavaScriptSerializer()
+            Dim dict As Dictionary(Of String, Object) = jss.Deserialize(Of Dictionary(Of String, Object))(result)
+            Dim ver As String = Nothing, html_url As String = Nothing
+            If dict.TryGetValue("tag_name", ver) AndAlso dict.TryGetValue("html_url", html_url) AndAlso ver > My.Settings.Version Then
+                Dim boxResult As MsgBoxResult = MsgBox("Une nouvelle version est disponible, voulez-vous y accéder ?", MsgBoxStyle.YesNo, "Nouvelle version disponible !")
+                If boxResult = MsgBoxResult.Yes Then
+                    Process.Start(html_url)
+                End If
+            End If
+        Catch e As Exception
+            Console.WriteLine("Exception while fetching for updates: " & e.Message)
+        End Try
+    End Sub
 End Module
