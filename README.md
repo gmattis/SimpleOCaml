@@ -3,9 +3,10 @@ A simple OCaml IDE
 v1.1 release is out!  
 ## Windows :
 Simply clone the repository and build the project (tested only with Visual Studio)  
+If you just want to try it, check the releases!  
 ## Linux :
-I'm trying to add Linux systems support. You can build the project with msbuild and run it with mono (tested on Debian 8, mono 5.20.1.19, msbuild 16.0.0.0), but it works partially and there are some bugs. Feel free to post an issue when you encounter one!  
-Please note that for the moment, it will only use OCaml executables installed with `apt-get install ocaml` (located in /usr/bin/ocaml)  
+I'm trying to add Linux systems support. You can build the project with msbuild and run it with mono (tested on Debian 8, with mono 5.20.1.19, msbuild 16.0.0.0), but it works partially and there are some bugs. Feel free to post an issue when you encounter one!  
+Please note that for the moment, it will only use OCaml executables installed with `apt-get install ocaml` (they are located in /usr/bin/ocaml)  
 #
 Using:  
 * FastColoredTextBox Control: https://github.com/PavelTorgashov/FastColoredTextBox  
