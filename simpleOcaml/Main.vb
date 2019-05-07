@@ -148,7 +148,7 @@ Public Class Main
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(\#][\s\S]+?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#][\s\S]+?(;;)")
         For Each expr As Match In Mat
             If expr.Index > CurrentTextbox.SelectionStart Then
                 CurrentTextbox.SelectionStart = expr.Index
@@ -243,6 +243,7 @@ Public Class Main
         TabControl.SelectedTab.Tag = {"", False}
         TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            .AutoIndentChars = False
             .LeftBracket = "("
             .RightBracket = ")"
             .LeftBracket2 = "["
