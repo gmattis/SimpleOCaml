@@ -244,28 +244,28 @@ Partial Class Main
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(144, 22)
         Me.CleanOutputMenuItem.Text = "CleanOutput"
         '
         'CopyMenuItem
         '
         Me.CopyMenuItem.Name = "CopyMenuItem"
         Me.CopyMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopyMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CopyMenuItem.Size = New System.Drawing.Size(144, 22)
         Me.CopyMenuItem.Text = "Copy"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(144, 22)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(144, 22)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
@@ -301,14 +301,14 @@ Partial Class Main
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(117, 22)
         Me.PartialOutputMenuItem.Text = "Partial"
         '
         'DetailedOutputMenuItem
         '
         Me.DetailedOutputMenuItem.CheckOnClick = True
         Me.DetailedOutputMenuItem.Name = "DetailedOutputMenuItem"
-        Me.DetailedOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DetailedOutputMenuItem.Size = New System.Drawing.Size(117, 22)
         Me.DetailedOutputMenuItem.Text = "Detailed"
         '
         'CloseOcamlMenuItem
@@ -334,52 +334,52 @@ Partial Class Main
         '
         Me.ThemeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightThemeMenuItem, Me.DarkThemeMenuItem})
         Me.ThemeMenuItem.Name = "ThemeMenuItem"
-        Me.ThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ThemeMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.ThemeMenuItem.Text = "Theme"
         '
         'LightThemeMenuItem
         '
         Me.LightThemeMenuItem.CheckOnClick = True
         Me.LightThemeMenuItem.Name = "LightThemeMenuItem"
-        Me.LightThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LightThemeMenuItem.Size = New System.Drawing.Size(141, 22)
         Me.LightThemeMenuItem.Text = "Light Theme"
         '
         'DarkThemeMenuItem
         '
         Me.DarkThemeMenuItem.CheckOnClick = True
         Me.DarkThemeMenuItem.Name = "DarkThemeMenuItem"
-        Me.DarkThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DarkThemeMenuItem.Size = New System.Drawing.Size(141, 22)
         Me.DarkThemeMenuItem.Text = "Dark Theme"
         '
         'AutoSaveMenuItem
         '
         Me.AutoSaveMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableAutoSaveMenuItem, Me.AutoSaveDelayMenuItem})
         Me.AutoSaveMenuItem.Name = "AutoSaveMenuItem"
-        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.AutoSaveMenuItem.Text = "Autosave"
         '
         'EnableAutoSaveMenuItem
         '
-        Me.EnableAutoSaveMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Autosave
+        Me.EnableAutoSaveMenuItem.Checked = Global.SimpleOCaml.My.MySettings.Default.Autosave
         Me.EnableAutoSaveMenuItem.CheckOnClick = True
         Me.EnableAutoSaveMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.EnableAutoSaveMenuItem.Name = "EnableAutoSaveMenuItem"
-        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.EnableAutoSaveMenuItem.Text = "Enabled"
         '
         'AutoSaveDelayMenuItem
         '
         Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
-        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.AutoSaveDelayMenuItem.Text = "Delay"
         '
         'CodeFoldingMenuItem
         '
-        Me.CodeFoldingMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Code_Folding
+        Me.CodeFoldingMenuItem.Checked = Global.SimpleOCaml.My.MySettings.Default.Code_Folding
         Me.CodeFoldingMenuItem.CheckOnClick = True
         Me.CodeFoldingMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CodeFoldingMenuItem.Name = "CodeFoldingMenuItem"
-        Me.CodeFoldingMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CodeFoldingMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.CodeFoldingMenuItem.Text = "Code folding"
         '
         'HelpMenuItem

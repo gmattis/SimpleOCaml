@@ -5,12 +5,12 @@ Imports FastColoredTextBoxNS
 Module Utils
     Public ReadOnly OperatorRegex As String = "(=|<|>|!|\+|-|\/|\.|\*|%|@|\||&)"
     Public ReadOnly KeywordRegex As String = "\b(and|asr|assert|as|begin|class|constraint|done|downto|do|" &
-            "else|end|exception|external|false|for|function|functor|fun|if|" &
+            "else|end|exception|external|for|function|functor|fun|if|" &
             "include|inherit|initializer|in|land|lazy|let|lor|lsl|lsr|" &
             "lxor|match|method|module|mod|mutable|open|new|nonrec|object|" &
             "of|open!|open|or|private|rec|sig|struct|then|to|" &
-            "true|try|type|val|virtual|when|while|with)\b"
-    Public ReadOnly NumericRegex As String = "\b\d+(\.(\d+)?)?"
+            "try|type|val|virtual|when|while|with)\b"
+    Public ReadOnly NumericRegex As String = "\b((true\b|false\b)|\d+(\.(\d+)?)?)"
     Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)][\s]*"
     Public ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
     Public ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"

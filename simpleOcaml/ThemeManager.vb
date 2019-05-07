@@ -114,11 +114,11 @@ Public Class ThemeManager
             Main.DarkThemeMenuItem.Enabled = True
             Main.LightThemeMenuItem.Enabled = False
         ElseIf theme = Themes.DarkTheme Then
-            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(172, 106, 200)), Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(231, 219, 116)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(116, 112, 93)), Nothing, FontStyle.Regular)
+            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(250, 39, 114)), Nothing, FontStyle.Regular)
+            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(250, 39, 114)), Nothing, FontStyle.Regular)
+            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(147, 88, 254)), Nothing, FontStyle.Regular)
+            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(231, 219, 117)), Nothing, FontStyle.Regular)
+            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(127, 125, 105)), Nothing, FontStyle.Regular)
             functionStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(166, 226, 43)), Nothing, FontStyle.Regular)
             highlightBrushValue = New SolidBrush(Color.FromArgb(64, Color.Gray))
 
@@ -131,19 +131,26 @@ Public Class ThemeManager
                 ApplyTabPageStyle(page)
             Next
             OutputColor = Color.White
-            OutputCommandColor = Color.FromArgb(249, 36, 114)
+            OutputCommandColor = Color.FromArgb(250, 39, 114)
             With Main.OutputBox
-                .BackColor = Color.FromArgb(45, 45, 45)
+                .BackColor = Color.FromArgb(40, 40, 35)
                 .ForeColor = OutputColor
             End With
             With Main.TabControl
-                .DisplayStyleProvider.TabColorUnSelected1 = Color.FromArgb(70, 70, 70)
-                .DisplayStyleProvider.TabColorUnSelected2 = Color.FromArgb(70, 70, 70)
-                .DisplayStyleProvider.TabColorFocused1 = Color.DimGray
-                .DisplayStyleProvider.TabColorFocused2 = Color.DimGray
-                .DisplayStyleProvider.TabColorHighLighted1 = Color.Gray
-                .DisplayStyleProvider.TabColorHighLighted2 = Color.Gray
+                .DisplayStyleProvider.TabColorFocused1 = Color.FromArgb(70, 70, 65)
+                .DisplayStyleProvider.TabColorFocused2 = Color.FromArgb(70, 70, 65)
+                .DisplayStyleProvider.TextColorFocused = Color.FromArgb(220, 220, 220)
+                .DisplayStyleProvider.TabColorHighLighted1 = Color.FromArgb(90, 90, 85)
+                .DisplayStyleProvider.TabColorHighLighted2 = Color.FromArgb(90, 90, 85)
+                .DisplayStyleProvider.TextColorHighlighted = Color.FromArgb(220, 220, 220)
+                .DisplayStyleProvider.TabColorSelected1 = Color.FromArgb(70, 70, 65)
+                .DisplayStyleProvider.TabColorSelected2 = Color.FromArgb(70, 70, 65)
+                .DisplayStyleProvider.TextColorSelected = Color.FromArgb(220, 220, 220)
+                .DisplayStyleProvider.TabColorUnSelected1 = Color.FromArgb(50, 50, 45)
+                .DisplayStyleProvider.TabColorUnSelected2 = Color.FromArgb(50, 50, 45)
+                .DisplayStyleProvider.TextColorUnselected = Color.FromArgb(220, 220, 220)
             End With
+
             Main.LightThemeMenuItem.Checked = False
             Main.LightThemeMenuItem.Enabled = True
             Main.DarkThemeMenuItem.Enabled = False
@@ -161,10 +168,10 @@ Public Class ThemeManager
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 0, 0, 100)))
                 .CaretColor = Color.Black
             ElseIf My.Settings.Theme = Themes.DarkTheme Then
-                .BackColor = Color.FromArgb(45, 45, 45)
+                .BackColor = Color.FromArgb(40, 40, 35)
                 .ForeColor = Color.White
                 .SelectionColor = Color.Gray
-                .IndentBackColor = Color.FromArgb(45, 45, 45)
+                .IndentBackColor = Color.FromArgb(40, 40, 35)
                 .LineNumberColor = Color.White
                 .BracketsStyle = New MarkerStyle(New SolidBrush(Color.FromArgb(100, 150, 150, 150)))
                 .CaretColor = Color.FromArgb(210, 210, 210)
