@@ -110,9 +110,9 @@ Public Class ThemeManager
                 .DisplayStyleProvider.ShowTabCloser = True
             End With
 
-            Main.DarkModeMenuItem.Checked = False
-            Main.DarkModeMenuItem.Enabled = True
-            Main.LightModeMenuItem.Enabled = False
+            Main.DarkThemeMenuItem.Checked = False
+            Main.DarkThemeMenuItem.Enabled = True
+            Main.LightThemeMenuItem.Enabled = False
         ElseIf theme = Themes.DarkTheme Then
             keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
             operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(249, 36, 114)), Nothing, FontStyle.Regular)
@@ -144,9 +144,9 @@ Public Class ThemeManager
                 .DisplayStyleProvider.TabColorHighLighted1 = Color.Gray
                 .DisplayStyleProvider.TabColorHighLighted2 = Color.Gray
             End With
-            Main.LightModeMenuItem.Checked = False
-            Main.LightModeMenuItem.Enabled = True
-            Main.DarkModeMenuItem.Enabled = False
+            Main.LightThemeMenuItem.Checked = False
+            Main.LightThemeMenuItem.Enabled = True
+            Main.DarkThemeMenuItem.Enabled = False
         End If
     End Sub
     Public Sub ApplyTabPageStyle(page As TabPage)

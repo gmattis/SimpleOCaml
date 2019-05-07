@@ -12,23 +12,24 @@ Public Class MenuHandler
     Private WithEvents ExecuteMenuItem As ToolStripMenuItem = Main.ExecuteMenuItem
     Private WithEvents OutputMenuItem As ToolStripMenuItem = Main.OutputMenuItem
     Private WithEvents PartialOutputMenuItem As ToolStripMenuItem = Main.PartialOutputMenuItem
-    Private WithEvents FullOutputMenuItem As ToolStripMenuItem = Main.FullOutputMenuItem
+    Private WithEvents FullOutputMenuItem As ToolStripMenuItem = Main.DetailedOutputMenuItem
     Private WithEvents CloseOcamlMenuItem As ToolStripMenuItem = Main.CloseOcamlMenuItem
     Private WithEvents SettingsMenuItem As ToolStripMenuItem = Main.SettingsMenuItem
     Private WithEvents ThemeMenuItem As ToolStripMenuItem = Main.ThemeMenuItem
-    Private WithEvents LightModeMenuItem As ToolStripMenuItem = Main.LightModeMenuItem
-    Private WithEvents DarkModeMenuItem As ToolStripMenuItem = Main.DarkModeMenuItem
+    Private WithEvents LightModeMenuItem As ToolStripMenuItem = Main.LightThemeMenuItem
+    Private WithEvents DarkModeMenuItem As ToolStripMenuItem = Main.DarkThemeMenuItem
     Private WithEvents AutoSaveMenuItem As ToolStripMenuItem = Main.AutoSaveMenuItem
     Private WithEvents EnableAutoSaveMenuItem As ToolStripMenuItem = Main.EnableAutoSaveMenuItem
     Private WithEvents AutoSaveDelayMenuItem As ToolStripMenuItem = Main.AutoSaveDelayMenuItem
     Private WithEvents HelpMenuItem As ToolStripMenuItem = Main.HelpMenuItem
     Private WithEvents OcamlDocMenuItem As ToolStripMenuItem = Main.OcamlDocMenuItem
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
-    Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopierMenuItem
+    Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopyMenuItem
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
-    Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.ToutEnregistrerMenuItem
-    Private WithEvents ReductionCodeMenuItem As ToolStripMenuItem = Main.ReductionCodeMenuItem
+    Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
+    Private WithEvents ReductionCodeMenuItem As ToolStripMenuItem = Main.CodeFoldingMenuItem
+    Private WithEvents StartupOptionsMenuItem As ToolStripMenuItem = Main.StartupOptionsMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -67,15 +68,7 @@ Public Class MenuHandler
     End Sub
 
     Private Sub OnOpenFile(sender As Object, e As EventArgs) Handles OpenFileDialog.FileOk
-        Main.AddNewPage(True)
-        Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim openPath As String = OpenFileDialog.FileName
-        CurrentTextbox.OpenFile(openPath, System.Text.Encoding.Default)
-        Main.TabControl.SelectedTab.Text = OpenFileDialog.SafeFileName
-        Main.TabControl.SelectedTab.Tag(0) = openPath
-        Main.TabControl.SelectedTab.Tag(1) = True
-        UpdateTextStyle(CurrentTextbox)
-        AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
+        Utils.OpenFile(OpenFileDialog.FileName)
     End Sub
 
     Private Sub NewMenuItem_Click(sender As Object, e As EventArgs) Handles NewMenuItem.Click
@@ -109,12 +102,12 @@ Public Class MenuHandler
     End Sub
 
     Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click
-        MsgBox("Un IDE OCaml, développé par Mattis GOLLIET, Thomas MICHEL et Bastien PASCAL.", Title:="SimpleOCaml v1.1")
+        MsgBox("An OCaml IDE, made by Mattis GOLLIET, Thomas MICHEL and Bastien PASCAL.", Title:=$"SimpleOCaml {My.Settings.Version}")
     End Sub
 
     Private Sub CloseOcamlMenuItem_Click(sender As Object, e As EventArgs) Handles CloseOcamlMenuItem.Click
         Main.CommandExecutor.Dispose()
-        Main.OutputBox.AppendText("OCaml a été fermé" & vbLf & "Redémarrage ..." & vbLf & vbLf)
+        Main.OutputBox.AppendText("OCaml has been closed." & vbLf & "Restarting ..." & vbLf & vbLf)
         Main.CommandExecutor.Start()
     End Sub
 
@@ -133,15 +126,15 @@ Public Class MenuHandler
 
     Private Sub AutoSaveDelayMenuItem_Click(sender As Object, e As EventArgs) Handles AutoSaveDelayMenuItem.Click
         Try
-            Dim Delay As Integer = InputBox("Veuillez définir le délai en secondes entre deux sauvegardes automatiques (minimum 10)", "Délai de sauvegarde", My.Settings.Autosave_delay)
+            Dim Delay As Integer = InputBox("Please enter the delay between two autosaves in seconds (min. 10)", "Autosave delay", My.Settings.Autosave_delay)
             If Delay < 10 Then
-                MsgBox("Veuillez entrer un nombre supérieur à 10")
+                MsgBox("The delay must be higher than 10")
             Else
                 My.Settings.Autosave_delay = Delay
                 Main.AutoSaveTimer.Interval = Delay * 1000
             End If
         Catch
-            MsgBox("Veuillez entrer un nombre valide")
+            MsgBox("The delay must be a valid integer")
         End Try
     End Sub
 
@@ -173,5 +166,12 @@ Public Class MenuHandler
     Private Sub ReductionCodeMenuItem_Click(sender As Object, e As EventArgs) Handles ReductionCodeMenuItem.Click
         My.Settings.Code_Folding = Not My.Settings.Code_Folding
         TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Range.ClearFoldingMarkers()
+    End Sub
+
+    Private Sub StartupOptionsMenuItem_Click(sender As Object, e As EventArgs) Handles StartupOptionsMenuItem.Click
+        Dim startupOptions As String = InputBox("Command line parameters for OCaml", "Startup Options", My.Settings.StartupOptions)
+        If startupOptions Then
+            My.Settings.StartupOptions = startupOptions
+        End If
     End Sub
 End Class

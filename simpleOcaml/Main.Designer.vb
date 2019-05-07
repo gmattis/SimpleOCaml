@@ -35,31 +35,32 @@ Partial Class Main
         Me.OpenMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToutEnregistrerMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAllMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CopierMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopyMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UndoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RedoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExecuteMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToutExecuterMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExecuteAllMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartialOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FullOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DetailedOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseOcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StartupOptionsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LightModeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DarkModeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LightThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DarkThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ReductionCodeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CodeFoldingMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OcamlFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.OCamlFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
@@ -175,11 +176,11 @@ Partial Class Main
         '
         'SaveFileDialog
         '
-        Me.SaveFileDialog.Filter = "Fichier OCaml|*.ml;*.oml;*.mli"
+        Me.SaveFileDialog.Filter = "OCaml File|*.ml;*.oml;*.mli"
         '
         'OpenFileDialog
         '
-        Me.OpenFileDialog.Filter = "Fichier OCaml|*.ml;*.oml;*.mli"
+        Me.OpenFileDialog.Filter = "OCaml File|*.ml;*.oml;*.mli"
         '
         'MenuStrip
         '
@@ -193,83 +194,83 @@ Partial Class Main
         '
         'FileMenuItem
         '
-        Me.FileMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMenuItem, Me.OpenMenuItem, Me.SaveMenuItem, Me.SaveAsMenuItem, Me.ToutEnregistrerMenuItem})
+        Me.FileMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMenuItem, Me.OpenMenuItem, Me.SaveMenuItem, Me.SaveAsMenuItem, Me.SaveAllMenuItem})
         Me.FileMenuItem.Name = "FileMenuItem"
-        Me.FileMenuItem.Size = New System.Drawing.Size(54, 20)
-        Me.FileMenuItem.Text = "Fichier"
+        Me.FileMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileMenuItem.Text = "File"
         '
         'NewMenuItem
         '
         Me.NewMenuItem.Name = "NewMenuItem"
         Me.NewMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NewMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.NewMenuItem.Text = "Nouveau"
+        Me.NewMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NewMenuItem.Text = "New"
         '
         'OpenMenuItem
         '
         Me.OpenMenuItem.Name = "OpenMenuItem"
         Me.OpenMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.OpenMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.OpenMenuItem.Text = "Ouvrir"
+        Me.OpenMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenMenuItem.Text = "Open"
         '
         'SaveMenuItem
         '
         Me.SaveMenuItem.Name = "SaveMenuItem"
         Me.SaveMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.SaveMenuItem.Text = "Enregistrer"
+        Me.SaveMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveMenuItem.Text = "Save"
         '
         'SaveAsMenuItem
         '
         Me.SaveAsMenuItem.Name = "SaveAsMenuItem"
         Me.SaveAsMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveAsMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.SaveAsMenuItem.Text = "Enregistrer sous"
+        Me.SaveAsMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveAsMenuItem.Text = "Save as"
         '
-        'ToutEnregistrerMenuItem
+        'SaveAllMenuItem
         '
-        Me.ToutEnregistrerMenuItem.Name = "ToutEnregistrerMenuItem"
-        Me.ToutEnregistrerMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.ToutEnregistrerMenuItem.Text = "Tout enregistrer"
+        Me.SaveAllMenuItem.Name = "SaveAllMenuItem"
+        Me.SaveAllMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveAllMenuItem.Text = "Save all"
         '
         'EditMenuItem
         '
-        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopierMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
+        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopyMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
-        Me.EditMenuItem.Size = New System.Drawing.Size(56, 20)
-        Me.EditMenuItem.Text = "Edition"
+        Me.EditMenuItem.Size = New System.Drawing.Size(39, 20)
+        Me.EditMenuItem.Text = "Edit"
         '
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.CleanOutputMenuItem.Text = "Nettoyer la sortie"
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CleanOutputMenuItem.Text = "CleanOutput"
         '
-        'CopierMenuItem
+        'CopyMenuItem
         '
-        Me.CopierMenuItem.Name = "CopierMenuItem"
-        Me.CopierMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopierMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.CopierMenuItem.Text = "Copier"
+        Me.CopyMenuItem.Name = "CopyMenuItem"
+        Me.CopyMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.CopyMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CopyMenuItem.Text = "Copy"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
         '
-        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.ToutExecuterMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem})
+        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.ExecuteAllMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem, Me.StartupOptionsMenuItem})
         Me.OcamlMenuItem.Name = "OcamlMenuItem"
         Me.OcamlMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OcamlMenuItem.Text = "OCaml"
@@ -278,78 +279,84 @@ Partial Class Main
         '
         Me.ExecuteMenuItem.Name = "ExecuteMenuItem"
         Me.ExecuteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.[Return]), System.Windows.Forms.Keys)
-        Me.ExecuteMenuItem.Size = New System.Drawing.Size(240, 22)
-        Me.ExecuteMenuItem.Text = "Exécuter"
+        Me.ExecuteMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.ExecuteMenuItem.Text = "Execute"
         '
-        'ToutExecuterMenuItem
+        'ExecuteAllMenuItem
         '
-        Me.ToutExecuterMenuItem.Name = "ToutExecuterMenuItem"
-        Me.ToutExecuterMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+        Me.ExecuteAllMenuItem.Name = "ExecuteAllMenuItem"
+        Me.ExecuteAllMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.[Return]), System.Windows.Forms.Keys)
-        Me.ToutExecuterMenuItem.Size = New System.Drawing.Size(240, 22)
-        Me.ToutExecuterMenuItem.Text = "Tout exécuter"
+        Me.ExecuteAllMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.ExecuteAllMenuItem.Text = "Execute all"
         '
         'OutputMenuItem
         '
-        Me.OutputMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartialOutputMenuItem, Me.FullOutputMenuItem})
+        Me.OutputMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartialOutputMenuItem, Me.DetailedOutputMenuItem})
         Me.OutputMenuItem.Name = "OutputMenuItem"
-        Me.OutputMenuItem.Size = New System.Drawing.Size(240, 22)
-        Me.OutputMenuItem.Text = "Sortie"
+        Me.OutputMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.OutputMenuItem.Text = "Output"
         '
         'PartialOutputMenuItem
         '
         Me.PartialOutputMenuItem.CheckOnClick = True
         Me.PartialOutputMenuItem.Name = "PartialOutputMenuItem"
-        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(126, 22)
-        Me.PartialOutputMenuItem.Text = "Partielle"
+        Me.PartialOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PartialOutputMenuItem.Text = "Partial"
         '
-        'FullOutputMenuItem
+        'DetailedOutputMenuItem
         '
-        Me.FullOutputMenuItem.CheckOnClick = True
-        Me.FullOutputMenuItem.Name = "FullOutputMenuItem"
-        Me.FullOutputMenuItem.Size = New System.Drawing.Size(126, 22)
-        Me.FullOutputMenuItem.Text = "Complète"
+        Me.DetailedOutputMenuItem.CheckOnClick = True
+        Me.DetailedOutputMenuItem.Name = "DetailedOutputMenuItem"
+        Me.DetailedOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DetailedOutputMenuItem.Text = "Detailed"
         '
         'CloseOcamlMenuItem
         '
         Me.CloseOcamlMenuItem.Name = "CloseOcamlMenuItem"
-        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(240, 22)
-        Me.CloseOcamlMenuItem.Text = "Fermer"
+        Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.CloseOcamlMenuItem.Text = "Close OCaml"
+        '
+        'StartupOptionsMenuItem
+        '
+        Me.StartupOptionsMenuItem.Name = "StartupOptionsMenuItem"
+        Me.StartupOptionsMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.StartupOptionsMenuItem.Text = "Startup options"
         '
         'SettingsMenuItem
         '
-        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.ReductionCodeMenuItem})
+        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.CodeFoldingMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
-        Me.SettingsMenuItem.Size = New System.Drawing.Size(78, 20)
-        Me.SettingsMenuItem.Text = "Paramètres"
+        Me.SettingsMenuItem.Size = New System.Drawing.Size(61, 20)
+        Me.SettingsMenuItem.Text = "Settings"
         '
         'ThemeMenuItem
         '
-        Me.ThemeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightModeMenuItem, Me.DarkModeMenuItem})
+        Me.ThemeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightThemeMenuItem, Me.DarkThemeMenuItem})
         Me.ThemeMenuItem.Name = "ThemeMenuItem"
-        Me.ThemeMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.ThemeMenuItem.Text = "Thème"
+        Me.ThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ThemeMenuItem.Text = "Theme"
         '
-        'LightModeMenuItem
+        'LightThemeMenuItem
         '
-        Me.LightModeMenuItem.CheckOnClick = True
-        Me.LightModeMenuItem.Name = "LightModeMenuItem"
-        Me.LightModeMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.LightModeMenuItem.Text = "Light Mode"
+        Me.LightThemeMenuItem.CheckOnClick = True
+        Me.LightThemeMenuItem.Name = "LightThemeMenuItem"
+        Me.LightThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LightThemeMenuItem.Text = "Light Theme"
         '
-        'DarkModeMenuItem
+        'DarkThemeMenuItem
         '
-        Me.DarkModeMenuItem.CheckOnClick = True
-        Me.DarkModeMenuItem.Name = "DarkModeMenuItem"
-        Me.DarkModeMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.DarkModeMenuItem.Text = "Dark Mode"
+        Me.DarkThemeMenuItem.CheckOnClick = True
+        Me.DarkThemeMenuItem.Name = "DarkThemeMenuItem"
+        Me.DarkThemeMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DarkThemeMenuItem.Text = "Dark Theme"
         '
         'AutoSaveMenuItem
         '
         Me.AutoSaveMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableAutoSaveMenuItem, Me.AutoSaveDelayMenuItem})
         Me.AutoSaveMenuItem.Name = "AutoSaveMenuItem"
-        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.AutoSaveMenuItem.Text = "Sauvegarde automatique"
+        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AutoSaveMenuItem.Text = "Autosave"
         '
         'EnableAutoSaveMenuItem
         '
@@ -357,42 +364,46 @@ Partial Class Main
         Me.EnableAutoSaveMenuItem.CheckOnClick = True
         Me.EnableAutoSaveMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.EnableAutoSaveMenuItem.Name = "EnableAutoSaveMenuItem"
-        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(179, 22)
-        Me.EnableAutoSaveMenuItem.Text = "Activer"
+        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EnableAutoSaveMenuItem.Text = "Enabled"
         '
         'AutoSaveDelayMenuItem
         '
         Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
-        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(179, 22)
-        Me.AutoSaveDelayMenuItem.Text = "Délai de sauvegarde"
+        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AutoSaveDelayMenuItem.Text = "Delay"
         '
-        'ReductionCodeMenuItem
+        'CodeFoldingMenuItem
         '
-        Me.ReductionCodeMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Code_Folding
-        Me.ReductionCodeMenuItem.CheckOnClick = True
-        Me.ReductionCodeMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ReductionCodeMenuItem.Name = "ReductionCodeMenuItem"
-        Me.ReductionCodeMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.ReductionCodeMenuItem.Text = "Réduction de code"
+        Me.CodeFoldingMenuItem.Checked = Global.simpleOCaml.My.MySettings.Default.Code_Folding
+        Me.CodeFoldingMenuItem.CheckOnClick = True
+        Me.CodeFoldingMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CodeFoldingMenuItem.Name = "CodeFoldingMenuItem"
+        Me.CodeFoldingMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CodeFoldingMenuItem.Text = "Code folding"
         '
         'HelpMenuItem
         '
         Me.HelpMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OcamlDocMenuItem, Me.AboutMenuItem})
         Me.HelpMenuItem.Name = "HelpMenuItem"
-        Me.HelpMenuItem.Size = New System.Drawing.Size(43, 20)
-        Me.HelpMenuItem.Text = "Aide"
+        Me.HelpMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.HelpMenuItem.Text = "Help"
         '
         'OcamlDocMenuItem
         '
         Me.OcamlDocMenuItem.Name = "OcamlDocMenuItem"
         Me.OcamlDocMenuItem.Size = New System.Drawing.Size(197, 22)
-        Me.OcamlDocMenuItem.Text = "Documentation OCaml"
+        Me.OcamlDocMenuItem.Text = "OCaml Documentation"
         '
         'AboutMenuItem
         '
         Me.AboutMenuItem.Name = "AboutMenuItem"
         Me.AboutMenuItem.Size = New System.Drawing.Size(197, 22)
-        Me.AboutMenuItem.Text = "A propos"
+        Me.AboutMenuItem.Text = "About"
+        '
+        'LibrariesBrowserDialog
+        '
+        Me.LibrariesBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer
         '
         'AutoSaveTimer
         '
@@ -466,15 +477,15 @@ Partial Class Main
     Friend WithEvents ExecuteMenuItem As ToolStripMenuItem
     Friend WithEvents OcamlDocMenuItem As ToolStripMenuItem
     Friend WithEvents OutputMenuItem As ToolStripMenuItem
-    Friend WithEvents FullOutputMenuItem As ToolStripMenuItem
+    Friend WithEvents DetailedOutputMenuItem As ToolStripMenuItem
     Friend WithEvents PartialOutputMenuItem As ToolStripMenuItem
-    Friend WithEvents OcamlFileDialog As OpenFileDialog
+    Friend WithEvents OCamlFileDialog As OpenFileDialog
     Friend WithEvents LibrariesBrowserDialog As FolderBrowserDialog
     Friend WithEvents AboutMenuItem As ToolStripMenuItem
     Friend WithEvents SettingsMenuItem As ToolStripMenuItem
     Friend WithEvents ThemeMenuItem As ToolStripMenuItem
-    Friend WithEvents LightModeMenuItem As ToolStripMenuItem
-    Friend WithEvents DarkModeMenuItem As ToolStripMenuItem
+    Friend WithEvents LightThemeMenuItem As ToolStripMenuItem
+    Friend WithEvents DarkThemeMenuItem As ToolStripMenuItem
     Friend WithEvents CloseOcamlMenuItem As ToolStripMenuItem
     Friend WithEvents CleanOutputMenuItem As ToolStripMenuItem
     Friend WithEvents AutoSaveTimer As Timer
@@ -486,12 +497,13 @@ Partial Class Main
     Friend WithEvents TabControl As TradeWright.UI.Forms.TabControlExtra
     Friend WithEvents StateLabel As ToolStripStatusLabel
     Friend WithEvents ElapsedTimer As Timer
-    Friend WithEvents CopierMenuItem As ToolStripMenuItem
+    Friend WithEvents CopyMenuItem As ToolStripMenuItem
     Friend WithEvents UndoMenuItem As ToolStripMenuItem
     Friend WithEvents RedoMenuItem As ToolStripMenuItem
-    Friend WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveAllMenuItem As ToolStripMenuItem
     Friend WithEvents RefreshTimer As Timer
-    Friend WithEvents ToutExecuterMenuItem As ToolStripMenuItem
-    Friend WithEvents ReductionCodeMenuItem As ToolStripMenuItem
+    Friend WithEvents ExecuteAllMenuItem As ToolStripMenuItem
+    Friend WithEvents CodeFoldingMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
+    Friend WithEvents StartupOptionsMenuItem As ToolStripMenuItem
 End Class

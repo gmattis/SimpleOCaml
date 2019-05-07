@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0E5A5166-0981-4FB4-BB81-ECF09D81BB1A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>simpleOCaml.My.MyApplication</StartupObject>
-    <RootNamespace>simpleOCaml</RootNamespace>
-    <AssemblyName>simpleOCaml</AssemblyName>
+    <StartupObject>SimpleOCaml.My.MyApplication</StartupObject>
+    <RootNamespace>SimpleOCaml</RootNamespace>
+    <AssemblyName>SimpleOCaml</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -37,7 +37,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>simpleOCaml.xml</DocumentationFile>
+    <DocumentationFile>SimpleOCaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
@@ -49,7 +49,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>simpleOCaml.xml</DocumentationFile>
+    <DocumentationFile>SimpleOCaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>

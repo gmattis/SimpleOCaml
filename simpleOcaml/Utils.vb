@@ -60,7 +60,7 @@ Module Utils
         If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text.Trim() <> "" AndAlso Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
             If e.TabPage.Tag(0) = "" Then
-                result = MsgBox(String.Format("Ce fichier n'a pas été sauvegardé." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                result = MsgBox(String.Format("This file wasn't saved." + vbLf + "Save it?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Unsaved file")
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -69,7 +69,7 @@ Module Utils
                     End If
                 End If
             Else
-                result = MsgBox(String.Format("{0} a été modifié." + vbLf + "Voulez-vous sauvegarder ?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Fichier non sauvegardé")
+                result = MsgBox(String.Format("{0} was modified." + vbLf + "Save it?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "U")
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -157,7 +157,7 @@ Module Utils
             Dim dict As Dictionary(Of String, Object) = jss.Deserialize(Of Dictionary(Of String, Object))(result)
             Dim ver As String = Nothing, html_url As String = Nothing
             If dict.TryGetValue("tag_name", ver) AndAlso dict.TryGetValue("html_url", html_url) AndAlso ver > My.Settings.Version Then
-                Dim boxResult As MsgBoxResult = MsgBox("Une nouvelle version est disponible, voulez-vous y accéder ?", MsgBoxStyle.YesNo, "Nouvelle version disponible !")
+                Dim boxResult As MsgBoxResult = MsgBox("An update is available, open it in webbrowser?", MsgBoxStyle.YesNo, "Available update!")
                 If boxResult = MsgBoxResult.Yes Then
                     Process.Start(html_url)
                 End If
@@ -165,5 +165,16 @@ Module Utils
         Catch e As Exception
             Console.WriteLine("Exception while fetching for updates: " & e.Message)
         End Try
+    End Sub
+
+    Public Sub OpenFile(file As String)
+        Main.AddNewPage(True)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        CurrentTextbox.OpenFile(file, System.Text.Encoding.Default)
+        Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(file)
+        Main.TabControl.SelectedTab.Tag(0) = file
+        Main.TabControl.SelectedTab.Tag(1) = True
+        UpdateTextStyle(CurrentTextbox)
+        AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
     End Sub
 End Module

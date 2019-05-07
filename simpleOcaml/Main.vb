@@ -15,7 +15,7 @@ Public Class Main
         Utils.CheckUpdate()
 
         If Utils.IsLinux Then
-            MsgBox("Attention : Il semble que vous lancez le projet depuis une distribution Unix. OCaml sera chargé depuis '/usr/bin/ocaml'.")
+            MsgBox("Warning: It seems you're running this app on a Unix system. OCaml will be loaded from '/usr/bin/ocaml'.")
         End If
 
         'Settings init
@@ -35,17 +35,17 @@ Public Class Main
         OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
 
         'MenuItems init
-        FullOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
-        FullOutputMenuItem.Checked = My.Settings.Detailed_Output
+        DetailedOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
+        DetailedOutputMenuItem.Checked = My.Settings.Detailed_Output
         PartialOutputMenuItem.Enabled = My.Settings.Detailed_Output
         PartialOutputMenuItem.Checked = Not My.Settings.Detailed_Output
 
         If My.Settings.Theme = ThemeManager.Themes.DarkTheme Then
-            DarkModeMenuItem.Enabled = False
-            DarkModeMenuItem.Checked = True
+            DarkThemeMenuItem.Enabled = False
+            DarkThemeMenuItem.Checked = True
         Else
-            LightModeMenuItem.Enabled = False
-            LightModeMenuItem.Checked = True
+            LightThemeMenuItem.Enabled = False
+            LightThemeMenuItem.Checked = True
         End If
 
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
@@ -67,17 +67,17 @@ Public Class Main
             LibsPath = ""
         Else
             While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
-                MsgBox("Exécutable OCaml non trouvé ! Veuillez spécifier son emplacement")
-                OcamlFileDialog.ShowDialog()
-                If OcamlFileDialog.FileName = "" Then
+                MsgBox("OCaml executable not found! Please specify its location")
+                OCamlFileDialog.ShowDialog()
+                If OCamlFileDialog.FileName = "" Then
                     End
                 Else
-                    My.Settings.Ocaml_Exe = OcamlFileDialog.FileName
-                    OcamlFileDialog.Reset()
+                    My.Settings.Ocaml_Exe = OCamlFileDialog.FileName
+                    OCamlFileDialog.Reset()
                 End If
             End While
             While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
-                MsgBox("Dossier des librairies OCaml non trouvé ! Veuillez spécifier son emplacement")
+                MsgBox("OCaml libraries folder not found! Please specify its location")
                 LibrariesBrowserDialog.ShowDialog()
                 If LibrariesBrowserDialog.SelectedPath = "" Then
                     End
@@ -91,7 +91,7 @@ Public Class Main
                 LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
             Next
         End If
-        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath)
+        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath & " " & My.Settings.StartupOptions)
         CommandExecutor.Start()
     End Sub
 
@@ -129,7 +129,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub ToutExecuter(sender As Object, e As EventArgs) Handles ToutExecuterMenuItem.Click
+    Private Sub ToutExecuter(sender As Object, e As EventArgs) Handles ExecuteAllMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim currentPosition As Integer = CurrentTextbox.SelectionStart
         Dim prevPosition As Integer = -1
@@ -187,7 +187,7 @@ Public Class Main
 
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\(A-z)\(\#][\s\S]+?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#][\s\S]+?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
@@ -243,6 +243,7 @@ Public Class Main
         TabControl.SelectedTab.Tag = {"", False}
         TabControl.SelectedTab.Controls.Add(New FastColoredTextBox)
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+            .AllowDrop = True
             .AutoIndentChars = False
             .LeftBracket = "("
             .RightBracket = ")"
@@ -253,6 +254,8 @@ Public Class Main
             .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
             .BeginAutoUndo()
             AddHandler .Click, AddressOf InputBox_KeyUp
+            AddHandler .DragEnter, AddressOf InputBox_DragEnter
+            AddHandler .DragDrop, AddressOf InputBox_DragDrop
             AddHandler .KeyUp, AddressOf InputBox_KeyUp
             AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
@@ -263,35 +266,24 @@ Public Class Main
         ThemeManager.ApplyTabPageStyle(TabControl.SelectedTab)
     End Sub
 
-    Private Sub TabControl_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs)
-        Dim g As Graphics = e.Graphics
-        Dim tp As TabPage = TabControl.TabPages(e.Index)
-        Dim br As Brush
-        Dim sf As New StringFormat
-        Dim r As New RectangleF(e.Bounds.X, e.Bounds.Y + 2, e.Bounds.Width, e.Bounds.Height - 2)
-
-        sf.Alignment = StringAlignment.Center
-
-        Dim strTitle As String = tp.Text
-        'If the current index is the Selected Index, change the color
-        If TabControl.SelectedIndex = e.Index Then
-            'this is the background color of the tabpage
-            'you could make this a standard color for the selected page
-            br = New SolidBrush(Color.Red) 'New SolidBrush(tp.BackColor)
-            'this is the background color of the tab page
-            g.FillRectangle(br, e.Bounds)
-            'this is the foreground color of the tab page
-            'you could make this a standard color for the selected page
-            br = New SolidBrush(tp.ForeColor)
-            g.DrawString(strTitle, TabControl.Font, br, r, sf)
-            'these are the standard colors for the unselected tab pages
-            'br = New SolidBrush(Color.WhiteSmoke)
-            'g.FillRectangle(br, e.Bounds)
-            'br = New SolidBrush(Color.Black)
-            'g.DrawString(strTitle, TabControl.Font, br, r, sf)
+    Private Sub InputBox_DragEnter(sender As Object, e As DragEventArgs)
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.All
+        Else
+            e.Effect = DragDropEffects.None
         End If
     End Sub
 
+    Private Sub InputBox_DragDrop(sender As Object, e As DragEventArgs)
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            Dim files As String() = e.Data.GetData(DataFormats.FileDrop, True)
+            For Each file As String In files
+                If System.IO.File.Exists(file) AndAlso (file.EndsWith(".ml") Or file.EndsWith(".oml") Or file.EndsWith(".mli")) Then
+                    OpenFile(file)
+                End If
+            Next
+        End If
+    End Sub
 
     Private Sub AutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles AutoSaveTimer.Tick
         ElapsedTimer.Stop()
@@ -306,7 +298,7 @@ Public Class Main
                 page.Text = System.IO.Path.GetFileName(savePath)
             End If
         Next
-        SaveLabel.Text = "Sauvegarde automatique effectuée!"
+        SaveLabel.Text = "Autosave done!"
         LastSaved = Now
         ElapsedTimer.Enabled = True
         ElapsedTimer.Start()
@@ -314,7 +306,7 @@ Public Class Main
 
     Public Sub ElapsedTimer_Tick() Handles ElapsedTimer.Tick
         If LastSaved.CompareTo(New Date) <> 0 Then
-            SaveLabel.Text = String.Format("Denière sauvegarde il y a {0} min.", (Now - LastSaved).Minutes)
+            SaveLabel.Text = $"Last save {(Now - LastSaved).Minutes} min. ago"
         End If
     End Sub
 

@@ -92,7 +92,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute(".\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\lib")>  _
         Public Property Ocaml_Lib() As String
             Get
                 Return CType(Me("Ocaml_Lib"),String)
@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml.exe")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\bin\ocaml.exe")>  _
         Public Property Ocaml_Exe() As String
             Get
                 Return CType(Me("Ocaml_Exe"),String)
@@ -185,6 +185,18 @@ Namespace My
                 Me("Version") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property StartupOptions() As String
+            Get
+                Return CType(Me("StartupOptions"),String)
+            End Get
+            Set
+                Me("StartupOptions") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
@@ -196,9 +208,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.simpleOCaml.My.MySettings
+        Friend ReadOnly Property Settings() As Global.SimpleOCaml.My.MySettings
             Get
-                Return Global.simpleOCaml.My.MySettings.Default
+                Return Global.SimpleOCaml.My.MySettings.Default
             End Get
         End Property
     End Module
