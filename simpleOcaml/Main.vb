@@ -15,7 +15,9 @@ Public Class Main
         Utils.CheckUpdate()
 
         If Utils.IsLinux Then
-            MsgBox("Warning: It seems you're running this app on a Unix system. OCaml will be loaded from '/usr/bin/ocaml'.")
+            MsgBox("Warning: It seems you're running this app on an Unix system. OCaml will be loaded from '/usr/bin/ocaml'.")
+        ElseIf Utils.IsMacOS Then
+            MsgBox("Warning: It seems you're running this app on a MacOS system. OCaml will be loaded using 'ocaml' command.")
         End If
 
         'Settings init
@@ -63,6 +65,10 @@ Public Class Main
 
         If Utils.IsLinux Then
             My.Settings.Ocaml_Exe = "/usr/bin/ocaml"
+            My.Settings.Ocaml_Lib = ""
+            LibsPath = ""
+        ElseIf Utils.IsMacOS Then
+            My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
         Else
