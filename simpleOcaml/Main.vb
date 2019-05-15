@@ -148,7 +148,7 @@ Public Class Main
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#][\s\S]+?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
         For Each expr As Match In Mat
             If expr.Index > CurrentTextbox.SelectionStart Then
                 CurrentTextbox.SelectionStart = expr.Index
@@ -159,35 +159,9 @@ Public Class Main
         Next
     End Sub
 
-    Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
-    Private Sub ProcessCommandOutput(ByVal output As String)
-        OutputBox.AppendText(output)
-        OutputBox.ScrollToCaret()
-    End Sub
-
-    ''' Le reste
-    Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
-        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        If e.KeyCode = Keys.Back Then
-            If CurrentTextbox.SelectionStart > 1 Then
-                Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine)
-                Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
-                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length And match.Length > 0 Then
-                    CurrentTextbox.DecreaseIndent()
-                    e.SuppressKeyPress = True
-                End If
-            End If
-        End If
-
-        If e.KeyCode = Keys.Space Or e.KeyCode = Keys.Enter Then
-            CurrentTextbox.EndAutoUndo()
-            CurrentTextbox.BeginAutoUndo()
-        End If
-    End Sub
-
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#][\s\S]+?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
@@ -207,6 +181,32 @@ Public Class Main
             CodeToExecutePos = {0, 0}
             LinesToExecute = {-1, -1}
             CurrentTextbox.Invalidate()
+        End If
+    End Sub
+
+    Private Delegate Sub ProcessCommandOutputDelegate(ByVal output As String)
+    Private Sub ProcessCommandOutput(ByVal output As String)
+        OutputBox.AppendText(output)
+        OutputBox.ScrollToCaret()
+    End Sub
+
+    ''' Le reste
+    Private Sub InputBox_KeyDown(sender As Object, e As KeyEventArgs)
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        If e.KeyCode = Keys.Back Then
+            If CurrentTextbox.SelectionStart > 1 Then
+                Dim currentRange As Range = CurrentTextbox.GetLine(CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart).iLine).GetIntersectionWith(New Range(CurrentTextbox, CurrentTextbox.PositionToPlace(0), CurrentTextbox.PositionToPlace(CurrentTextbox.SelectionStart)))
+                Dim match As Match = Regex.Match(currentRange.Text, "^[ ]+")
+                If CurrentTextbox.SelectionStart - CurrentTextbox.PlaceToPosition(currentRange.Start) <= match.Length And match.Length > 0 Then
+                    CurrentTextbox.DecreaseIndent()
+                    e.SuppressKeyPress = True
+                End If
+            End If
+        End If
+
+        If e.KeyCode = Keys.Space Or e.KeyCode = Keys.Enter Then
+            CurrentTextbox.EndAutoUndo()
+            CurrentTextbox.BeginAutoUndo()
         End If
     End Sub
 
