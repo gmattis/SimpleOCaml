@@ -50,18 +50,10 @@ Partial Class Main
         Me.CloseOcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartupOptionsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LightThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DarkThemeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EnableAutoSaveMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AutoSaveDelayMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CodeFoldingMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OCamlFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.LibrariesBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
+        Me.FolderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.AutoSaveTimer = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.SaveLabel = New System.Windows.Forms.ToolStripStatusLabel()
@@ -325,62 +317,9 @@ Partial Class Main
         '
         'SettingsMenuItem
         '
-        Me.SettingsMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ThemeMenuItem, Me.AutoSaveMenuItem, Me.CodeFoldingMenuItem})
         Me.SettingsMenuItem.Name = "SettingsMenuItem"
         Me.SettingsMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.SettingsMenuItem.Text = "Settings"
-        '
-        'ThemeMenuItem
-        '
-        Me.ThemeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LightThemeMenuItem, Me.DarkThemeMenuItem})
-        Me.ThemeMenuItem.Name = "ThemeMenuItem"
-        Me.ThemeMenuItem.Size = New System.Drawing.Size(143, 22)
-        Me.ThemeMenuItem.Text = "Theme"
-        '
-        'LightThemeMenuItem
-        '
-        Me.LightThemeMenuItem.CheckOnClick = True
-        Me.LightThemeMenuItem.Name = "LightThemeMenuItem"
-        Me.LightThemeMenuItem.Size = New System.Drawing.Size(141, 22)
-        Me.LightThemeMenuItem.Text = "Light Theme"
-        '
-        'DarkThemeMenuItem
-        '
-        Me.DarkThemeMenuItem.CheckOnClick = True
-        Me.DarkThemeMenuItem.Name = "DarkThemeMenuItem"
-        Me.DarkThemeMenuItem.Size = New System.Drawing.Size(141, 22)
-        Me.DarkThemeMenuItem.Text = "Dark Theme"
-        '
-        'AutoSaveMenuItem
-        '
-        Me.AutoSaveMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableAutoSaveMenuItem, Me.AutoSaveDelayMenuItem})
-        Me.AutoSaveMenuItem.Name = "AutoSaveMenuItem"
-        Me.AutoSaveMenuItem.Size = New System.Drawing.Size(143, 22)
-        Me.AutoSaveMenuItem.Text = "Autosave"
-        '
-        'EnableAutoSaveMenuItem
-        '
-        Me.EnableAutoSaveMenuItem.Checked = Global.SimpleOCaml.My.MySettings.Default.Autosave
-        Me.EnableAutoSaveMenuItem.CheckOnClick = True
-        Me.EnableAutoSaveMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.EnableAutoSaveMenuItem.Name = "EnableAutoSaveMenuItem"
-        Me.EnableAutoSaveMenuItem.Size = New System.Drawing.Size(116, 22)
-        Me.EnableAutoSaveMenuItem.Text = "Enabled"
-        '
-        'AutoSaveDelayMenuItem
-        '
-        Me.AutoSaveDelayMenuItem.Name = "AutoSaveDelayMenuItem"
-        Me.AutoSaveDelayMenuItem.Size = New System.Drawing.Size(116, 22)
-        Me.AutoSaveDelayMenuItem.Text = "Delay"
-        '
-        'CodeFoldingMenuItem
-        '
-        Me.CodeFoldingMenuItem.Checked = Global.SimpleOCaml.My.MySettings.Default.Code_Folding
-        Me.CodeFoldingMenuItem.CheckOnClick = True
-        Me.CodeFoldingMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CodeFoldingMenuItem.Name = "CodeFoldingMenuItem"
-        Me.CodeFoldingMenuItem.Size = New System.Drawing.Size(143, 22)
-        Me.CodeFoldingMenuItem.Text = "Code folding"
         '
         'HelpMenuItem
         '
@@ -401,9 +340,9 @@ Partial Class Main
         Me.AboutMenuItem.Size = New System.Drawing.Size(197, 22)
         Me.AboutMenuItem.Text = "About"
         '
-        'LibrariesBrowserDialog
+        'FolderBrowserDialog
         '
-        Me.LibrariesBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer
+        Me.FolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer
         '
         'AutoSaveTimer
         '
@@ -479,21 +418,14 @@ Partial Class Main
     Friend WithEvents OutputMenuItem As ToolStripMenuItem
     Friend WithEvents DetailedOutputMenuItem As ToolStripMenuItem
     Friend WithEvents PartialOutputMenuItem As ToolStripMenuItem
-    Friend WithEvents OCamlFileDialog As OpenFileDialog
-    Friend WithEvents LibrariesBrowserDialog As FolderBrowserDialog
+    Friend WithEvents FolderBrowserDialog As FolderBrowserDialog
     Friend WithEvents AboutMenuItem As ToolStripMenuItem
     Friend WithEvents SettingsMenuItem As ToolStripMenuItem
-    Friend WithEvents ThemeMenuItem As ToolStripMenuItem
-    Friend WithEvents LightThemeMenuItem As ToolStripMenuItem
-    Friend WithEvents DarkThemeMenuItem As ToolStripMenuItem
     Friend WithEvents CloseOcamlMenuItem As ToolStripMenuItem
     Friend WithEvents CleanOutputMenuItem As ToolStripMenuItem
     Friend WithEvents AutoSaveTimer As Timer
-    Friend WithEvents AutoSaveMenuItem As ToolStripMenuItem
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents SaveLabel As ToolStripStatusLabel
-    Friend WithEvents EnableAutoSaveMenuItem As ToolStripMenuItem
-    Friend WithEvents AutoSaveDelayMenuItem As ToolStripMenuItem
     Friend WithEvents TabControl As TradeWright.UI.Forms.TabControlExtra
     Friend WithEvents StateLabel As ToolStripStatusLabel
     Friend WithEvents ElapsedTimer As Timer
@@ -503,7 +435,6 @@ Partial Class Main
     Friend WithEvents SaveAllMenuItem As ToolStripMenuItem
     Friend WithEvents RefreshTimer As Timer
     Friend WithEvents ExecuteAllMenuItem As ToolStripMenuItem
-    Friend WithEvents CodeFoldingMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
     Friend WithEvents StartupOptionsMenuItem As ToolStripMenuItem
 End Class

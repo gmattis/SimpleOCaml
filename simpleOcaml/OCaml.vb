@@ -38,6 +38,12 @@ Public Class OCaml
         StartProcessOutputRead()
     End Sub
 
+    Public Sub Start(exePath As String, arguments As String)
+        Me.exePath = exePath
+        Me.args = arguments
+        Start()
+    End Sub
+
     Public Sub StartProcessOutputRead()
         StopMonitoringProcessOutput()
         If OcamlProcess Is Nothing Then

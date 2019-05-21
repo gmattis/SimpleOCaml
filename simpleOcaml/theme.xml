@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<themeColors>
+  <lightTheme>
+    <keywordColor></keywordColor>
+    <operatorColor></operatorColor>
+    <numericColor></numericColor>
+    <stringColor></stringColor>
+    <commentColor></commentColor>
+    <functionColor></functionColor>
+  </lightTheme>
+  <darkTheme>
+    <keywordColor></keywordColor>
+    <operatorColor></operatorColor>
+    <numericColor></numericColor>
+    <stringColor></stringColor>
+    <commentColor></commentColor>
+    <functionColor></functionColor>
+  </darkTheme>
+</themeColors>

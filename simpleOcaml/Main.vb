@@ -5,8 +5,8 @@ Public Class Main
     Public LinesToExecute As Integer() = {-1, -1}
     Public CodeToExecute As String = ""
     Public CodeToExecutePos As Integer() = {0, 0}
-    Public WithEvents CommandExecutor As New OCaml()
-    Public MenuHandling As MenuHandler
+    Public WithEvents CommandExecutor As New OCaml
+    Public MenuHandler As MenuHandler
     Public ThemeManager As ThemeManager
     Public LastSaved As Date = Nothing
 
@@ -15,7 +15,7 @@ Public Class Main
         Utils.CheckUpdate()
 
         If Utils.IsLinux Then
-            MsgBox("Warning: It seems you're running this app on an Unix system. OCaml will be loaded from '/usr/bin/ocaml'.")
+            MsgBox("Warning: It seems you're running this app on an Unix system. OCaml will be loaded using 'ocaml' command.")
         ElseIf Utils.IsMacOS Then
             MsgBox("Warning: It seems you're running this app on a MacOS system. OCaml will be loaded using 'ocaml' command.")
         End If
@@ -24,7 +24,7 @@ Public Class Main
         My.Settings.Upgrade()
 
         'Class inits
-        MenuHandling = New MenuHandler()
+        MenuHandler = New MenuHandler()
         ThemeManager = New ThemeManager()
 
         'TabControl init
@@ -42,14 +42,6 @@ Public Class Main
         PartialOutputMenuItem.Enabled = My.Settings.Detailed_Output
         PartialOutputMenuItem.Checked = Not My.Settings.Detailed_Output
 
-        If My.Settings.Theme = ThemeManager.Themes.DarkTheme Then
-            DarkThemeMenuItem.Enabled = False
-            DarkThemeMenuItem.Checked = True
-        Else
-            LightThemeMenuItem.Enabled = False
-            LightThemeMenuItem.Checked = True
-        End If
-
         AutoSaveTimer.Interval = My.Settings.Autosave_delay * 1000
         If My.Settings.Autosave Then
             AutoSaveTimer.Start()
@@ -64,7 +56,7 @@ Public Class Main
         Dim LibsPath As String
 
         If Utils.IsLinux Then
-            My.Settings.Ocaml_Exe = "/usr/bin/ocaml"
+            My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
         ElseIf Utils.IsMacOS Then
@@ -72,24 +64,22 @@ Public Class Main
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
         Else
-            While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe)) And My.Settings.Ocaml_Exe.EndsWith("ocaml.exe"))
+            While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe"))
                 MsgBox("OCaml executable not found! Please specify its location")
-                OCamlFileDialog.ShowDialog()
-                If OCamlFileDialog.FileName = "" Then
+                FolderBrowserDialog.ShowDialog()
+                If FolderBrowserDialog.SelectedPath = "" Then
                     End
                 Else
-                    My.Settings.Ocaml_Exe = OCamlFileDialog.FileName
-                    OCamlFileDialog.Reset()
+                    My.Settings.Ocaml_Exe = FolderBrowserDialog.SelectedPath
                 End If
             End While
             While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
                 MsgBox("OCaml libraries folder not found! Please specify its location")
-                LibrariesBrowserDialog.ShowDialog()
-                If LibrariesBrowserDialog.SelectedPath = "" Then
+                FolderBrowserDialog.ShowDialog()
+                If FolderBrowserDialog.SelectedPath = "" Then
                     End
                 Else
-                    My.Settings.Ocaml_Lib = LibrariesBrowserDialog.SelectedPath
-                    LibrariesBrowserDialog.Reset()
+                    My.Settings.Ocaml_Lib = FolderBrowserDialog.SelectedPath
                 End If
             End While
             LibsPath = "-I " + Chr(34) + System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib) + Chr(34) + " "
@@ -97,8 +87,10 @@ Public Class Main
                 LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
             Next
         End If
-        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), LibsPath & " " & My.Settings.StartupOptions)
+        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe", LibsPath & " " & My.Settings.StartupOptions)
         CommandExecutor.Start()
+
+        My.Settings.Save()
     End Sub
 
     Private Sub Main_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

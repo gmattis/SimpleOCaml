@@ -15,12 +15,6 @@ Public Class MenuHandler
     Private WithEvents FullOutputMenuItem As ToolStripMenuItem = Main.DetailedOutputMenuItem
     Private WithEvents CloseOcamlMenuItem As ToolStripMenuItem = Main.CloseOcamlMenuItem
     Private WithEvents SettingsMenuItem As ToolStripMenuItem = Main.SettingsMenuItem
-    Private WithEvents ThemeMenuItem As ToolStripMenuItem = Main.ThemeMenuItem
-    Private WithEvents LightModeMenuItem As ToolStripMenuItem = Main.LightThemeMenuItem
-    Private WithEvents DarkModeMenuItem As ToolStripMenuItem = Main.DarkThemeMenuItem
-    Private WithEvents AutoSaveMenuItem As ToolStripMenuItem = Main.AutoSaveMenuItem
-    Private WithEvents EnableAutoSaveMenuItem As ToolStripMenuItem = Main.EnableAutoSaveMenuItem
-    Private WithEvents AutoSaveDelayMenuItem As ToolStripMenuItem = Main.AutoSaveDelayMenuItem
     Private WithEvents HelpMenuItem As ToolStripMenuItem = Main.HelpMenuItem
     Private WithEvents OcamlDocMenuItem As ToolStripMenuItem = Main.OcamlDocMenuItem
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
@@ -28,7 +22,6 @@ Public Class MenuHandler
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
     Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
-    Private WithEvents ReductionCodeMenuItem As ToolStripMenuItem = Main.CodeFoldingMenuItem
     Private WithEvents StartupOptionsMenuItem As ToolStripMenuItem = Main.StartupOptionsMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
@@ -89,14 +82,6 @@ Public Class MenuHandler
         My.Settings.Detailed_Output = False
     End Sub
 
-    Private Sub DarkModeMenuItem_Click(sender As Object, e As EventArgs) Handles DarkModeMenuItem.Click
-        Main.ThemeManager.SwitchTheme(ThemeManager.Themes.DarkTheme)
-    End Sub
-
-    Private Sub LightModeMenuItem_Click(sender As Object, e As EventArgs) Handles LightModeMenuItem.Click
-        Main.ThemeManager.SwitchTheme(ThemeManager.Themes.LightTheme)
-    End Sub
-
     Private Sub OcamlDocMenuItem_Click(sender As Object, e As EventArgs) Handles OcamlDocMenuItem.Click
         Process.Start("http://caml.inria.fr/pub/docs/manual-ocaml/")
     End Sub
@@ -113,29 +98,6 @@ Public Class MenuHandler
 
     Private Sub CleanOutputMenuItem_Click(sender As Object, e As EventArgs) Handles CleanOutputMenuItem.Click
         Main.OutputBox.Clear()
-    End Sub
-
-    Private Sub EnableAutoSaveMenuItem_Click(sender As Object, e As EventArgs) Handles EnableAutoSaveMenuItem.Click
-        My.Settings.Autosave = Not My.Settings.Autosave
-        If My.Settings.Autosave Then
-            Main.AutoSaveTimer.Start()
-        Else
-            Main.AutoSaveTimer.Stop()
-        End If
-    End Sub
-
-    Private Sub AutoSaveDelayMenuItem_Click(sender As Object, e As EventArgs) Handles AutoSaveDelayMenuItem.Click
-        Try
-            Dim Delay As Integer = InputBox("Please enter the delay between two autosaves in seconds (min. 10)", "Autosave delay", My.Settings.Autosave_delay)
-            If Delay < 10 Then
-                MsgBox("The delay must be higher than 10")
-            Else
-                My.Settings.Autosave_delay = Delay
-                Main.AutoSaveTimer.Interval = Delay * 1000
-            End If
-        Catch
-            MsgBox("The delay must be a valid integer")
-        End Try
     End Sub
 
     Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
@@ -163,15 +125,14 @@ Public Class MenuHandler
         Next
     End Sub
 
-    Private Sub ReductionCodeMenuItem_Click(sender As Object, e As EventArgs) Handles ReductionCodeMenuItem.Click
-        My.Settings.Code_Folding = Not My.Settings.Code_Folding
-        TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Range.ClearFoldingMarkers()
-    End Sub
-
     Private Sub StartupOptionsMenuItem_Click(sender As Object, e As EventArgs) Handles StartupOptionsMenuItem.Click
         Dim startupOptions As String = InputBox("Command line parameters for OCaml", "Startup Options", My.Settings.StartupOptions)
         If startupOptions Then
             My.Settings.StartupOptions = startupOptions
         End If
+    End Sub
+
+    Private Sub SettingsMenuItem_Click(sender As Object, e As EventArgs) Handles SettingsMenuItem.Click
+        Settings.Show()
     End Sub
 End Class

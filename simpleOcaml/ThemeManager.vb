@@ -3,10 +3,7 @@
 Public Class ThemeManager
     Public OutputColor As Color
     Public OutputCommandColor As Color
-    Public Enum Themes
-        LightTheme = 0
-        DarkTheme = 1
-    End Enum
+    Public ThemeLoader As New ThemeLoader
 
     Public Sub New()
         SwitchTheme(My.Settings.Theme)
@@ -81,17 +78,21 @@ Public Class ThemeManager
         End Set
     End Property
 
-    Public Sub SwitchTheme(theme As Integer)
+    Public Sub SwitchTheme(theme As Themes)
+        ThemeLoader.Reload(theme)
+
+        keywordStyleValue = New TextStyle(New SolidBrush(ThemeLoader.KeywordColor), Nothing, FontStyle.Regular)
+        operatorStyleValue = New TextStyle(New SolidBrush(ThemeLoader.OperatorColor), Nothing, FontStyle.Regular)
+        numericStyleValue = New TextStyle(New SolidBrush(ThemeLoader.NumericColor), Nothing, FontStyle.Regular)
+        stringStyleValue = New TextStyle(New SolidBrush(ThemeLoader.StringColor), Nothing, FontStyle.Regular)
+        commentStyleValue = New TextStyle(New SolidBrush(ThemeLoader.CommentColor), Nothing, FontStyle.Regular)
+        functionStyleValue = New TextStyle(New SolidBrush(ThemeLoader.FunctionColor), Nothing, FontStyle.Regular)
+
         If theme = Themes.LightTheme Then
-            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(0, 0, 255)), Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(0, 0, 255)), Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(128, 0, 0)), Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(69, 143, 34)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(173, 173, 173)), Nothing, FontStyle.Regular)
-            functionStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(144, 0, 144)), Nothing, FontStyle.Regular)
+            My.Settings.Theme = Themes.LightTheme
+
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
 
-            My.Settings.Theme = Themes.LightTheme
             With Main.SplitContainer
                 .BackColor = SplitContainer.DefaultBackColor
                 .ForeColor = SplitContainer.DefaultForeColor
@@ -109,20 +110,11 @@ Public Class ThemeManager
                 .DisplayStyleProvider = TradeWright.UI.Forms.TabStyleProvider.CreateProvider(Main.TabControl)
                 .DisplayStyleProvider.ShowTabCloser = True
             End With
-
-            Main.DarkThemeMenuItem.Checked = False
-            Main.DarkThemeMenuItem.Enabled = True
-            Main.LightThemeMenuItem.Enabled = False
         ElseIf theme = Themes.DarkTheme Then
-            keywordStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(250, 39, 114)), Nothing, FontStyle.Regular)
-            operatorStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(250, 39, 114)), Nothing, FontStyle.Regular)
-            numericStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(147, 88, 254)), Nothing, FontStyle.Regular)
-            stringStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(231, 219, 117)), Nothing, FontStyle.Regular)
-            commentStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(127, 125, 105)), Nothing, FontStyle.Regular)
-            functionStyleValue = New TextStyle(New SolidBrush(Color.FromArgb(166, 226, 43)), Nothing, FontStyle.Regular)
+            My.Settings.Theme = Themes.DarkTheme
+
             highlightBrushValue = New SolidBrush(Color.FromArgb(64, Color.Gray))
 
-            My.Settings.Theme = Themes.DarkTheme
             With Main.SplitContainer
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
@@ -150,12 +142,9 @@ Public Class ThemeManager
                 .DisplayStyleProvider.TabColorUnSelected2 = Color.FromArgb(50, 50, 45)
                 .DisplayStyleProvider.TextColorUnselected = Color.FromArgb(220, 220, 220)
             End With
-
-            Main.LightThemeMenuItem.Checked = False
-            Main.LightThemeMenuItem.Enabled = True
-            Main.DarkThemeMenuItem.Enabled = False
         End If
     End Sub
+
     Public Sub ApplyTabPageStyle(page As TabPage)
         With TryCast(page.Controls(0), FastColoredTextBox)
             .ClearStylesBuffer()

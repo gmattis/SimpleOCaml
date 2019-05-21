@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\bin\ocaml.exe")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute(".\ocaml64\miniocaml\bin")>  _
         Public Property Ocaml_Exe() As String
             Get
                 Return CType(Me("Ocaml_Exe"),String)
@@ -174,16 +174,13 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("v1.1.5")>  _
-        Public Property Version() As String
+        Public ReadOnly Property Version() As String
             Get
                 Return CType(Me("Version"),String)
             End Get
-            Set
-                Me("Version") = value
-            End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
