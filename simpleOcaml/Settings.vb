@@ -38,6 +38,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.KeywordColor = ColorPickerDialog.Color
             KeywordButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
@@ -46,6 +47,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.OperatorColor = ColorPickerDialog.Color
             OperatorButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
@@ -54,6 +56,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.NumericColor = ColorPickerDialog.Color
             DigitButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
@@ -62,6 +65,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.StringColor = ColorPickerDialog.Color
             StringButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
@@ -70,6 +74,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.CommentColor = ColorPickerDialog.Color
             CommentButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
@@ -78,6 +83,7 @@
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
             Main.ThemeManager.ThemeLoader.FunctionColor = ColorPickerDialog.Color
             FunctionButton.BackColor = ColorPickerDialog.Color
+            Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
     End Sub
 
