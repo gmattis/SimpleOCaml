@@ -59,10 +59,14 @@ Public Class Main
             My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
+            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), My.Settings.StartupOptions)
+            CommandExecutor.Start()
         ElseIf Utils.IsMacOS Then
             My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
+            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), My.Settings.StartupOptions)
+            CommandExecutor.Start()
         Else
             While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe"))
                 MsgBox("OCaml executable not found! Please specify its location")
@@ -86,9 +90,9 @@ Public Class Main
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
                 LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
             Next
+            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe", LibsPath & " " & My.Settings.StartupOptions)
+            CommandExecutor.Start()
         End If
-        CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe", LibsPath & " " & My.Settings.StartupOptions)
-        CommandExecutor.Start()
 
         My.Settings.Save()
     End Sub

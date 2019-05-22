@@ -169,7 +169,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SimpleCaml.ico" />
     <Content Include="theme.xml">
       <SubType>Designer</SubType>
     </Content>
