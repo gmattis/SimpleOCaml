@@ -81,6 +81,8 @@ Public Class ThemeManager
     Public Sub SwitchTheme(theme As Themes)
         ThemeLoader.Reload(theme)
 
+        Main.OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+
         keywordStyleValue = New TextStyle(New SolidBrush(ThemeLoader.KeywordColor), Nothing, FontStyle.Regular)
         operatorStyleValue = New TextStyle(New SolidBrush(ThemeLoader.OperatorColor), Nothing, FontStyle.Regular)
         numericStyleValue = New TextStyle(New SolidBrush(ThemeLoader.NumericColor), Nothing, FontStyle.Regular)
@@ -166,6 +168,7 @@ Public Class ThemeManager
                 .CaretColor = Color.FromArgb(210, 210, 210)
             End If
             .OnTextChanged(0, .LinesCount - 1)
+            .Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
         End With
     End Sub
 End Class

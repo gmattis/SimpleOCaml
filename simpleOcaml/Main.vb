@@ -247,6 +247,7 @@ Public Class Main
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             .AllowDrop = True
             .AutoIndentChars = False
+            .Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
             .LeftBracket = "("
             .RightBracket = ")"
             .LeftBracket2 = "["
