@@ -102,6 +102,23 @@ Module Utils
         TextRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
     End Sub
 
+    Public Sub UpdateTextStyle(sender As Object, e As TextChangedEventArgs)
+        Dim TextRange As Range = e.ChangedRange.tb.Range()
+        TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
+        TextRange.ClearStyle(Main.ThemeManager.StringStyle)
+        TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
+        TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
+        TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
+        TextRange.ClearStyle(Main.ThemeManager.FunctionStyle)
+
+        TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
+        TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
+        TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
+        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
+        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
+        TextRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
+    End Sub
+
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()
@@ -184,4 +201,13 @@ Module Utils
         UpdateTextStyle(CurrentTextbox)
         AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
     End Sub
+
+    Function FindFocussedControl(ByVal ctr As Control) As Control
+        Dim container As ContainerControl = TryCast(ctr, ContainerControl)
+        Do While (container IsNot Nothing AndAlso container.GetType().Equals(GetType(SplitContainer)))
+            ctr = container.ActiveControl
+            container = TryCast(ctr, ContainerControl)
+        Loop
+        Return ctr
+    End Function
 End Module

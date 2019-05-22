@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Lucida Console")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Courier New")>  _
         Public Property Font_Family() As String
             Get
                 Return CType(Me("Font_Family"),String)

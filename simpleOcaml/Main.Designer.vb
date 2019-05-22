@@ -26,7 +26,9 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer = New System.Windows.Forms.SplitContainer()
         Me.TabControl = New TradeWright.UI.Forms.TabControlExtra()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.OutputBox = New System.Windows.Forms.RichTextBox()
+        Me.FastInputBox = New FastColoredTextBoxNS.FastColoredTextBox()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
@@ -64,6 +66,11 @@ Partial Class Main
         Me.SplitContainer.Panel1.SuspendLayout()
         Me.SplitContainer.Panel2.SuspendLayout()
         Me.SplitContainer.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        CType(Me.FastInputBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
@@ -80,7 +87,7 @@ Partial Class Main
         '
         'SplitContainer.Panel2
         '
-        Me.SplitContainer.Panel2.Controls.Add(Me.OutputBox)
+        Me.SplitContainer.Panel2.Controls.Add(Me.SplitContainer1)
         Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
         Me.SplitContainer.SplitterDistance = 402
         Me.SplitContainer.TabIndex = 2
@@ -155,6 +162,25 @@ Partial Class Main
         Me.TabControl.Size = New System.Drawing.Size(402, 345)
         Me.TabControl.TabIndex = 0
         '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.OutputBox)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.FastInputBox)
+        Me.SplitContainer1.Size = New System.Drawing.Size(363, 345)
+        Me.SplitContainer1.SplitterDistance = 316
+        Me.SplitContainer1.SplitterIncrement = 25
+        Me.SplitContainer1.TabIndex = 1
+        '
         'OutputBox
         '
         Me.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -162,9 +188,32 @@ Partial Class Main
         Me.OutputBox.Location = New System.Drawing.Point(0, 0)
         Me.OutputBox.Name = "OutputBox"
         Me.OutputBox.ReadOnly = True
-        Me.OutputBox.Size = New System.Drawing.Size(363, 345)
+        Me.OutputBox.Size = New System.Drawing.Size(363, 316)
         Me.OutputBox.TabIndex = 0
         Me.OutputBox.Text = ""
+        '
+        'FastInputBox
+        '
+        Me.FastInputBox.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
+        Me.FastInputBox.AutoIndentCharsPatterns = "^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);" & Global.Microsoft.VisualBasic.ChrW(10) & "^\s*(case|default)\s*[^:]*(" &
+    "?<range>:)\s*(?<range>[^;]+);"
+        Me.FastInputBox.AutoScrollMinSize = New System.Drawing.Size(2, 14)
+        Me.FastInputBox.BackBrush = Nothing
+        Me.FastInputBox.CharHeight = 14
+        Me.FastInputBox.CharWidth = 8
+        Me.FastInputBox.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.FastInputBox.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
+        Me.FastInputBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FastInputBox.IsReplaceMode = False
+        Me.FastInputBox.Location = New System.Drawing.Point(0, 0)
+        Me.FastInputBox.Name = "FastInputBox"
+        Me.FastInputBox.Paddings = New System.Windows.Forms.Padding(0)
+        Me.FastInputBox.SelectionColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.FastInputBox.ServiceColors = CType(resources.GetObject("FastInputBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
+        Me.FastInputBox.ShowLineNumbers = False
+        Me.FastInputBox.Size = New System.Drawing.Size(363, 25)
+        Me.FastInputBox.TabIndex = 0
+        Me.FastInputBox.Zoom = 100
         '
         'SaveFileDialog
         '
@@ -393,6 +442,11 @@ Partial Class Main
         Me.SplitContainer.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        CType(Me.FastInputBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.StatusStrip.ResumeLayout(False)
@@ -437,4 +491,6 @@ Partial Class Main
     Friend WithEvents ExecuteAllMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
     Friend WithEvents StartupOptionsMenuItem As ToolStripMenuItem
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents FastInputBox As FastColoredTextBoxNS.FastColoredTextBox
 End Class

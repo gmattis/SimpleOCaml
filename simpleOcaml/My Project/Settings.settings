@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Font_Family" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Lucida Console</Value>
+      <Value Profile="(Default)">Courier New</Value>
     </Setting>
     <Setting Name="Font_Style" Type="System.Drawing.FontStyle" Scope="User">
       <Value Profile="(Default)">Regular</Value>

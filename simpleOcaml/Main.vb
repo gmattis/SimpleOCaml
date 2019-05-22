@@ -33,8 +33,12 @@ Public Class Main
         AddHandler TabControl.TabClosing, AddressOf OnTabClosing
         AddHandler TabControl.TabClosed, AddressOf OnTabClosed
 
-        'OutputBox init
-        OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+        'TextBox init
+        Dim TextFont As Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+        OutputBox.Font = TextFont
+        FastInputBox.Font = TextFont
+        SplitContainer1.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
+        AddHandler FastInputBox.TextChanged, AddressOf UpdateTextStyle
 
         'MenuItems init
         DetailedOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
@@ -117,17 +121,27 @@ Public Class Main
 
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
-        If CodeToExecute <> "" Then
+        If FindFocussedControl(Me.ActiveControl).Equals(FastInputBox) Then
             OutputBox.SelectionColor = ThemeManager.OutputCommandColor
             If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
-                OutputBox.AppendText(CodeToExecute + vbLf)
+                OutputBox.AppendText(FastInputBox.Text + vbLf)
             Else
-                OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
+                OutputBox.AppendText(FastInputBox.Text.Substring(0, FastInputBox.Text.IndexOf(vbLf) - 1) + " [...]" + vbLf)
             End If
             OutputBox.SelectionColor = ThemeManager.OutputColor
-            CommandExecutor.Execute(Normalise_Text(CodeToExecute))
-            Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-            WarpToNextCode()
+            CommandExecutor.Execute(Normalise_Text(FastInputBox.Text))
+        Else
+            If CodeToExecute <> "" Then
+                OutputBox.SelectionColor = ThemeManager.OutputCommandColor
+                If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
+                    OutputBox.AppendText(CodeToExecute + vbLf)
+                Else
+                    OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
+                End If
+                OutputBox.SelectionColor = ThemeManager.OutputColor
+                CommandExecutor.Execute(Normalise_Text(CodeToExecute))
+                WarpToNextCode()
+            End If
         End If
     End Sub
 
@@ -266,7 +280,7 @@ Public Class Main
                 AddHandler .TextChanged, AddressOf InputBoxTextChanged
             End If
         End With
-        ThemeManager.ApplyTabPageStyle(TabControl.SelectedTab)
+        ThemeManager.ApplyTextBoxStyle(TabControl.SelectedTab.Controls(0))
     End Sub
 
     Private Sub InputBox_DragEnter(sender As Object, e As DragEventArgs)

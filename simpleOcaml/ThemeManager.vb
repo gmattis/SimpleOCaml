@@ -81,7 +81,10 @@ Public Class ThemeManager
     Public Sub SwitchTheme(theme As Themes)
         ThemeLoader.Reload(theme)
 
-        Main.OutputBox.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+        Dim TextFont As Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
+        Main.OutputBox.Font = TextFont
+        Main.FastInputBox.Font = TextFont
+        Main.SplitContainer1.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
 
         keywordStyleValue = New TextStyle(New SolidBrush(ThemeLoader.KeywordColor), Nothing, FontStyle.Regular)
         operatorStyleValue = New TextStyle(New SolidBrush(ThemeLoader.OperatorColor), Nothing, FontStyle.Regular)
@@ -89,6 +92,8 @@ Public Class ThemeManager
         stringStyleValue = New TextStyle(New SolidBrush(ThemeLoader.StringColor), Nothing, FontStyle.Regular)
         commentStyleValue = New TextStyle(New SolidBrush(ThemeLoader.CommentColor), Nothing, FontStyle.Regular)
         functionStyleValue = New TextStyle(New SolidBrush(ThemeLoader.FunctionColor), Nothing, FontStyle.Regular)
+
+        ApplyTextBoxStyle(Main.FastInputBox)
 
         If theme = Themes.LightTheme Then
             My.Settings.Theme = Themes.LightTheme
@@ -99,12 +104,20 @@ Public Class ThemeManager
                 .BackColor = SplitContainer.DefaultBackColor
                 .ForeColor = SplitContainer.DefaultForeColor
             End With
+            With Main.SplitContainer1
+                .BackColor = SplitContainer.DefaultBackColor
+                .ForeColor = SplitContainer.DefaultForeColor
+            End With
             For Each page As TabPage In Main.TabControl.TabPages
-                ApplyTabPageStyle(page)
+                ApplyTextBoxStyle(page.Controls(0))
             Next
             OutputColor = Color.Black
             OutputCommandColor = Color.Blue
             With Main.OutputBox
+                .BackColor = Color.FromArgb(240, 240, 240)
+                .ForeColor = OutputColor
+            End With
+            With Main.FastInputBox
                 .BackColor = Color.FromArgb(240, 240, 240)
                 .ForeColor = OutputColor
             End With
@@ -121,12 +134,20 @@ Public Class ThemeManager
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
             End With
+            With Main.SplitContainer1
+                .BackColor = Color.FromArgb(60, 60, 60)
+                .ForeColor = Color.LightGray
+            End With
             For Each page As TabPage In Main.TabControl.TabPages
-                ApplyTabPageStyle(page)
+                ApplyTextBoxStyle(page.Controls(0))
             Next
             OutputColor = Color.White
             OutputCommandColor = Color.FromArgb(250, 39, 114)
             With Main.OutputBox
+                .BackColor = Color.FromArgb(40, 40, 35)
+                .ForeColor = OutputColor
+            End With
+            With Main.FastInputBox
                 .BackColor = Color.FromArgb(40, 40, 35)
                 .ForeColor = OutputColor
             End With
@@ -147,8 +168,8 @@ Public Class ThemeManager
         End If
     End Sub
 
-    Public Sub ApplyTabPageStyle(page As TabPage)
-        With TryCast(page.Controls(0), FastColoredTextBox)
+    Public Sub ApplyTextBoxStyle(tb As FastColoredTextBox)
+        With tb
             .ClearStylesBuffer()
             If My.Settings.Theme = Themes.LightTheme Then
                 .BackColor = Color.White
