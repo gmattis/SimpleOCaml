@@ -59,13 +59,13 @@ Public Class Main
             My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
-            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), My.Settings.StartupOptions)
+            CommandExecutor.Init(My.Settings.Ocaml_Exe, My.Settings.StartupOptions)
             CommandExecutor.Start()
         ElseIf Utils.IsMacOS Then
             My.Settings.Ocaml_Exe = "ocaml"
             My.Settings.Ocaml_Lib = ""
             LibsPath = ""
-            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe), My.Settings.StartupOptions)
+            CommandExecutor.Init(My.Settings.Ocaml_Exe, My.Settings.StartupOptions)
             CommandExecutor.Start()
         Else
             While Not (System.IO.File.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe"))
