@@ -26,6 +26,17 @@ Module Utils
         Return ret
     End Function
 
+    Public Sub OnAutoIndent(sender As Object, e As AutoIndentEventArgs)
+        Dim stringEnd As String = e.LineText.Trim((" "))
+        If stringEnd.EndsWith("in") OrElse stringEnd.EndsWith("function") OrElse stringEnd.EndsWith("=") Then
+            e.ShiftNextLines = e.TabLength
+        ElseIf stringEnd.EndsWith(";;") Then
+            e.ShiftNextLines -= e.TabLength
+        ElseIf String.IsNullOrWhiteSpace(e.PrevLineText) AndAlso String.IsNullOrWhiteSpace(e.LineText) Then
+            e.ShiftNextLines -= e.TabLength
+        End If
+    End Sub
+
     Public Function IndexsOf(str As String, srch As String) As List(Of Integer)
         If str.Length > 2 Then
             Dim len As Integer = str.Length

@@ -84,7 +84,8 @@ Public Class ThemeManager
         Dim TextFont As Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
         Main.OutputBox.Font = TextFont
         Main.FastInputBox.Font = TextFont
-        Main.SplitContainer1.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
+        Main.OutputSplitContainer.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
+        Main.OutputSplitContainer.Panel2MinSize = TextRenderer.MeasureText("I", TextFont).Height
 
         keywordStyleValue = New TextStyle(New SolidBrush(ThemeLoader.KeywordColor), Nothing, FontStyle.Regular)
         operatorStyleValue = New TextStyle(New SolidBrush(ThemeLoader.OperatorColor), Nothing, FontStyle.Regular)
@@ -100,11 +101,11 @@ Public Class ThemeManager
 
             highlightBrushValue = New SolidBrush(Color.FromArgb(128, Color.LightGreen))
 
-            With Main.SplitContainer
+            With Main.MainSplitContainer
                 .BackColor = SplitContainer.DefaultBackColor
                 .ForeColor = SplitContainer.DefaultForeColor
             End With
-            With Main.SplitContainer1
+            With Main.OutputSplitContainer
                 .BackColor = SplitContainer.DefaultBackColor
                 .ForeColor = SplitContainer.DefaultForeColor
             End With
@@ -130,11 +131,11 @@ Public Class ThemeManager
 
             highlightBrushValue = New SolidBrush(Color.FromArgb(64, Color.Gray))
 
-            With Main.SplitContainer
+            With Main.MainSplitContainer
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
             End With
-            With Main.SplitContainer1
+            With Main.OutputSplitContainer
                 .BackColor = Color.FromArgb(60, 60, 60)
                 .ForeColor = Color.LightGray
             End With

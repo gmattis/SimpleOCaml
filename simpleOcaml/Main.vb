@@ -37,7 +37,7 @@ Public Class Main
         Dim TextFont As Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
         OutputBox.Font = TextFont
         FastInputBox.Font = TextFont
-        SplitContainer1.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
+        OutputSplitContainer.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
         AddHandler FastInputBox.TextChanged, AddressOf UpdateTextStyle
 
         'MenuItems init
@@ -154,7 +154,7 @@ Public Class Main
         While prevPosition <> CurrentTextbox.SelectionStart
             prevPosition = CurrentTextbox.SelectionStart
             Executer(Me, Nothing)
-            Do Until OutputBox.Text.Substring(OutputBox.TextLength - 2, 2) = "# " ' CONDITION A AMELIORER
+            Do Until OutputBox.Text.Substring(OutputBox.TextLength - 2, 2) = "# " ' TODO: Find a better condition
                 Application.DoEvents()
             Loop
         End While
@@ -163,7 +163,6 @@ Public Class Main
 
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim Pos As List(Of Integer) = IndexsOf(CurrentTextbox.Text, ";;")
         Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
         For Each expr As Match In Mat
             If expr.Index > CurrentTextbox.SelectionStart Then
@@ -177,6 +176,7 @@ Public Class Main
 
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
+        ' TODO: "(\(\*)[\s\S]*?(\*\))" maybe a usefull Regex, else should use lookahead or lookbehind
         Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
@@ -261,15 +261,17 @@ Public Class Main
         With TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
             .AllowDrop = True
             .AutoIndentChars = False
+            .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
+            .Dock = DockStyle.Fill
             .Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
             .LeftBracket = "("
             .RightBracket = ")"
             .LeftBracket2 = "["
             .RightBracket2 = "]"
-            .Dock = DockStyle.Fill
             .Select()
-            .BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2
+            .ShowCaretWhenInactive = True
             .BeginAutoUndo()
+            AddHandler .AutoIndentNeeded, AddressOf OnAutoIndent
             AddHandler .Click, AddressOf InputBox_KeyUp
             AddHandler .DragEnter, AddressOf InputBox_DragEnter
             AddHandler .DragDrop, AddressOf InputBox_DragDrop

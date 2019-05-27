@@ -19,6 +19,7 @@ Public Class MenuHandler
     Private WithEvents OcamlDocMenuItem As ToolStripMenuItem = Main.OcamlDocMenuItem
     Private WithEvents AboutMenuItem As ToolStripMenuItem = Main.AboutMenuItem
     Private WithEvents CopierMenuItem As ToolStripMenuItem = Main.CopyMenuItem
+    Private WithEvents PasteMenuItem As ToolStripMenuItem = Main.PasteMenuItem
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
     Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
@@ -101,9 +102,24 @@ Public Class MenuHandler
     End Sub
 
     Private Sub CopierMenuItem_Click(sender As Object, e As EventArgs) Handles CopierMenuItem.Click
-        Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        If CurrentTextbox.SelectedText <> "" Then
-            Clipboard.SetText(CurrentTextbox.SelectedText)
+        Dim CurrentTextbox = FindFocussedControl(Main.ActiveControl)
+        If CurrentTextbox.GetType().Equals(GetType(FastColoredTextBox)) Then
+            If TryCast(CurrentTextbox, FastColoredTextBox).SelectedText <> "" Then
+                Clipboard.SetText(TryCast(CurrentTextbox, FastColoredTextBox).SelectedText)
+            End If
+        ElseIf CurrentTextbox.GetType().Equals(GetType(RichTextBox)) Then
+            If TryCast(CurrentTextbox, RichTextBox).SelectedText <> "" Then
+                Clipboard.SetText(TryCast(CurrentTextbox, RichTextBox).SelectedText)
+            End If
+        End If
+    End Sub
+
+    Private Sub PasteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteMenuItem.Click
+        Dim CurrentTextbox = FindFocussedControl(Main.ActiveControl)
+        If CurrentTextbox.GetType().Equals(GetType(FastColoredTextBox)) Then
+            TryCast(CurrentTextbox, FastColoredTextBox).EndAutoUndo()
+            TryCast(CurrentTextbox, FastColoredTextBox).InsertText(Clipboard.GetText(), True)
+            TryCast(CurrentTextbox, FastColoredTextBox).BeginAutoUndo()
         End If
     End Sub
 

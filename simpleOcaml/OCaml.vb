@@ -7,14 +7,14 @@ Public Class OCaml
 
     Private WithEvents OcamlProcess As Process
     Private stdoutThread As Thread
-    Private streambuffer As StringBuilder
+    Private streamBuffer As StringBuilder
     Private exePath = ""
     Private args = ""
 
     Public Sub Init(ByVal exePath As String, ByVal arguments As String)
         Me.exePath = exePath
         Me.args = arguments
-        Me.streambuffer = New StringBuilder()
+        Me.streamBuffer = New StringBuilder()
     End Sub
 
     Public Sub Start()
@@ -73,7 +73,7 @@ Public Class OCaml
 
             While OcamlProcess IsNot Nothing
                 UpdateStreamBuffer(False, ch)
-                If streambuffer.Length > 16384 Then
+                If streamBuffer.Length > 16384 Then
                     RaiseEvent RefreshDemand(Me, Nothing)
                 End If
                 ch = OcamlProcess.StandardOutput.Read()
@@ -86,12 +86,12 @@ Public Class OCaml
 
     Private Function UpdateStreamBuffer(readmode As Boolean, Optional ch As Integer = -1)
         SyncLock Me
-            If readmode And streambuffer IsNot Nothing Then
-                Dim str = streambuffer.ToString
-                streambuffer.Length = 0
+            If readmode And streamBuffer IsNot Nothing Then
+                Dim str = streamBuffer.ToString
+                streamBuffer.Length = 0
                 Return str
             ElseIf ch > -1 Then
-                streambuffer.Append(ChrW(ch))
+                streamBuffer.Append(ChrW(ch))
                 Return Nothing
             End If
             Return Nothing

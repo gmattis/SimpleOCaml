@@ -24,9 +24,9 @@ Partial Class Main
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-        Me.SplitContainer = New System.Windows.Forms.SplitContainer()
+        Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
         Me.TabControl = New TradeWright.UI.Forms.TabControlExtra()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.OutputSplitContainer = New System.Windows.Forms.SplitContainer()
         Me.OutputBox = New System.Windows.Forms.RichTextBox()
         Me.FastInputBox = New FastColoredTextBoxNS.FastColoredTextBox()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
@@ -41,6 +41,7 @@ Partial Class Main
         Me.EditMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PasteMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UndoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RedoMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -62,35 +63,35 @@ Partial Class Main
         Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ElapsedTimer = New System.Windows.Forms.Timer(Me.components)
         Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
-        CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer.Panel1.SuspendLayout()
-        Me.SplitContainer.Panel2.SuspendLayout()
-        Me.SplitContainer.SuspendLayout()
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer1.Panel1.SuspendLayout()
-        Me.SplitContainer1.Panel2.SuspendLayout()
-        Me.SplitContainer1.SuspendLayout()
+        CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MainSplitContainer.Panel1.SuspendLayout()
+        Me.MainSplitContainer.Panel2.SuspendLayout()
+        Me.MainSplitContainer.SuspendLayout()
+        CType(Me.OutputSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.OutputSplitContainer.Panel1.SuspendLayout()
+        Me.OutputSplitContainer.Panel2.SuspendLayout()
+        Me.OutputSplitContainer.SuspendLayout()
         CType(Me.FastInputBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
-        'SplitContainer
+        'MainSplitContainer
         '
-        Me.SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer.Location = New System.Drawing.Point(0, 24)
-        Me.SplitContainer.Name = "SplitContainer"
+        Me.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainSplitContainer.Location = New System.Drawing.Point(0, 24)
+        Me.MainSplitContainer.Name = "MainSplitContainer"
         '
-        'SplitContainer.Panel1
+        'MainSplitContainer.Panel1
         '
-        Me.SplitContainer.Panel1.Controls.Add(Me.TabControl)
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.TabControl)
         '
-        'SplitContainer.Panel2
+        'MainSplitContainer.Panel2
         '
-        Me.SplitContainer.Panel2.Controls.Add(Me.SplitContainer1)
-        Me.SplitContainer.Size = New System.Drawing.Size(769, 345)
-        Me.SplitContainer.SplitterDistance = 402
-        Me.SplitContainer.TabIndex = 2
+        Me.MainSplitContainer.Panel2.Controls.Add(Me.OutputSplitContainer)
+        Me.MainSplitContainer.Size = New System.Drawing.Size(769, 345)
+        Me.MainSplitContainer.SplitterDistance = 402
+        Me.MainSplitContainer.TabIndex = 2
         '
         'TabControl
         '
@@ -162,24 +163,23 @@ Partial Class Main
         Me.TabControl.Size = New System.Drawing.Size(402, 345)
         Me.TabControl.TabIndex = 0
         '
-        'SplitContainer1
+        'OutputSplitContainer
         '
-        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer1.Name = "SplitContainer1"
-        Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        Me.OutputSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.OutputSplitContainer.Location = New System.Drawing.Point(0, 0)
+        Me.OutputSplitContainer.Name = "OutputSplitContainer"
+        Me.OutputSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
-        'SplitContainer1.Panel1
+        'OutputSplitContainer.Panel1
         '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.OutputBox)
+        Me.OutputSplitContainer.Panel1.Controls.Add(Me.OutputBox)
         '
-        'SplitContainer1.Panel2
+        'OutputSplitContainer.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.FastInputBox)
-        Me.SplitContainer1.Size = New System.Drawing.Size(363, 345)
-        Me.SplitContainer1.SplitterDistance = 316
-        Me.SplitContainer1.SplitterIncrement = 25
-        Me.SplitContainer1.TabIndex = 1
+        Me.OutputSplitContainer.Panel2.Controls.Add(Me.FastInputBox)
+        Me.OutputSplitContainer.Size = New System.Drawing.Size(363, 345)
+        Me.OutputSplitContainer.SplitterDistance = 316
+        Me.OutputSplitContainer.TabIndex = 1
         '
         'OutputBox
         '
@@ -277,7 +277,7 @@ Partial Class Main
         '
         'EditMenuItem
         '
-        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopyMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
+        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopyMenuItem, Me.PasteMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
         Me.EditMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditMenuItem.Text = "Edit"
@@ -285,28 +285,35 @@ Partial Class Main
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.CleanOutputMenuItem.Text = "CleanOutput"
         '
         'CopyMenuItem
         '
         Me.CopyMenuItem.Name = "CopyMenuItem"
         Me.CopyMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopyMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.CopyMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.CopyMenuItem.Text = "Copy"
+        '
+        'PasteMenuItem
+        '
+        Me.PasteMenuItem.Name = "PasteMenuItem"
+        Me.PasteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.W), System.Windows.Forms.Keys)
+        Me.PasteMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PasteMenuItem.Text = "Paste"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
@@ -431,21 +438,21 @@ Partial Class Main
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(769, 391)
-        Me.Controls.Add(Me.SplitContainer)
+        Me.Controls.Add(Me.MainSplitContainer)
         Me.Controls.Add(Me.MenuStrip)
         Me.Controls.Add(Me.StatusStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "Main"
         Me.Text = "SimpleOCaml"
-        Me.SplitContainer.Panel1.ResumeLayout(False)
-        Me.SplitContainer.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer.ResumeLayout(False)
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
-        Me.SplitContainer1.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer1.ResumeLayout(False)
+        Me.MainSplitContainer.Panel1.ResumeLayout(False)
+        Me.MainSplitContainer.Panel2.ResumeLayout(False)
+        CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MainSplitContainer.ResumeLayout(False)
+        Me.OutputSplitContainer.Panel1.ResumeLayout(False)
+        Me.OutputSplitContainer.Panel2.ResumeLayout(False)
+        CType(Me.OutputSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.OutputSplitContainer.ResumeLayout(False)
         CType(Me.FastInputBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
@@ -455,7 +462,7 @@ Partial Class Main
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents SplitContainer As SplitContainer
+    Friend WithEvents MainSplitContainer As SplitContainer
     Friend WithEvents SaveFileDialog As SaveFileDialog
     Friend WithEvents OpenFileDialog As OpenFileDialog
     Friend WithEvents MenuStrip As MenuStrip
@@ -491,6 +498,7 @@ Partial Class Main
     Friend WithEvents ExecuteAllMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
     Friend WithEvents StartupOptionsMenuItem As ToolStripMenuItem
-    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents OutputSplitContainer As SplitContainer
     Friend WithEvents FastInputBox As FastColoredTextBoxNS.FastColoredTextBox
+    Friend WithEvents PasteMenuItem As ToolStripMenuItem
 End Class
