@@ -1,6 +1,6 @@
 # SimpleOCaml
 A simple OCaml IDE  
-v1.1.5 release is out!  
+v1.2 release is out!  
 ## Windows :
 Simply clone the repository and build the project (tested only with Visual Studio)  
 If you just want to try it, check the releases!  
