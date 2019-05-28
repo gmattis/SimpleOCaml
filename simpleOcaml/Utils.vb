@@ -203,7 +203,6 @@ Module Utils
     End Sub
 
     Public Sub OpenFile(file As String)
-        Main.AddNewPage(True)
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         CurrentTextbox.OpenFile(file, System.Text.Encoding.Default)
         Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(file)

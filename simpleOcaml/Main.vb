@@ -121,26 +121,29 @@ Public Class Main
 
     ''' Execution et affichage des scripts
     Private Sub Executer(sender As Object, e As EventArgs) Handles ExecuteMenuItem.Click
-        If FindFocussedControl(Me.ActiveControl).Equals(FastInputBox) Then
-            OutputBox.SelectionColor = ThemeManager.OutputCommandColor
-            If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
-                OutputBox.AppendText(FastInputBox.Text + vbLf)
-            Else
-                OutputBox.AppendText(FastInputBox.Text.Substring(0, FastInputBox.Text.IndexOf(vbLf) - 1) + " [...]" + vbLf)
-            End If
-            OutputBox.SelectionColor = ThemeManager.OutputColor
-            CommandExecutor.Execute(Normalise_Text(FastInputBox.Text))
-        Else
-            If CodeToExecute <> "" Then
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(FindFocussedControl(Me.ActiveControl), FastColoredTextBox)
+        If Not CurrentTextbox Is Nothing Then
+            If FindFocussedControl(Me.ActiveControl).Equals(FastInputBox) Then
                 OutputBox.SelectionColor = ThemeManager.OutputCommandColor
-                If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
-                    OutputBox.AppendText(CodeToExecute + vbLf)
+                If My.Settings.Detailed_Output OrElse Not FastInputBox.Text.Contains(vbLf) Then
+                    OutputBox.AppendText(FastInputBox.Text + vbLf)
                 Else
-                    OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
+                    OutputBox.AppendText(FastInputBox.Text.Substring(0, FastInputBox.Text.IndexOf(vbLf) - 1) + " [...]" + vbLf)
                 End If
                 OutputBox.SelectionColor = ThemeManager.OutputColor
-                CommandExecutor.Execute(Normalise_Text(CodeToExecute))
-                WarpToNextCode()
+                CommandExecutor.Execute(Normalise_Text(FastInputBox.Text))
+            Else
+                If CodeToExecute <> "" Then
+                    OutputBox.SelectionColor = ThemeManager.OutputCommandColor
+                    If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
+                        OutputBox.AppendText(CodeToExecute + vbLf)
+                    Else
+                        OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
+                    End If
+                    OutputBox.SelectionColor = ThemeManager.OutputColor
+                    CommandExecutor.Execute(Normalise_Text(CodeToExecute))
+                    WarpToNextCode()
+                End If
             End If
         End If
     End Sub

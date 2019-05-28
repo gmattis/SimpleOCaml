@@ -62,6 +62,11 @@ Public Class MenuHandler
     End Sub
 
     Private Sub OnOpenFile(sender As Object, e As EventArgs) Handles OpenFileDialog.FileOk
+        Dim CurrentPage As TabPage = Main.TabControl.SelectedTab
+        Dim CurrentTextbox As FastColoredTextBox = TryCast(CurrentPage.Controls.Item(0), FastColoredTextBox)
+        If Not (CurrentPage.Tag(0) = "" AndAlso CurrentTextbox.Text = "") Then
+            Main.AddNewPage(True)
+        End If
         Utils.OpenFile(OpenFileDialog.FileName)
     End Sub
 
@@ -84,7 +89,11 @@ Public Class MenuHandler
     End Sub
 
     Private Sub OcamlDocMenuItem_Click(sender As Object, e As EventArgs) Handles OcamlDocMenuItem.Click
-        Process.Start("http://caml.inria.fr/pub/docs/manual-ocaml/")
+        If System.IO.File.Exists("doc/index.html") Then
+            Process.Start(System.IO.Path.GetFullPath("doc/index.html"))
+        Else
+            Process.Start("http://caml.inria.fr/pub/docs/manual-ocaml/")
+        End If
     End Sub
 
     Private Sub AboutMenuItem_Click(sender As Object, e As EventArgs) Handles AboutMenuItem.Click
@@ -111,15 +120,6 @@ Public Class MenuHandler
             If TryCast(CurrentTextbox, RichTextBox).SelectedText <> "" Then
                 Clipboard.SetText(TryCast(CurrentTextbox, RichTextBox).SelectedText)
             End If
-        End If
-    End Sub
-
-    Private Sub PasteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteMenuItem.Click
-        Dim CurrentTextbox = FindFocussedControl(Main.ActiveControl)
-        If CurrentTextbox.GetType().Equals(GetType(FastColoredTextBox)) Then
-            TryCast(CurrentTextbox, FastColoredTextBox).EndAutoUndo()
-            TryCast(CurrentTextbox, FastColoredTextBox).InsertText(Clipboard.GetText(), True)
-            TryCast(CurrentTextbox, FastColoredTextBox).BeginAutoUndo()
         End If
     End Sub
 

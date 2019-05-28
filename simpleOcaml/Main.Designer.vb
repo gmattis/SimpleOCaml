@@ -204,6 +204,7 @@ Partial Class Main
         Me.FastInputBox.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.FastInputBox.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.FastInputBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FastInputBox.Font = New System.Drawing.Font("Courier New", 9.75!)
         Me.FastInputBox.IsReplaceMode = False
         Me.FastInputBox.Location = New System.Drawing.Point(0, 0)
         Me.FastInputBox.Name = "FastInputBox"
@@ -285,35 +286,35 @@ Partial Class Main
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.CleanOutputMenuItem.Text = "CleanOutput"
         '
         'CopyMenuItem
         '
         Me.CopyMenuItem.Name = "CopyMenuItem"
         Me.CopyMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopyMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CopyMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.CopyMenuItem.Text = "Copy"
         '
         'PasteMenuItem
         '
         Me.PasteMenuItem.Name = "PasteMenuItem"
         Me.PasteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.W), System.Windows.Forms.Keys)
-        Me.PasteMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PasteMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.PasteMenuItem.Text = "Paste"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
@@ -362,6 +363,7 @@ Partial Class Main
         'CloseOcamlMenuItem
         '
         Me.CloseOcamlMenuItem.Name = "CloseOcamlMenuItem"
+        Me.CloseOcamlMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
         Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(224, 22)
         Me.CloseOcamlMenuItem.Text = "Close OCaml"
         '
