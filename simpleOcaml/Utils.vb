@@ -16,7 +16,7 @@ Module Utils
     Public ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
 
     Public Function Normalise_Text(str As String) As String
-        Dim ret As String = str
+        Dim ret As String = str.Trim((" " & vbCr & vbLf).ToCharArray())
         If Not ret.EndsWith(";;") Then ret += ";;"
         Dim matches As MatchCollection = Regex.Matches(ret, CommentRegex)
         For i As Integer = matches.Count - 1 To 0 Step -1
