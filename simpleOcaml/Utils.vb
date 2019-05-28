@@ -192,7 +192,7 @@ Module Utils
             Dim dict As Dictionary(Of String, Object) = jss.Deserialize(Of Dictionary(Of String, Object))(result)
             Dim ver As String = Nothing, html_url As String = Nothing
             If dict.TryGetValue("tag_name", ver) AndAlso dict.TryGetValue("html_url", html_url) AndAlso ver > My.Settings.Version Then
-                Dim boxResult As MsgBoxResult = MsgBox("An update is available, open it in webbrowser?", MsgBoxStyle.YesNo, "Available update!")
+                Dim boxResult As MsgBoxResult = MsgBox("An update is available, open it in your web browser?", MsgBoxStyle.YesNo, "Available update!")
                 If boxResult = MsgBoxResult.Yes Then
                     Process.Start(html_url)
                 End If
