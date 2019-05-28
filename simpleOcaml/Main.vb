@@ -94,7 +94,7 @@ Public Class Main
             For Each path As String In System.IO.Directory.EnumerateDirectories(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib))
                 LibsPath += "-I " + Chr(34) + path + Chr(34) + " "
             Next
-            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocaml.exe", LibsPath & " " & My.Settings.StartupOptions)
+            CommandExecutor.Init(System.IO.Path.GetFullPath(My.Settings.Ocaml_Exe) & "\ocamlrun.exe", "ocaml.exe" & " " & LibsPath & " " & My.Settings.StartupOptions)
             CommandExecutor.Start()
         End If
 
