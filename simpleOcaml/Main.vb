@@ -180,21 +180,20 @@ Public Class Main
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         ' TODO: "(\(\*)[\s\S]*?(\*\))" maybe a usefull Regex, else should use lookahead or lookbehind
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\S][\s\S]*?(;;)")
-        For Each expr As Match In Mat
-            If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
-                Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
-                If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({expr.Index, expr.Length}) Then
-                    CodeToExecute = Utils.Normalise_Text(code)
-                    CodeToExecutePos = {expr.Index, expr.Length}
-                    If Not LinesToExecute.SequenceEqual({CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}) Then
-                        LinesToExecute = {CurrentTextbox.PositionToPlace(expr.Index).iLine, CurrentTextbox.PositionToPlace(expr.Index + expr.Length).iLine}
-                        CurrentTextbox.Invalidate()
-                    End If
+        Dim StartIndex As Integer = CurrentTextbox.Text.LastIndexOf(";;", Utils.Max(CurrentTextbox.SelectionStart - 2, 0))
+        Dim Mat As Match = New Regex("[\S][\s\S]*?(;;)").Match(CurrentTextbox.Text, If(StartIndex = -1, 0, StartIndex + 2))
+        If Mat.Success Then
+            Dim code As String = Regex.Replace(Mat.Value, CommentRegex, "")
+            If code <> CodeToExecute Or Not CodeToExecutePos.SequenceEqual({Mat.Index, Mat.Length}) Then
+                CodeToExecute = code
+                CodeToExecutePos = {Mat.Index, Mat.Length}
+                If Not LinesToExecute.SequenceEqual({CurrentTextbox.PositionToPlace(Mat.Index).iLine, CurrentTextbox.PositionToPlace(Mat.Index + Mat.Length).iLine}) Then
+                    LinesToExecute = {CurrentTextbox.PositionToPlace(Mat.Index).iLine, CurrentTextbox.PositionToPlace(Mat.Index + Mat.Length).iLine}
+                    CurrentTextbox.Invalidate()
                 End If
-                Exit Sub
             End If
-        Next
+            Exit Sub
+        End If
         If CodeToExecute <> "" Then
             CodeToExecute = ""
             CodeToExecutePos = {0, 0}
