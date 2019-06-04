@@ -79,9 +79,9 @@
     End Sub
 
     Private Sub FunctionButton_Click(sender As Object, e As EventArgs) Handles FunctionButton.Click
-        ColorPickerDialog.Color = Main.ThemeManager.ThemeLoader.FunctionColor
+        ColorPickerDialog.Color = Main.ThemeManager.ThemeLoader.VariableColor
         If ColorPickerDialog.ShowDialog() = DialogResult.OK Then
-            Main.ThemeManager.ThemeLoader.FunctionColor = ColorPickerDialog.Color
+            Main.ThemeManager.ThemeLoader.VariableColor = ColorPickerDialog.Color
             FunctionButton.BackColor = ColorPickerDialog.Color
             Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         End If
@@ -93,7 +93,7 @@
         DigitButton.BackColor = Main.ThemeManager.ThemeLoader.NumericColor
         StringButton.BackColor = Main.ThemeManager.ThemeLoader.StringColor
         CommentButton.BackColor = Main.ThemeManager.ThemeLoader.CommentColor
-        FunctionButton.BackColor = Main.ThemeManager.ThemeLoader.FunctionColor
+        FunctionButton.BackColor = Main.ThemeManager.ThemeLoader.VariableColor
     End Sub
 
     Private Sub ResetButton_Click(sender As Object, e As EventArgs) Handles ResetButton.Click
@@ -127,6 +127,7 @@
             My.Settings.Font_Size = FontPickerDialog.Font.Size
             My.Settings.Font_Style = FontPickerDialog.Font.Style
         End If
+        Main.ThemeManager.SwitchTheme(My.Settings.Theme)
         FontButton.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
     End Sub
 

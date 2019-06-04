@@ -23,7 +23,6 @@ Public Class MenuHandler
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
     Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
-    Private WithEvents StartupOptionsMenuItem As ToolStripMenuItem = Main.StartupOptionsMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -139,13 +138,6 @@ Public Class MenuHandler
                 page.Text = System.IO.Path.GetFileName(page.Tag(0))
             End If
         Next
-    End Sub
-
-    Private Sub StartupOptionsMenuItem_Click(sender As Object, e As EventArgs) Handles StartupOptionsMenuItem.Click
-        Dim startupOptions As String = InputBox("Command line parameters for OCaml", "Startup Options", My.Settings.StartupOptions)
-        If startupOptions Then
-            My.Settings.StartupOptions = startupOptions
-        End If
     End Sub
 
     Private Sub SettingsMenuItem_Click(sender As Object, e As EventArgs) Handles SettingsMenuItem.Click

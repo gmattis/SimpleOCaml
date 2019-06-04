@@ -13,11 +13,13 @@ Module Utils
     Public ReadOnly NumericRegex As String = "\b((true\b|false\b)|\d+(\.(\d+)?)?)"
     Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)][\s]*"
     Public ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
-    Public ReadOnly FunctionRegex As String = "(?<=let |rec )(\w|,)*"
+    Public ReadOnly VariableRegex As String = "(?<=let |rec |and )(\w|,)*"
+    Public ReadOnly VariableRegexBis As String = "(?<=\| )[\w]*(?=[ ]*->)"
 
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str.Trim((" " & vbCr & vbLf).ToCharArray())
         If Not ret.EndsWith(";;") Then ret += ";;"
+        ret = ret.Replace(vbCrLf, " ")
         Dim matches As MatchCollection = Regex.Matches(ret, CommentRegex)
         For i As Integer = matches.Count - 1 To 0 Step -1
             Dim match As Match = matches.Item(i)
@@ -28,7 +30,7 @@ Module Utils
 
     Public Sub OnAutoIndent(sender As Object, e As AutoIndentEventArgs)
         Dim stringEnd As String = e.LineText.Trim((" "))
-        If stringEnd.EndsWith("in") OrElse stringEnd.EndsWith("function") OrElse stringEnd.EndsWith("=") Then
+        If stringEnd.EndsWith("in") OrElse stringEnd.EndsWith("do") OrElse stringEnd.EndsWith("function") OrElse stringEnd.EndsWith("then") OrElse stringEnd.EndsWith("=") OrElse stringEnd.EndsWith("(") Then
             e.ShiftNextLines = e.TabLength
         ElseIf stringEnd.EndsWith(";;") Then
             e.ShiftNextLines -= e.TabLength
@@ -103,14 +105,15 @@ Module Utils
         TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
         TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
         TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
-        TextRange.ClearStyle(Main.ThemeManager.FunctionStyle)
+        TextRange.ClearStyle(Main.ThemeManager.VariableStyle)
 
         TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
         TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
         TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
         TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
         TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        TextRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
+        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
+        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
     End Sub
 
     Public Sub UpdateTextStyle(sender As Object, e As TextChangedEventArgs)
@@ -120,14 +123,15 @@ Module Utils
         TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
         TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
         TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
-        TextRange.ClearStyle(Main.ThemeManager.FunctionStyle)
+        TextRange.ClearStyle(Main.ThemeManager.VariableStyle)
 
         TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
         TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
         TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
         TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
         TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        TextRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
+        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
+        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
     End Sub
 
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
@@ -139,14 +143,15 @@ Module Utils
         CurrentRange.ClearStyle(Main.ThemeManager.NumericStyle)
         CurrentRange.ClearStyle(Main.ThemeManager.KeywordStyle)
         CurrentRange.ClearStyle(Main.ThemeManager.OperatorStyle)
-        CurrentRange.ClearStyle(Main.ThemeManager.FunctionStyle)
+        CurrentRange.ClearStyle(Main.ThemeManager.VariableStyle)
 
         TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
         TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
         CurrentRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
         CurrentRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        CurrentRange.SetStyle(Main.ThemeManager.FunctionStyle, FunctionRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
+        CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
 
         If Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False

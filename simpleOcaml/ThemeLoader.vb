@@ -56,14 +56,14 @@
         End Set
     End Property
 
-    Private functionColorValue As Color
-    Public Property FunctionColor() As Color
+    Private variableColorValue As Color
+    Public Property VariableColor() As Color
         Get
-            Return functionColorValue
+            Return variableColorValue
         End Get
         Set(value As Color)
-            functionColorValue = value
-            Replace("functionColor", value, My.Settings.Theme)
+            variableColorValue = value
+            Replace("variableColor", value, My.Settings.Theme)
         End Set
     End Property
 
@@ -88,7 +88,7 @@
         Replace("numericColor", numericColorValue, Themes.LightTheme)
         Replace("stringColor", stringColorValue, Themes.LightTheme)
         Replace("commentColor", commentColorValue, Themes.LightTheme)
-        Replace("functionColor", functionColorValue, Themes.LightTheme)
+        Replace("variableColor", variableColorValue, Themes.LightTheme)
 
         LoadDefault(Themes.DarkTheme)
         Replace("keywordColor", keywordColorValue, Themes.DarkTheme)
@@ -96,7 +96,7 @@
         Replace("numericColor", numericColorValue, Themes.DarkTheme)
         Replace("stringColor", stringColorValue, Themes.DarkTheme)
         Replace("commentColor", commentColorValue, Themes.DarkTheme)
-        Replace("functionColor", functionColorValue, Themes.DarkTheme)
+        Replace("variableColor", variableColorValue, Themes.DarkTheme)
     End Sub
 
     Private Sub Load(theme As Themes)
@@ -116,14 +116,14 @@
             Dim numericValue As Integer() = Array.ConvertAll(Of String, Integer)(themeElement.Element("numericColor").Value.Split(","), Function(str) Int32.Parse(str))
             Dim stringValue As Integer() = Array.ConvertAll(Of String, Integer)(themeElement.Element("stringColor").Value.Split(","), Function(str) Int32.Parse(str))
             Dim commentValue As Integer() = Array.ConvertAll(Of String, Integer)(themeElement.Element("commentColor").Value.Split(","), Function(str) Int32.Parse(str))
-            Dim functionValue As Integer() = Array.ConvertAll(Of String, Integer)(themeElement.Element("functionColor").Value.Split(","), Function(str) Int32.Parse(str))
+            Dim variableValue As Integer() = Array.ConvertAll(Of String, Integer)(themeElement.Element("variableColor").Value.Split(","), Function(str) Int32.Parse(str))
 
             keywordColorValue = Color.FromArgb(keywordValue(0), keywordValue(1), keywordValue(2))
             operatorColorValue = Color.FromArgb(operatorValue(0), operatorValue(1), operatorValue(2))
             numericColorValue = Color.FromArgb(numericValue(0), numericValue(1), numericValue(2))
             stringColorValue = Color.FromArgb(stringValue(0), stringValue(1), stringValue(2))
             commentColorValue = Color.FromArgb(commentValue(0), commentValue(1), commentValue(2))
-            functionColorValue = Color.FromArgb(functionValue(0), functionValue(1), functionValue(2))
+            variableColorValue = Color.FromArgb(variableValue(0), variableValue(1), variableValue(2))
         Catch e As Exception
             Console.WriteLine("Invalid theme configuration, loading default values.")
             LoadDefault(theme)
@@ -138,7 +138,7 @@
                 numericColorValue = Color.FromArgb(128, 0, 0)
                 stringColorValue = Color.FromArgb(69, 143, 34)
                 commentColorValue = Color.FromArgb(173, 173, 173)
-                functionColorValue = Color.FromArgb(144, 0, 144)
+                variableColorValue = Color.FromArgb(144, 0, 144)
 
             Case Themes.DarkTheme
                 keywordColorValue = Color.FromArgb(250, 39, 114)
@@ -146,7 +146,7 @@
                 numericColorValue = Color.FromArgb(147, 88, 254)
                 stringColorValue = Color.FromArgb(231, 219, 117)
                 commentColorValue = Color.FromArgb(127, 125, 105)
-                functionColorValue = Color.FromArgb(166, 226, 43)
+                variableColorValue = Color.FromArgb(166, 226, 43)
 
             Case Else
                 keywordColorValue = Color.FromArgb(0, 0, 255)
@@ -154,21 +154,26 @@
                 numericColorValue = Color.FromArgb(128, 0, 0)
                 stringColorValue = Color.FromArgb(69, 143, 34)
                 commentColorValue = Color.FromArgb(173, 173, 173)
-                functionColorValue = Color.FromArgb(144, 0, 144)
+                variableColorValue = Color.FromArgb(144, 0, 144)
 
         End Select
     End Sub
 
     Private Sub Replace(color As String, value As Color, theme As Themes)
-        Select Case theme
-            Case Themes.LightTheme
-                ThemeConfig.Element("themeColors").Element("lightTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
-            Case Themes.DarkTheme
-                ThemeConfig.Element("themeColors").Element("darkTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
-            Case Else
-                ThemeConfig.Element("themeColors").Element("lightTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
-        End Select
-        ThemeConfig.Save("theme.xml")
+        Try
+            Select Case theme
+                Case Themes.LightTheme
+                    ThemeConfig.Element("themeColors").Element("lightTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
+                Case Themes.DarkTheme
+                    ThemeConfig.Element("themeColors").Element("darkTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
+                Case Else
+                    ThemeConfig.Element("themeColors").Element("lightTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
+            End Select
+            ThemeConfig.Save("theme.xml")
+        Catch e As Exception
+            Console.WriteLine("An error appends while replacing colors!")
+            Console.WriteLine(e.Message)
+        End Try
     End Sub
 
     Private Sub CreateConfig()
@@ -187,7 +192,7 @@
             .Element("lightTheme").Add(New XElement("numericColor", $"{numericColorValue.R},{numericColorValue.G},{numericColorValue.B}"))
             .Element("lightTheme").Add(New XElement("stringColor", $"{stringColorValue.R},{stringColorValue.G},{stringColorValue.B}"))
             .Element("lightTheme").Add(New XElement("commentColor", $"{commentColorValue.R},{commentColorValue.G},{commentColorValue.B}"))
-            .Element("lightTheme").Add(New XElement("functionColor", $"{functionColorValue.R},{functionColorValue.G},{functionColorValue.B}"))
+            .Element("lightTheme").Add(New XElement("variableColor", $"{variableColorValue.R},{variableColorValue.G},{variableColorValue.B}"))
 
             LoadDefault(Themes.DarkTheme)
 
@@ -196,7 +201,7 @@
             .Element("darkTheme").Add(New XElement("numericColor", $"{numericColorValue.R},{numericColorValue.G},{numericColorValue.B}"))
             .Element("darkTheme").Add(New XElement("stringColor", $"{stringColorValue.R},{stringColorValue.G},{stringColorValue.B}"))
             .Element("darkTheme").Add(New XElement("commentColor", $"{commentColorValue.R},{commentColorValue.G},{commentColorValue.B}"))
-            .Element("darkTheme").Add(New XElement("functionColor", $"{functionColorValue.R},{functionColorValue.G},{functionColorValue.B}"))
+            .Element("darkTheme").Add(New XElement("variableColor", $"{variableColorValue.R},{variableColorValue.G},{variableColorValue.B}"))
         End With
 
         ThemeConfig.Save("theme.xml")

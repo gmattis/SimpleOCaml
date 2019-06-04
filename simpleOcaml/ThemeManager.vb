@@ -58,13 +58,14 @@ Public Class ThemeManager
             operatorStyleValue = value
         End Set
     End Property
-    Private functionStyleValue As TextStyle
-    Public Property FunctionStyle() As TextStyle
+
+    Private variableStyleValue As TextStyle
+    Public Property VariableStyle() As TextStyle
         Get
-            Return functionStyleValue
+            Return variableStyleValue
         End Get
         Set(ByVal value As TextStyle)
-            functionStyleValue = value
+            variableStyleValue = value
         End Set
     End Property
 
@@ -92,7 +93,7 @@ Public Class ThemeManager
         numericStyleValue = New TextStyle(New SolidBrush(ThemeLoader.NumericColor), Nothing, FontStyle.Regular)
         stringStyleValue = New TextStyle(New SolidBrush(ThemeLoader.StringColor), Nothing, FontStyle.Regular)
         commentStyleValue = New TextStyle(New SolidBrush(ThemeLoader.CommentColor), Nothing, FontStyle.Regular)
-        functionStyleValue = New TextStyle(New SolidBrush(ThemeLoader.FunctionColor), Nothing, FontStyle.Regular)
+        variableStyleValue = New TextStyle(New SolidBrush(ThemeLoader.VariableColor), Nothing, FontStyle.Regular)
 
         ApplyTextBoxStyle(Main.FastInputBox)
 

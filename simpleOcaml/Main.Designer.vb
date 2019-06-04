@@ -51,7 +51,6 @@ Partial Class Main
         Me.PartialOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DetailedOutputMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseOcamlMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.StartupOptionsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OcamlDocMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -204,7 +203,6 @@ Partial Class Main
         Me.FastInputBox.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.FastInputBox.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.FastInputBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FastInputBox.Font = New System.Drawing.Font("Courier New", 9.75!)
         Me.FastInputBox.IsReplaceMode = False
         Me.FastInputBox.Location = New System.Drawing.Point(0, 0)
         Me.FastInputBox.Name = "FastInputBox"
@@ -319,7 +317,7 @@ Partial Class Main
         '
         'OcamlMenuItem
         '
-        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.ExecuteAllMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem, Me.StartupOptionsMenuItem})
+        Me.OcamlMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExecuteMenuItem, Me.ExecuteAllMenuItem, Me.OutputMenuItem, Me.CloseOcamlMenuItem})
         Me.OcamlMenuItem.Name = "OcamlMenuItem"
         Me.OcamlMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OcamlMenuItem.Text = "OCaml"
@@ -366,12 +364,6 @@ Partial Class Main
         Me.CloseOcamlMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
         Me.CloseOcamlMenuItem.Size = New System.Drawing.Size(224, 22)
         Me.CloseOcamlMenuItem.Text = "Close OCaml"
-        '
-        'StartupOptionsMenuItem
-        '
-        Me.StartupOptionsMenuItem.Name = "StartupOptionsMenuItem"
-        Me.StartupOptionsMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.StartupOptionsMenuItem.Text = "Startup options"
         '
         'SettingsMenuItem
         '
@@ -499,7 +491,6 @@ Partial Class Main
     Friend WithEvents RefreshTimer As Timer
     Friend WithEvents ExecuteAllMenuItem As ToolStripMenuItem
     Friend WithEvents OutputBox As RichTextBox
-    Friend WithEvents StartupOptionsMenuItem As ToolStripMenuItem
     Friend WithEvents OutputSplitContainer As SplitContainer
     Friend WithEvents FastInputBox As FastColoredTextBoxNS.FastColoredTextBox
     Friend WithEvents PasteMenuItem As ToolStripMenuItem

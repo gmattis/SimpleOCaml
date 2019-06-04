@@ -6,7 +6,7 @@
     <numericColor></numericColor>
     <stringColor></stringColor>
     <commentColor></commentColor>
-    <functionColor></functionColor>
+    <variableColor></variableColor>
   </lightTheme>
   <darkTheme>
     <keywordColor></keywordColor>
@@ -14,6 +14,6 @@
     <numericColor></numericColor>
     <stringColor></stringColor>
     <commentColor></commentColor>
-    <functionColor></functionColor>
+    <variableColor></variableColor>
   </darkTheme>
 </themeColors>

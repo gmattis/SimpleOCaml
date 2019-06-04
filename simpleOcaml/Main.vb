@@ -180,7 +180,7 @@ Public Class Main
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         ' TODO: "(\(\*)[\s\S]*?(\*\))" maybe a usefull Regex, else should use lookahead or lookbehind
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\S][\s\S]*?(;;)")
         For Each expr As Match In Mat
             If expr.Index <= CurrentTextbox.SelectionStart And CurrentTextbox.SelectionStart <= expr.Index + expr.Length Then
                 Dim code As String = Regex.Replace(expr.Value, CommentRegex, "")
