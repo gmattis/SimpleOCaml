@@ -29,7 +29,7 @@ Public Class MenuHandler
 
     Private Sub SaveFile() Handles SaveMenuItem.Click
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        If Main.TabControl.SelectedTab.Tag(0) = "" Or Not System.IO.File.Exists(Main.TabControl.SelectedTab.Tag(0)) Then
+        If Main.TabControl.SelectedTab.Tag(0) = "" OrElse Not System.IO.File.Exists(Main.TabControl.SelectedTab.Tag(0)) Then
             SaveAsFile()
         Else
             Dim savePath As String = Main.TabControl.SelectedTab.Tag(0)
@@ -42,6 +42,7 @@ Public Class MenuHandler
     End Sub
 
     Private Sub SaveAsFile() Handles SaveAsMenuItem.Click
+        SaveFileDialog.FileName = System.IO.Path.GetFileName(Main.TabControl.SelectedTab.Tag(0))
         SaveFileDialog.ShowDialog()
     End Sub
 

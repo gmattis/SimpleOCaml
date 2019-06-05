@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Text
 Imports System.Threading
 Public Class OCaml
@@ -8,6 +9,7 @@ Public Class OCaml
     Private WithEvents OcamlProcess As Process
     Private stdoutThread As Thread
     Private streamBuffer As StringBuilder
+    Private codeBuffer As Queue(Of String)
     Private exePath = ""
     Private args = ""
 
@@ -15,6 +17,7 @@ Public Class OCaml
         Me.exePath = exePath
         Me.args = arguments
         Me.streamBuffer = New StringBuilder()
+        Me.codeBuffer = New Queue(Of String)
     End Sub
 
     Public Sub Start()
@@ -102,12 +105,28 @@ Public Class OCaml
         If OcamlProcess Is Nothing Then
             Start()
         End If
-        OcamlProcess.StandardInput.WriteLine(command)
+        codeBuffer.Enqueue(command)
+
+        If Main.OutputBox.Text.EndsWith("# ") Then NextCommand()
     End Sub
 
     Public Function Refresh()
         Return UpdateStreamBuffer(True)
     End Function
+
+    Public Sub NextCommand()
+        If codeBuffer.Count > 0 Then
+            Dim Code As String = codeBuffer.Dequeue()
+            Main.OutputBox.SelectionColor = Main.ThemeManager.OutputCommandColor
+            If My.Settings.Detailed_Output OrElse Not Code.Contains(vbLf) Then
+                Main.OutputBox.AppendText(Code + vbLf)
+            Else
+                Main.OutputBox.AppendText(Code.Substring(0, Code.IndexOf(vbLf) - 1) + " [...]" + vbLf)
+            End If
+            Main.OutputBox.SelectionColor = Main.ThemeManager.OutputColor
+            OcamlProcess.StandardInput.WriteLine(Code)
+        End If
+    End Sub
 
     Protected Overridable Sub Dispose(ByVal disposing As Boolean)
         If disposing Then

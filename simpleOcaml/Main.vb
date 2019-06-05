@@ -38,7 +38,7 @@ Public Class Main
         OutputBox.Font = TextFont
         FastInputBox.Font = TextFont
         OutputSplitContainer.SplitterIncrement = TextRenderer.MeasureText("I", TextFont).Height
-        AddHandler FastInputBox.TextChanged, AddressOf UpdateTextStyle
+        AddHandler FastInputBox.TextChangedDelayed, AddressOf InputBoxTextChanged
 
         'MenuItems init
         DetailedOutputMenuItem.Enabled = Not My.Settings.Detailed_Output
@@ -124,26 +124,10 @@ Public Class Main
         Dim CurrentTextbox As FastColoredTextBox = TryCast(FindFocussedControl(Me.ActiveControl), FastColoredTextBox)
         If Not CurrentTextbox Is Nothing Then
             If FindFocussedControl(Me.ActiveControl).Equals(FastInputBox) Then
-                OutputBox.SelectionColor = ThemeManager.OutputCommandColor
-                If My.Settings.Detailed_Output OrElse Not FastInputBox.Text.Contains(vbLf) Then
-                    OutputBox.AppendText(FastInputBox.Text + vbLf)
-                Else
-                    OutputBox.AppendText(FastInputBox.Text.Substring(0, FastInputBox.Text.IndexOf(vbLf) - 1) + " [...]" + vbLf)
-                End If
-                OutputBox.SelectionColor = ThemeManager.OutputColor
                 CommandExecutor.Execute(Normalise_Text(FastInputBox.Text))
-            Else
-                If CodeToExecute <> "" Then
-                    OutputBox.SelectionColor = ThemeManager.OutputCommandColor
-                    If My.Settings.Detailed_Output OrElse Not CodeToExecute.Contains(vbLf) Then
-                        OutputBox.AppendText(CodeToExecute + vbLf)
-                    Else
-                        OutputBox.AppendText(CodeToExecute.Substring(0, CodeToExecute.IndexOf(vbLf) - 1) + " [...]" + vbLf)
-                    End If
-                    OutputBox.SelectionColor = ThemeManager.OutputColor
-                    CommandExecutor.Execute(Normalise_Text(CodeToExecute))
-                    WarpToNextCode()
-                End If
+            ElseIf CodeToExecute <> "" Then
+                CommandExecutor.Execute(Normalise_Text(CodeToExecute))
+                WarpToNextCode()
             End If
         End If
     End Sub
@@ -166,7 +150,7 @@ Public Class Main
 
     Private Sub WarpToNextCode()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
-        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\w\(\#]([\s\S])*?(;;)")
+        Dim Mat As MatchCollection = Regex.Matches(CurrentTextbox.Text, "[\S][\s\S]*?(;;)")
         For Each expr As Match In Mat
             If expr.Index > CurrentTextbox.SelectionStart Then
                 CurrentTextbox.SelectionStart = expr.Index
@@ -206,6 +190,7 @@ Public Class Main
     Private Sub ProcessCommandOutput(ByVal output As String)
         OutputBox.AppendText(output)
         OutputBox.ScrollToCaret()
+        If OutputBox.Text.EndsWith("# ") Then CommandExecutor.NextCommand()
     End Sub
 
     ''' Le reste
@@ -228,6 +213,16 @@ Public Class Main
         End If
     End Sub
 
+    Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
+        ' Code a exécuter
+        UpdateCodeToExecute()
+
+        ' Code Folding
+        If My.Settings.Code_Folding Then
+            DrawCodeFoldingMarkers()
+        End If
+    End Sub
+
     Private Sub DrawCodeFoldingMarkers()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         CurrentTextbox.Range.ClearFoldingMarkers()
@@ -243,16 +238,6 @@ Public Class Main
                 isOpened = False
             End If
         Next
-    End Sub
-
-    Private Sub InputBox_KeyUp(sender As Object, e As EventArgs)
-        ' Code a exécuter
-        UpdateCodeToExecute()
-
-        ' Code Folding
-        If My.Settings.Code_Folding Then
-            DrawCodeFoldingMarkers()
-        End If
     End Sub
 
     Public Sub AddNewPage(opened As Boolean)
@@ -281,7 +266,7 @@ Public Class Main
             AddHandler .KeyDown, AddressOf InputBox_KeyDown
             AddHandler .PaintLine, AddressOf PaintLines
             If Not opened Then
-                AddHandler .TextChanged, AddressOf InputBoxTextChanged
+                AddHandler .TextChangedDelayed, AddressOf InputBoxTextChanged
             End If
         End With
         ThemeManager.ApplyTextBoxStyle(TabControl.SelectedTab.Controls(0))

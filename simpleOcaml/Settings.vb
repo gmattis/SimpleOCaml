@@ -1,8 +1,9 @@
 ﻿Public Class Settings
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim ThemesDict As New Dictionary(Of String, Integer)
-        ThemesDict.Add("Light Theme", Themes.LightTheme)
-        ThemesDict.Add("Dark Theme", Themes.DarkTheme)
+        Dim ThemesDict As New Dictionary(Of String, Integer) From {
+            {"Light Theme", Themes.LightTheme},
+            {"Dark Theme", Themes.DarkTheme}
+        }
 
         ThemeComboBox.DataSource = New BindingSource(ThemesDict, Nothing)
         ThemeComboBox.ValueMember = "Value"
@@ -16,6 +17,7 @@
         FontPickerDialog.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
 
         AutosaveDelayUpDown.Value = My.Settings.Autosave_delay
+        AddHandler AutosaveDelayUpDown.ValueChanged, AddressOf AutosaveDelayUpDown_ValueChanged
 
         ColorPickerDialog.FullOpen = True
 
@@ -131,7 +133,7 @@
         FontButton.Font = New Font(My.Settings.Font_Family, My.Settings.Font_Size, My.Settings.Font_Style)
     End Sub
 
-    Private Sub AutosaveDelayUpDown_ValueChanged(sender As Object, e As EventArgs) Handles AutosaveDelayUpDown.ValueChanged
+    Private Sub AutosaveDelayUpDown_ValueChanged(sender As Object, e As EventArgs)
         My.Settings.Autosave_delay = Convert.ToInt32(AutosaveDelayUpDown.Value)
     End Sub
 
@@ -146,6 +148,7 @@
     End Sub
 
     Private Sub ApplyButton_Click(sender As Object, e As EventArgs) Handles ApplyButton.Click
+        My.Settings.Save()
         Me.Close()
     End Sub
 

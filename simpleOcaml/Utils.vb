@@ -13,7 +13,7 @@ Module Utils
     Public ReadOnly NumericRegex As String = "\b((true\b|false\b)|\d+(\.(\d+)?)?)"
     Public ReadOnly CommentRegex As String = "[(][*][\s\S]*?[*][)][\s]*"
     Public ReadOnly StringRegex As String = "[""][\s\S]*?[""]"
-    Public ReadOnly VariableRegex As String = "(?<=let |rec |and )(\w|,)*"
+    Public ReadOnly VariableRegex As String = "(?<=let |rec |and |for )(\w|,)*"
     Public ReadOnly VariableRegexBis As String = "(?<=\| )[\w]*(?=[ ]*->)"
 
     Public Function Normalise_Text(str As String) As String
@@ -73,7 +73,7 @@ Module Utils
         If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text.Trim() <> "" AndAlso Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
             If e.TabPage.Tag(0) = "" Then
-                result = MsgBox(String.Format("This file wasn't saved." + vbLf + "Save it?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "Unsaved file")
+                result = MsgBox("This file wasn't saved." & vbLf & "Save it?", MsgBoxStyle.YesNoCancel, "Unsaved file")
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -82,7 +82,7 @@ Module Utils
                     End If
                 End If
             Else
-                result = MsgBox(String.Format("{0} was modified." + vbLf + "Save it?", System.IO.Path.GetFileName(e.TabPage.Tag(0))), MsgBoxStyle.YesNoCancel, "U")
+                result = MsgBox($"{System.IO.Path.GetFileName(e.TabPage.Tag(0))} was modified." + vbLf + "Save it?", MsgBoxStyle.YesNoCancel, System.IO.Path.GetFileName(e.TabPage.Tag(0)))
                 If result = MsgBoxResult.Cancel Then
                     e.Cancel = True
                 ElseIf result = MsgBoxResult.Yes Then
@@ -153,7 +153,7 @@ Module Utils
         CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
         CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
 
-        If Main.TabControl.SelectedTab.Tag(1) Then
+        If Not sender.Equals(Main.FastInputBox) AndAlso Main.TabControl.SelectedTab.Tag(1) Then
             Main.TabControl.SelectedTab.Tag(1) = False
             Main.TabControl.SelectedTab.Text = "*" & Main.TabControl.SelectedTab.Text
         End If
@@ -214,7 +214,7 @@ Module Utils
         Main.TabControl.SelectedTab.Tag(0) = file
         Main.TabControl.SelectedTab.Tag(1) = True
         UpdateTextStyle(CurrentTextbox)
-        AddHandler CurrentTextbox.TextChanged, AddressOf InputBoxTextChanged
+        AddHandler CurrentTextbox.TextChangedDelayed, AddressOf InputBoxTextChanged
     End Sub
 
     Function FindFocussedControl(ByVal ctr As Control) As Control
