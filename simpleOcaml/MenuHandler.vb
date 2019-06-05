@@ -22,7 +22,9 @@ Public Class MenuHandler
     Private WithEvents PasteMenuItem As ToolStripMenuItem = Main.PasteMenuItem
     Private WithEvents UndoMenuItem As ToolStripMenuItem = Main.UndoMenuItem
     Private WithEvents RedoMenuItem As ToolStripMenuItem = Main.RedoMenuItem
-    Private WithEvents ToutEnregistrerMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
+    Private WithEvents SaveAllMenuItem As ToolStripMenuItem = Main.SaveAllMenuItem
+    Private WithEvents FindMenuItem As ToolStripMenuItem = Main.FindMenuItem
+    Private WithEvents ReplaceMenuItem As ToolStripMenuItem = Main.ReplaceMenuItem
 
     Private WithEvents OpenFileDialog As OpenFileDialog = Main.OpenFileDialog
     Private WithEvents SaveFileDialog As SaveFileDialog = Main.SaveFileDialog
@@ -131,7 +133,7 @@ Public Class MenuHandler
         TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox).Redo()
     End Sub
 
-    Private Sub ToutEnregistrerMenuItem_Click(sender As Object, e As EventArgs) Handles ToutEnregistrerMenuItem.Click
+    Private Sub SaveAllMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAllMenuItem.Click
         For Each page As TabPage In Main.TabControl.TabPages
             If page.Tag(0) <> "" And Not page.Tag(1) Then
                 TryCast(page.Controls.Item(0), FastColoredTextBox).SaveToFile(page.Tag(0), System.Text.Encoding.Default)
@@ -143,5 +145,15 @@ Public Class MenuHandler
 
     Private Sub SettingsMenuItem_Click(sender As Object, e As EventArgs) Handles SettingsMenuItem.Click
         Settings.Show()
+    End Sub
+
+    Private Sub FindMenuItem_Click(sender As Object, e As EventArgs) Handles FindMenuItem.Click
+        FindReplace.Show()
+        FindReplace.TabControl.SelectTab(0)
+    End Sub
+
+    Private Sub ReplaceMenuItem_Click(sender As Object, e As EventArgs) Handles ReplaceMenuItem.Click
+        FindReplace.Show()
+        FindReplace.TabControl.SelectTab(1)
     End Sub
 End Class

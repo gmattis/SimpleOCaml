@@ -62,6 +62,8 @@ Partial Class Main
         Me.StateLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ElapsedTimer = New System.Windows.Forms.Timer(Me.components)
         Me.RefreshTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.FindMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReplaceMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSplitContainer.Panel1.SuspendLayout()
         Me.MainSplitContainer.Panel2.SuspendLayout()
@@ -203,6 +205,7 @@ Partial Class Main
         Me.FastInputBox.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.FastInputBox.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.FastInputBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FastInputBox.Font = New System.Drawing.Font("Courier New", 9.75!)
         Me.FastInputBox.IsReplaceMode = False
         Me.FastInputBox.Location = New System.Drawing.Point(0, 0)
         Me.FastInputBox.Name = "FastInputBox"
@@ -276,7 +279,7 @@ Partial Class Main
         '
         'EditMenuItem
         '
-        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopyMenuItem, Me.PasteMenuItem, Me.UndoMenuItem, Me.RedoMenuItem})
+        Me.EditMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CleanOutputMenuItem, Me.CopyMenuItem, Me.PasteMenuItem, Me.UndoMenuItem, Me.RedoMenuItem, Me.FindMenuItem, Me.ReplaceMenuItem})
         Me.EditMenuItem.Name = "EditMenuItem"
         Me.EditMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditMenuItem.Text = "Edit"
@@ -284,35 +287,35 @@ Partial Class Main
         'CleanOutputMenuItem
         '
         Me.CleanOutputMenuItem.Name = "CleanOutputMenuItem"
-        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.CleanOutputMenuItem.Text = "CleanOutput"
+        Me.CleanOutputMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.CleanOutputMenuItem.Text = "Clean output"
         '
         'CopyMenuItem
         '
         Me.CopyMenuItem.Name = "CopyMenuItem"
         Me.CopyMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopyMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.CopyMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.CopyMenuItem.Text = "Copy"
         '
         'PasteMenuItem
         '
         Me.PasteMenuItem.Name = "PasteMenuItem"
         Me.PasteMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.W), System.Windows.Forms.Keys)
-        Me.PasteMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.PasteMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.PasteMenuItem.Text = "Paste"
         '
         'UndoMenuItem
         '
         Me.UndoMenuItem.Name = "UndoMenuItem"
         Me.UndoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.UndoMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.UndoMenuItem.Text = "Undo"
         '
         'RedoMenuItem
         '
         Me.RedoMenuItem.Name = "RedoMenuItem"
         Me.RedoMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RedoMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.RedoMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.RedoMenuItem.Text = "Redo"
         '
         'OcamlMenuItem
@@ -427,6 +430,20 @@ Partial Class Main
         Me.RefreshTimer.Enabled = True
         Me.RefreshTimer.Interval = 50
         '
+        'FindMenuItem
+        '
+        Me.FindMenuItem.Name = "FindMenuItem"
+        Me.FindMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
+        Me.FindMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.FindMenuItem.Text = "Find"
+        '
+        'ReplaceMenuItem
+        '
+        Me.ReplaceMenuItem.Name = "ReplaceMenuItem"
+        Me.ReplaceMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
+        Me.ReplaceMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.ReplaceMenuItem.Text = "Replace"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -494,4 +511,6 @@ Partial Class Main
     Friend WithEvents OutputSplitContainer As SplitContainer
     Friend WithEvents FastInputBox As FastColoredTextBoxNS.FastColoredTextBox
     Friend WithEvents PasteMenuItem As ToolStripMenuItem
+    Friend WithEvents FindMenuItem As ToolStripMenuItem
+    Friend WithEvents ReplaceMenuItem As ToolStripMenuItem
 End Class
