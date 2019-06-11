@@ -72,8 +72,8 @@
     End Sub
 
     Public Sub Reload(theme As Themes)
-        If System.IO.File.Exists(My.Application.Info.DirectoryPath & System.IO.Path.PathSeparator & "theme.xml") Then
-            ThemeConfig = XDocument.Load(My.Application.Info.DirectoryPath & System.IO.Path.PathSeparator & "theme.xml")
+        If System.IO.File.Exists(My.Application.Info.DirectoryPath & System.IO.Path.DirectorySeparatorChar & "theme.xml") Then
+            ThemeConfig = XDocument.Load(My.Application.Info.DirectoryPath & System.IO.Path.DirectorySeparatorChar & "theme.xml")
             Load(theme)
         Else
             LoadDefault(theme)
@@ -169,7 +169,7 @@
                 Case Else
                     ThemeConfig.Element("themeColors").Element("lightTheme").Element(color).Value = $"{value.R},{value.G},{value.B}"
             End Select
-            ThemeConfig.Save(My.Application.Info.DirectoryPath & System.IO.Path.PathSeparator & "theme.xml")
+            ThemeConfig.Save(My.Application.Info.DirectoryPath & System.IO.Path.DirectorySeparatorChar & "theme.xml")
         Catch e As Exception
             Console.WriteLine("An error appends while replacing colors!")
             Console.WriteLine(e.Message)
@@ -204,7 +204,7 @@
             .Element("darkTheme").Add(New XElement("variableColor", $"{variableColorValue.R},{variableColorValue.G},{variableColorValue.B}"))
         End With
 
-        ThemeConfig.Save(My.Application.Info.DirectoryPath & System.IO.Path.PathSeparator & "theme.xml")
+        ThemeConfig.Save(My.Application.Info.DirectoryPath & System.IO.Path.DirectorySeparatorChar & "theme.xml")
         LoadDefault(My.Settings.Theme)
     End Sub
 End Class

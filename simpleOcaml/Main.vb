@@ -12,6 +12,8 @@ Public Class Main
 
     ''' Démarrage et fermeture
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Text = $"SimpleOCaml {My.Settings.Version}"
+
         Utils.CheckUpdate()
 
         If Utils.IsLinux Then
