@@ -19,7 +19,6 @@ Module Utils
     Public Function Normalise_Text(str As String) As String
         Dim ret As String = str.Trim((" " & vbCr & vbLf).ToCharArray())
         If Not ret.EndsWith(";;") Then ret += ";;"
-        ret = ret.Replace(vbCrLf, " ")
         Dim matches As MatchCollection = Regex.Matches(ret, CommentRegex)
         For i As Integer = matches.Count - 1 To 0 Step -1
             Dim match As Match = matches.Item(i)
@@ -65,10 +64,6 @@ Module Utils
         End If
     End Sub
 
-    Public Function Max(a, b)
-        If a > b Then Return a Else Return b
-    End Function
-
     Public Sub OnTabClosing(sender As Object, e As TabControlCancelEventArgs)
         If TryCast(e.TabPage.Controls.Item(0), FastColoredTextBox).Text.Trim() <> "" AndAlso Not e.TabPage.Tag(1) Then
             Dim result As MsgBoxResult
@@ -98,42 +93,6 @@ Module Utils
         End If
     End Sub
 
-    Public Sub UpdateTextStyle(tb As FastColoredTextBox)
-        Dim TextRange As Range = tb.Range.tb.Range()
-        TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
-        TextRange.ClearStyle(Main.ThemeManager.StringStyle)
-        TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
-        TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
-        TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
-        TextRange.ClearStyle(Main.ThemeManager.VariableStyle)
-
-        TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
-        TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
-        TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
-        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
-        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
-        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
-    End Sub
-
-    Public Sub UpdateTextStyle(sender As Object, e As TextChangedEventArgs)
-        Dim TextRange As Range = e.ChangedRange.tb.Range()
-        TextRange.ClearStyle(Main.ThemeManager.CommentStyle)
-        TextRange.ClearStyle(Main.ThemeManager.StringStyle)
-        TextRange.ClearStyle(Main.ThemeManager.NumericStyle)
-        TextRange.ClearStyle(Main.ThemeManager.KeywordStyle)
-        TextRange.ClearStyle(Main.ThemeManager.OperatorStyle)
-        TextRange.ClearStyle(Main.ThemeManager.VariableStyle)
-
-        TextRange.SetStyle(Main.ThemeManager.CommentStyle, CommentRegex)
-        TextRange.SetStyle(Main.ThemeManager.StringStyle, StringRegex)
-        TextRange.SetStyle(Main.ThemeManager.NumericStyle, NumericRegex)
-        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, KeywordRegex)
-        TextRange.SetStyle(Main.ThemeManager.KeywordStyle, OperatorRegex)
-        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
-        TextRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
-    End Sub
-
     Public Sub InputBoxTextChanged(sender As Object, e As TextChangedEventArgs)
         Dim CurrentRange As Range = e.ChangedRange
         Dim TextRange As Range = e.ChangedRange.tb.Range()
@@ -153,7 +112,7 @@ Module Utils
         CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegex)
         CurrentRange.SetStyle(Main.ThemeManager.VariableStyle, VariableRegexBis)
 
-        If Not sender.Equals(Main.FastInputBox) AndAlso Main.TabControl.SelectedTab.Tag(1) Then
+        If Not sender.Equals(Main.FastInputBox) AndAlso Main.TabControl.SelectedTab.Tag(1) AndAlso e.ChangedRange.tb.IsChanged Then
             Main.TabControl.SelectedTab.Tag(1) = False
             Main.TabControl.SelectedTab.Text = "*" & Main.TabControl.SelectedTab.Text
         End If
@@ -210,10 +169,10 @@ Module Utils
     Public Sub OpenFile(file As String)
         Dim CurrentTextbox As FastColoredTextBox = TryCast(Main.TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         CurrentTextbox.OpenFile(file, System.Text.Encoding.Default)
+        CurrentTextbox.IsChanged = False
         Main.TabControl.SelectedTab.Text = System.IO.Path.GetFileName(file)
         Main.TabControl.SelectedTab.Tag(0) = file
         Main.TabControl.SelectedTab.Tag(1) = True
-        UpdateTextStyle(CurrentTextbox)
         AddHandler CurrentTextbox.TextChangedDelayed, AddressOf InputBoxTextChanged
     End Sub
 

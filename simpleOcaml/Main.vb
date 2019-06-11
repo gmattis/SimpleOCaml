@@ -29,7 +29,15 @@ Public Class Main
 
         'TabControl init
         TabControl.DisplayStyleProvider.ShowTabCloser = True
-        AddNewPage(False)
+
+        For Each param As String In My.Application.CommandLineArgs
+            If System.IO.File.Exists(param) Then
+                AddNewPage(True)
+                Utils.OpenFile(param)
+            End If
+        Next
+        If TabControl.TabCount = 0 Then AddNewPage(False)
+
         AddHandler TabControl.TabClosing, AddressOf OnTabClosing
         AddHandler TabControl.TabClosed, AddressOf OnTabClosed
 
@@ -164,7 +172,7 @@ Public Class Main
     Private Sub UpdateCodeToExecute()
         Dim CurrentTextbox As FastColoredTextBox = TryCast(TabControl.SelectedTab.Controls.Item(0), FastColoredTextBox)
         ' TODO: "(\(\*)[\s\S]*?(\*\))" maybe a usefull Regex, else should use lookahead or lookbehind
-        Dim StartIndex As Integer = CurrentTextbox.Text.LastIndexOf(";;", Utils.Max(CurrentTextbox.SelectionStart - 2, 0))
+        Dim StartIndex As Integer = CurrentTextbox.Text.LastIndexOf(";;", Math.Max(CurrentTextbox.SelectionStart - 2, 0))
         Dim Mat As Match = New Regex("[\S][\s\S]*?(;;)").Match(CurrentTextbox.Text, If(StartIndex = -1, 0, StartIndex + 2))
         If Mat.Success Then
             Dim code As String = Regex.Replace(Mat.Value, CommentRegex, "")
