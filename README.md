@@ -5,9 +5,9 @@ v1.2 release is out!
 Simply clone the repository and build the project (tested only with Visual Studio)  
 If you just want to try it, check the releases!
 
-You will also need to download Visual C++:
-  [Download Visual C++ x86 (32 bits)](https://aka.ms/vs/16/release/vc_redist.x86.exe)
-  [Download Visual C++ x64 (64 bits)](https://aka.ms/vs/16/release/vc_redist.x64.exe)
+You will also need to download Visual C++
+[Download Visual C++ x86 (32 bits)](https://aka.ms/vs/16/release/vc_redist.x86.exe)
+[Download Visual C++ x64 (64 bits)](https://aka.ms/vs/16/release/vc_redist.x64.exe)
   
 ## Linux / MacOS :
 I'm trying to add Linux systems support. You can build the project with msbuild and run it with mono (tested on Debian 8, with mono 5.20.1.19, msbuild 16.0.0.0), but it works partially and there are some bugs. Feel free to post an issue when you encounter one!  
