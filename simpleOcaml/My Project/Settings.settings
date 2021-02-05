@@ -12,13 +12,13 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Ocaml_Lib" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\ocaml64\miniocaml\lib</Value>
+      <Value Profile="(Default)">.\ocamlms64\lib</Value>
     </Setting>
     <Setting Name="Detailed_Output" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Ocaml_Exe" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\ocaml64\miniocaml\bin</Value>
+      <Value Profile="(Default)">.\ocamlms64\bin</Value>
     </Setting>
     <Setting Name="Autosave" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

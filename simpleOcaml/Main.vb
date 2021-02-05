@@ -91,7 +91,7 @@ Public Class Main
                     My.Settings.Ocaml_Exe = FolderBrowserDialog.SelectedPath
                 End If
             End While
-            While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)) AndAlso System.IO.Directory.GetFiles(My.Settings.Ocaml_Lib, "*.cmi").Count() > 0)
+            While Not (System.IO.Directory.Exists(System.IO.Path.GetFullPath(My.Settings.Ocaml_Lib)))
                 MsgBox("OCaml libraries folder not found! Please specify its location")
                 FolderBrowserDialog.ShowDialog()
                 If FolderBrowserDialog.SelectedPath = "" Then

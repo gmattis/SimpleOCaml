@@ -147,6 +147,12 @@
         End If
     End Sub
 
+    Private Sub LibsPathButton_Click(sender As Object, e As EventArgs) Handles LibsPathButton.Click
+        If FolderBrowserDialog.ShowDialog() = DialogResult.OK Then
+            My.Settings.Ocaml_Lib = FolderBrowserDialog.SelectedPath
+        End If
+    End Sub
+
     Private Sub ApplyButton_Click(sender As Object, e As EventArgs) Handles ApplyButton.Click
         My.Settings.Save()
         Me.Close()
